@@ -25,12 +25,12 @@ class Core
 {
     function __construct($view)
     {
-        //echo $_GET['id'];
+        //echo '__'.$_GET['id'].'---';
         $ruta = 'view/'.$view.'.php';
         if (is_file($ruta) && $this->tienePermisos()) {
             @\session_start();
             $rutasLegitima = true;
-            //echo $_GET['view'];
+            //echo '__'.$_GET['id'].'---';
             require_once $ruta;
         } elseif (isset($view))  {
             //echo 'ddd'.$view.'ggg';
