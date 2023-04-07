@@ -20,7 +20,7 @@ function redirec($redirec)
 
         $data = null;
         if (isset($vars->data) && $vars->data != '')
-            $data = strtolower($_SERVER["REQUEST_METHOD"]).$vars->data;
+            $data = $vars->data;
 
         if (!isset($vars->csrf_token))
             throw new Exception('CSRF invalido');

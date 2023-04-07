@@ -28,6 +28,10 @@ class Core
         //echo '__'.$_GET['id'].'---';
         $ruta = 'view/'.$view.'.php';
         if (is_file($ruta) && $this->tienePermisos()) {
+            //seteo la vida de la session en 31536000 segundos o 1 año
+            ini_set("session.cookie_lifetime","31536000");
+            ini_set("session.gc_maxlifetime","31536000");
+            
             @\session_start();
             $rutasLegitima = true;
             //echo '__'.$_GET['id'].'---';
@@ -59,6 +63,12 @@ function csrf_token()
 {
     @\session_start();
     return $_SESSION['csrf_token'];
+}
+
+function input_csrf_token()
+{
+    @\session_start();
+    return '<input type="hidden" id="csrf_token" value="'.$_SESSION['csrf_token'].'">';
 }
 
 if (!isset($_GET['view'])) {
