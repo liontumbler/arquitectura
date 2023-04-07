@@ -1,0 +1,1 @@
+//poner solo lo que se use de puro javascript

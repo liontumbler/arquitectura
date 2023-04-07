@@ -1,0 +1,7 @@
+ErrorDocument 404 /arquitectura/view/layout/error/404.php
+ErrorDocument 500 /arquitectura/view/layout/error/500.php
+
+RewriteEngine On
+RewriteRule ^([A-za-z0-9_-]{1,100})$ index.php?view=$1
+RewriteRule ^([A-za-z0-9_-]{1,100})/([0-9]{1,100})$ index.php?view=$1&id=$2
+#RewriteRule ^([A-za-z0-9_-]{1,100})/([0-9]{1,100})/([A-za-z0-9_-]{1,100})$ index.php?view=$1&id=$2&accion=$3
