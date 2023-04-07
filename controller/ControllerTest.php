@@ -12,7 +12,6 @@ class ControllerTest extends Controller
     public function postIndex()
     {
         $valido = $this->validarTokenCsrf();
-        $this->csrf_token_update();
         if ($valido) {
             return $this->model('ModelTest');
         } else {
