@@ -84,14 +84,13 @@ class PaginaOnce extends Web implements PaginaX
     public function footer()
     {
         ?>
-        <script src="resources/js/viewIndex.js"></script>
-
         <script>
             document.getElementById('sideBar').style.display = 'none';
             //document.getElementById('sideBar').style.display = 'block';
 
             
         </script>
+        <script src="resources/js/global.js"></script>
         <?php
     }
 }

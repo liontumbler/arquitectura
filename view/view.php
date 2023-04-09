@@ -58,7 +58,7 @@ class Web
                     }
 
                     #contentConSidebar{
-                        width: 78%;
+                        width: 100%;
                         display: block;
                         margin: auto;
                     }
@@ -74,7 +74,6 @@ class Web
                 <?= $this->content(); ?>
                 <?= $this->footer(); ?>
             </body>
-
         </html>
         <?php
     }

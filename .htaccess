@@ -7,3 +7,31 @@ RewriteRule ^([A-za-z0-9_-]{1,100})/([0-9]{1,100})$ index.php?view=$1&id=$2
 #RewriteRule ^([A-za-z0-9_-]{1,100})/([0-9]{1,100})/([A-za-z0-9_-]{1,100})$ index.php?view=$1&id=$2&accion=$3
 
 RedirectMatch "^/arquitectura/$" "/arquitectura/index"
+
+#limite de megas de imagen mx 10 MB
+LimitRequestBody 10000000
+
+<Files .htaccess>
+    order allow,deny
+    deny from all
+</Files>
+
+<FilesMatch "\.(htaccess|htpasswd|ini|phps|fla|psd|log|sh)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+#bloquear una ip o dominio EJ
+<Limit GET POST PUT DELETE>
+    order allow,deny
+    allow from all
+    deny from 123.45.67.255
+    deny from .*ejemplo\.com.*
+</Limit>
+
+#Deny from 99.88.77.66
+
+RewriteEngine On
+RewriteCond %{HTTP_USER_AGENT} ^BlackWidow [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Zeus
+RewriteRule .* - [F]
