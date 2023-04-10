@@ -12,14 +12,6 @@ class PaginaOnce extends Web implements PaginaX
         parent::__construct($title, $description, $keywords);
     }
 
-    public function nav()
-    {
-        require_once 'layout/nav.php';
-        ?>
-        
-        <?php
-    }
-
     public function content()
     {
         ?>
@@ -31,36 +23,19 @@ class PaginaOnce extends Web implements PaginaX
                     <div class="container" style="width: 390px;">
                         <div class="row">
                             <?= input_csrf_token(); ?>
-                            <!--div class="col-lg-12">
-                                <label for="gimnasio" class="form-label">Gimnasio</label>
-                                <select id="gimnasio" class="form-select">
-                                    <option selected value="">Seleccione una opcion</option>
-                                    <option value="1">pepe</option>
-                                    <option value="2">pepa</option>
-                                    <option value="3">pepo</option>
-                                </select>
-                            </div>
-                            <div class="col-lg-12">
-                                <label for="trabajador" class="form-label">Trabajador</label>
-                                <select id="trabajador" class="form-select">
-                                    <option selected value="">Seleccione una opcion</option>
-                                </select>
-                            </div-->
-                            <div class="col-lg-12">
+                            <div class="col-lg-12 mb-1">
                                 <label for="nickname" class="form-label">Nickname</label>
                                 <input type="password" class="form-control" id="nickname" placeholder="Dijite la nickname del trabajador">
                             </div>
-                            <div class="col-lg-12">
+                            <div class="col-lg-12 mb-1">
                                 <label for="clave" class="form-label">Clave</label>
                                 <input type="password" class="form-control" id="clave" placeholder="Dijite la clave del trabajador">
                             </div>
-                            <div class="col-lg-12">
+                            <div class="col-lg-12 mb-1">
                                 <label for="caja" class="form-label">Caja</label>
-                                <input type="number" class="form-control" id="caja" placeholder="Dijite el monto del efectivo">
+                                <input type="number" class="form-control" id="caja" placeholder="Dijite el monto del efectivo" max="1000000">
                             </div>
-
-                            
-                            <div class="col-lg-12">
+                            <div class="col-lg-12 mb-1">
                                 <div class="d-grid gap-2">
                                     <button id="trabajar" class="btn btn-primary" type="button">trabajar</button>
                                 </div>
@@ -104,6 +79,10 @@ class PaginaOnce extends Web implements PaginaX
                     console.log(res, 'csrf_token');
                     
                 }
+            });
+
+            document.getElementById('caja').addEventListener('input', function (e) {
+                this.value = this.value.replace(/[^0-9]/g, '');
             });
 
             function llenarSelec(data, id) {

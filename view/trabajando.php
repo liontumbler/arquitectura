@@ -15,14 +15,6 @@ class PaginaOnce extends Web implements PaginaX
         parent::__construct($title, $description, $keywords);
     }
 
-    public function nav()
-    {
-        require_once 'layout/nav.php';
-        ?>
-        
-        <?php
-    }
-
     public function content()
     {
         ?>

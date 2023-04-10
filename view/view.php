@@ -1,7 +1,6 @@
 <?php
 interface PaginaX
 {
-    public function nav();
     public function content();
     public function footer();
 }
@@ -17,6 +16,19 @@ class Web
         $this->title = $title;
         $this->description = $description;
         $this->keywords = $keywords;
+    }
+
+    public function nav()
+    {
+        require_once 'layout/nav.php';
+    }
+
+    public function libs()
+    {
+        ?>
+        
+        <script src="resources/js/global.js"></script>
+        <?php
     }
 
     public function crearHtml()
@@ -41,6 +53,10 @@ class Web
 
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
                 
+                <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.css">
+                <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+                <script src="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.js"></script>
+
                 <style>
                     #sideBar{
                         width: 22%;
@@ -73,6 +89,7 @@ class Web
                 <?= $this->nav(); ?>
                 <?= $this->content(); ?>
                 <?= $this->footer(); ?>
+                <?= $this->libs(); ?>
             </body>
         </html>
         <?php
