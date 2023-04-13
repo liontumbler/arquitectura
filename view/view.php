@@ -23,11 +23,17 @@ class Web
         require_once 'layout/nav.php';
     }
 
-    public function libs()
+    public function libsJS()
     {
         ?>
-        
         <script src="resources/js/global.js"></script>
+        <?php
+    }
+
+    public function libsCSS()
+    {
+        ?>
+        <link rel="stylesheet" href="resources/css/global.css">
         <?php
     }
 
@@ -43,6 +49,22 @@ class Web
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <meta http-equiv="content-language" content="es-CO">
 
+                <!-- Chrome 25+, Firefox 23+ and Safari 7+ >
+                <meta http-equiv="Content-Security-Policy"
+                content="script-src 'self' https: 'unsafe-inline'; style-src 'self' 'unsafe-inline';
+                object-src 'none'; img-src 'self' https: data:; media-src https:;
+                frame-src 'none'; font-src 'self' https:; connect-src 'self';">
+                <!-- Firefox 4.0+ and Internet Explorer 10+ >
+                <meta http-equiv="X-Content-Security-Policy"
+                content="script-src 'self' https: 'unsafe-inline'; style-src 'self' 'unsafe-inline';
+                object-src 'none'; img-src 'self' https: data:; media-src https:;
+                frame-src 'none'; font-src 'self' https:; connect-src 'self';">
+                <!-- Chrome 14+ and Safari 6+ >
+                <meta http-equiv="X-WebKit-CSP"
+                content="script-src 'self' https: 'unsafe-inline'; style-src 'self' 'unsafe-inline';
+                object-src 'none'; img-src 'self' https: data:; media-src https:;
+                frame-src 'none'; font-src 'self' https:; connect-src 'self';"-->
+
                 <meta name="description" content="<?= $this->description; ?>">
                 <meta name="keywords" content="<?= $this->keywords; ?>">
 
@@ -52,35 +74,24 @@ class Web
                 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
 
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-                
+
                 <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.css">
+                <link rel="stylesheet" href="https://unpkg.com/placeholder-loading/dist/css/placeholder-loading.min.css">
+                
                 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/tableexport.jquery.plugin@1.10.21/tableExport.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/tableexport.jquery.plugin@1.10.21/libs/jsPDF/jspdf.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/tableexport.jquery.plugin@1.10.21/libs/jsPDF-AutoTable/jspdf.plugin.autotable.js"></script>
                 <script src="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.js"></script>
+                <script src="https://unpkg.com/bootstrap-table@1.21.4/dist/extensions/export/bootstrap-table-export.min.js"></script>
 
+                <?= $this->libsCSS(); ?>
+                
                 <style>
-                    #sideBar{
-                        width: 22%;
-                        z-index: 1;
-                    }
-
-                    #sideBarrar{
-                        width: 280px;
-                        height: 92%;
-                        position: fixed;
-                    }
-
-                    #sideBarrar ul{
-                        display: block;
-                    }
-
-                    #contentConSidebar{
-                        width: 100%;
-                        display: block;
-                        margin: auto;
-                    }
+                    
 
                     body{
-                        padding-top: 56px;
+                        
                     }
                 </style>
             </head>
@@ -89,7 +100,7 @@ class Web
                 <?= $this->nav(); ?>
                 <?= $this->content(); ?>
                 <?= $this->footer(); ?>
-                <?= $this->libs(); ?>
+                <?= $this->libsJS(); ?>
             </body>
         </html>
         <?php

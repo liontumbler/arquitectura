@@ -141,8 +141,6 @@ class PaginaOnce extends Web implements PaginaX
                     });*/
             })
         </script>
-
-        <script src="resources/js/global.js"></script>
         <?php
     }
 }

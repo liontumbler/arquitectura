@@ -108,11 +108,6 @@ class PaginaOnce extends Web implements PaginaX
                 document.getElementById('total').textContent = document.getElementById('producto').value * cantidad;
                 
             });
-
-            document.getElementById('nombreYapellido').addEventListener('input', function (e) {
-                this.value = this.value.replace(/[^a-zñ ]/g, '').replace(/\s+/g, ' ');
-            });
-
             
         </script>
         <script src="resources/js/global.js"></script>
