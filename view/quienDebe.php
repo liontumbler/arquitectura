@@ -44,6 +44,11 @@ class PaginaOnce extends Web implements PaginaX
     <?php
     }
 
+    public function nav()
+    {
+        # code... nuevo nav con otras opciones
+    }
+
     public function footer()
     {
     ?>
@@ -159,6 +164,7 @@ class PaginaOnce extends Web implements PaginaX
                 height: '393',
                 buttonsClass: 'dark',
                 buttonsOrder: ['export', 'columns', 'fullscreen'],
+                classes: 'table table-striped',
 
                 showExport: "true",
                 exportDataType: 'all',
@@ -175,8 +181,6 @@ class PaginaOnce extends Web implements PaginaX
                 showFooter: true,
 
                 //locale: 'es-CO'
-                //clickToSelect: "true",//selecionar el chech desde cualquiercolumna
-                classes: 'table table-striped',
                 formatNoMatches: function() {
                     return "No se encontraron registros coincidentes"
                 },
@@ -194,20 +198,29 @@ class PaginaOnce extends Web implements PaginaX
                     title: 'Id',
                     halign: 'center',
                     align: 'center',
-                    searchable: 'false'
+                    searchable: false,
+                    switchable: false,
+                    sortable: false,
                 }, {
                     field: 'tipo',
                     title: 'Tipo Deuda',
+                    sortable: true,
+                    falign: 'center',
                     footerFormatter: function (data) {
                         return 'nombre deldeudor';
                     }
                 }, {
                     field: 'monto',//price
                     title: 'Valor',
+                    falign: 'center',
                     footerFormatter: function (data) {
                         let field = this.field
                         return '$' + data.map(function (row) {
-                            return + row[field];
+                            if (row.pago) {
+                                return + row[field];
+                            }else{
+                                return +0;
+                            }
                         }).reduce(function (sum, i) {
                             return sum + i
                         }, 0)
@@ -223,24 +236,46 @@ class PaginaOnce extends Web implements PaginaX
                     formatter: function (value, row, index) {
                         console.log(value, row, index, 'ejecuto alcargar?');
                         let checked = value ? 'checked' : '';
-                        return '<input class="form-check-input" type="checkbox" '+checked+'>'
+                        return '<input class="form-check-input checkPago" type="checkbox" '+checked+'>'
+                    },
+                    events: {
+                        'click .checkPago': function (e, value, row, index) {
+                            row.pago = !row.pago;
+                            let total =  '$' + $table.bootstrapTable('getData').map(function (row) {
+                                if (row.pago) {
+                                    return + row['monto'];
+                                }else{
+                                    return +0;
+                                }
+                            }).reduce(function (sum, i) {
+                                return sum + i
+                            }, 0)
+
+                            $('.fixed-table-footer .th-inner')[2].textContent = total;
+                        },
                     },
                     footerFormatter: function (data) {
-                        return '<button type="button" class="btn btn-success">Pagar</button>';
+                        return `<div class="d-grid gap-2">
+                        <button type="button" class="btn btn-success" id="checkPagar">Pagar</button>
+                        </div>`;
                     }
                 }],
 
                 data: data
+            });
+
+            $('#checkPagar').on('click', function (e) {
+                console.log('pago');
             })
 
-            //$table.bootstrapTable('showLoading');//bootstrapTable('destroy').bootstrapTable()
+            //$table.bootstrapTable('showLoading');
+            //$table.bootstrapTable('hideLoading');
             //$table.bootstrapTable('hideColumn', 'monto')
             //$table.bootstrapTable('showColumn', 'monto')
-            //$table.bootstrapTable('getSelections')
-
-            $table.on('all.bs.table', function(e, name, args) {
-                console.log(name, args)
-            })
+            //$table.bootstrapTable('removeAll')
+            //$table.bootstrapTable('insertRow', {index: 1, row: row})
+            //$table.bootstrapTable('getRowByUniqueId', 1)
+            //$table.bootstrapTable('getData')
         </script>
 <?php
     }
