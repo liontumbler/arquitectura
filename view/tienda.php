@@ -15,18 +15,37 @@ class PaginaOnce extends Web implements PaginaX
     public function content()
     {
         ?>
-        
         <div class="d-flex">
             <?php require_once 'layout/sidebar.php'; ?>
             <div id="contentConSidebar">
                 <div class="m-4">
                     
-                    <div class="container" style="width: 390px;">
+                    <div class="container" style="width: 450px;">
                         <div class="row">
                             <?= input_csrf_token(); ?>
                             <div class="col-lg-12 mb-1">
+                                <input class="form-check-input" type="checkbox" value="" id="cliente" checked>
+                                <label class="form-check-label" for="cliente">
+                                    Cliente existe?
+                                </label>
+                            </div>
+                            <div class="col-lg-12 mb-1" id="divClientePre">
+                                <label for="cliente" class="form-label">Clientes*</label>
+                                <select id="cliente" class="form-select">
+                                    <option selected value="">Seleccione una opción</option>
+                                    <option value="123123">pepe</option>
+                                    <option value="701232400">pepa</option>
+                                    <option value="234234">papu</option>
+                                    <option value="1534234000">3 horas</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-6 mb-1" id="divClienteNA">
                                 <label for="nombreYapellido" class="form-label">Nombre Y Apellido *</label>
-                                <input type="text" class="form-control" id="nombreYapellido" placeholder="Dijite la Nombre Y Apellido del Cliente" maxlength="50" minlength="1">
+                                <input type="text" class="form-control" id="nombreYapellido" placeholder="Nombre Y Apellido del Cliente" title="Nombre Y Apellido del Cliente">
+                            </div>
+                            <div class="col-lg-6 mb-1" id="divClienteD">
+                                <label for="documento" class="form-label">Documento *</label>
+                                <input type="text" class="form-control" id="documento" placeholder="Documento del Cliente" title="Documento del Cliente">
                             </div>
                             <div class="col-lg-12 mb-1">
                                 <label for="producto" class="form-label">producto *</label>
@@ -40,7 +59,7 @@ class PaginaOnce extends Web implements PaginaX
                             </div>
                             <div class="col-lg-12 mb-1">
                                 <label for="cantidad" class="form-label">Cantidad</label>
-                                <input type="number" class="form-control" id="cantidad" placeholder="Dijite la cantidad del producto" max="20" min="1">
+                                <input type="number" class="form-control" id="cantidad" placeholder="Cantidad del producto" max="20" min="1">
                             </div>
                             <div class="col-lg-12 mb-1">
                                 <input class="form-check-input" type="checkbox" value="" id="pago" checked>
@@ -83,8 +102,23 @@ class PaginaOnce extends Web implements PaginaX
     {
         ?>
         <script>
-            document.getElementById('sideBar').style.display = 'none';
-            //document.getElementById('sideBar').style.display = 'block';
+            if(document.getElementById('cliente').checked){
+                document.getElementById('divClienteNA').style.display = 'none';
+                document.getElementById('divClienteD').style.display = 'none';
+            }
+
+            document.getElementById('cliente').addEventListener('change', function (e) {
+                if(this.checked){
+                    document.getElementById('divClienteNA').style.display = 'none';
+                    document.getElementById('divClienteD').style.display = 'none';
+                    document.getElementById('divClientePre').style.display = 'block';
+                }
+                else{
+                    document.getElementById('divClienteNA').style.display = 'block';
+                    document.getElementById('divClienteD').style.display = 'block';
+                    document.getElementById('divClientePre').style.display = 'none';
+                }
+            });
             
             document.getElementById('pago').addEventListener('change', function (params) {
                 if(!this.checked)
@@ -108,9 +142,26 @@ class PaginaOnce extends Web implements PaginaX
                 document.getElementById('total').textContent = document.getElementById('producto').value * cantidad;
                 
             });
+
+
+            /*
+            Swal.fire({
+                title: 'Do you want to save the changes?',
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: 'Save',
+                denyButtonText: `Don't save`,
+                }).then((result) => {
+                //Read more about isConfirmed, isDenied below
+                if (result.isConfirmed) {
+                    Swal.fire('Saved!', '', 'success')
+                } else if (result.isDenied) {
+                    Swal.fire('Changes are not saved', '', 'info')
+                }
+            })
+            */
             
         </script>
-        <script src="resources/js/global.js"></script>
         <?php
     }
 }

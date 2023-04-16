@@ -32,7 +32,7 @@ class PaginaOnce extends Web implements PaginaX
                             <li>total:</li>
                         </ul>
                     </div>
-                    <div class="container" style="width: 390px;">
+                    <div class="container" style="width: 450px;">
                         
                         <div class="row">
                             <div class="col-lg-12 mb-1">
@@ -77,12 +77,8 @@ class PaginaOnce extends Web implements PaginaX
     {
         ?>
         <script>
-            document.getElementById('sideBar').style.display = 'none';
-            //document.getElementById('sideBar').style.display = 'block';
-
             
         </script>
-        <script src="resources/js/global.js"></script>
         <?php
     }
 }

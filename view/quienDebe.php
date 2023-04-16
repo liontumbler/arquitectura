@@ -53,9 +53,6 @@ class PaginaOnce extends Web implements PaginaX
     {
     ?>
         <script>
-            document.getElementById('sideBar').style.display = 'none';
-            //document.getElementById('sideBar').style.display = 'block';
-
             let data = [
                 {
                     id: 1,
@@ -202,12 +199,12 @@ class PaginaOnce extends Web implements PaginaX
                     switchable: false,
                     sortable: false,
                 }, {
-                    field: 'tipo',
+                    field: 'name',
                     title: 'Tipo Deuda',
                     sortable: true,
                     falign: 'center',
                     footerFormatter: function (data) {
-                        return 'nombre deldeudor';
+                        return 'Nombre del deudor';
                     }
                 }, {
                     field: 'monto',//price
@@ -226,13 +223,13 @@ class PaginaOnce extends Web implements PaginaX
                         }, 0)
                     }
                 }, {
-                    field: 'fecha',
+                    field: 'price',
                     title: 'Fecha'
                 }, {
                     title: 'Pagar',
                     field: 'pago',
                     align: 'center',
-                    valign: 'middle',
+                    halign: 'center',
                     formatter: function (value, row, index) {
                         console.log(value, row, index, 'ejecuto alcargar?');
                         let checked = value ? 'checked' : '';

@@ -101,9 +101,6 @@ class PaginaOnce extends Web implements PaginaX
     {
         ?>
         <script>
-            document.getElementById('sideBar').style.display = 'none';
-            //document.getElementById('sideBar').style.display = 'block';
-
             //poner solo lo que se use de puro javascript con php
             document.getElementById('submit').addEventListener('click', async function(e) {
                 let res = await fetch('controller/ControllerTest.php', {

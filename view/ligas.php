@@ -28,21 +28,37 @@ class PaginaOnce extends Web implements PaginaX
             <div id="contentConSidebar">
                 <div class="m-4">
                     
-                    <div class="container" style="width: 390px;">
+                    <div class="container" style="width: 450px;">
                         <div class="row">
                             <?= input_csrf_token(); ?>
                             <div class="col-lg-12 mb-1">
-                                <label for="nombreYapellido" class="form-label">Nombre Y Apellido *</label>
-                                <input type="text" class="form-control" id="nombreYapellido" placeholder="Dijite la Nombre Y Apellido del Cliente">
+                                <input class="form-check-input" type="checkbox" value="" id="cliente" checked>
+                                <label class="form-check-label" for="cliente">
+                                    Cliente existe?
+                                </label>
                             </div>
-                            <div class="col-lg-12 mb-1">
-                                <label for="documento" class="form-label">Documento</label>
-                                <input type="text" class="form-control" id="documento" placeholder="Dijite la documento del Cliente">
+                            <div class="col-lg-12 mb-1" id="divClientePre">
+                                <label for="cliente" class="form-label">Clientes*</label>
+                                <select id="cliente" class="form-select">
+                                    <option selected value="">Seleccione una opción</option>
+                                    <option value="123123">pepe</option>
+                                    <option value="701232400">pepa</option>
+                                    <option value="234234">papu</option>
+                                    <option value="1534234000">3 horas</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-6 mb-1" id="divClienteNA">
+                                <label for="nombreYapellido" class="form-label">Nombre Y Apellido *</label>
+                                <input type="text" class="form-control" id="nombreYapellido" placeholder="Nombre Y Apellido del Cliente" title="Nombre Y Apellido del Cliente">
+                            </div>
+                            <div class="col-lg-6 mb-1" id="divClienteD">
+                                <label for="documento" class="form-label">Documento *</label>
+                                <input type="text" class="form-control" id="documento" placeholder="Documento del Cliente" title="Documento del Cliente">
                             </div>
                             <div class="col-lg-12 mb-1">
                                 <label for="hora" class="form-label">Hora *</label>
                                 <select id="hora" class="form-select">
-                                    <option selected value="">Seleccione una opcion</option>
+                                    <option selected value="">Seleccione una opción</option>
                                     <option value="5000">30 minutos</option>
                                     <option value="7000">1 hora</option>
                                     <option value="10000">2 horas</option>
@@ -100,9 +116,23 @@ class PaginaOnce extends Web implements PaginaX
     {
         ?>
         <script>
-            document.getElementById('sideBar').style.display = 'none';
-            //document.getElementById('sideBar').style.display = 'block';
+            if(document.getElementById('cliente').checked){
+                document.getElementById('divClienteNA').style.display = 'none';
+                document.getElementById('divClienteD').style.display = 'none';
+            }
 
+            document.getElementById('cliente').addEventListener('change', function (e) {
+                if(this.checked){
+                    document.getElementById('divClienteNA').style.display = 'none';
+                    document.getElementById('divClienteD').style.display = 'none';
+                    document.getElementById('divClientePre').style.display = 'block';
+                }
+                else{
+                    document.getElementById('divClienteNA').style.display = 'block';
+                    document.getElementById('divClienteD').style.display = 'block';
+                    document.getElementById('divClientePre').style.display = 'none';
+                }
+            });
 
             if(document.getElementById('fechaDefault').checked){
                 document.getElementById('divFechaDefault').style.display = 'none';
@@ -123,29 +153,23 @@ class PaginaOnce extends Web implements PaginaX
             });
 
             document.getElementById('hora').addEventListener('change', function (e) {
+                console.log('hoe');
                 if(this.value)
                     document.getElementById('total').textContent = this.value;
                 else   
                     document.getElementById('total').textContent = '';
             });
 
-            
-
-            
-
-            
-
             function llenarSelec(data, id) {
                 let select = document.getElementById(id);
                 select.innerHTML = '';
-                select.append(new Option('Seleccione una opcion', ''));
+                select.append(new Option('Seleccione una opción', ''));
                 for (let i = 0; i < data.length; i++) {
                     let op = new Option(data[i].name, data[i].id)
                     select.append(op);
                 }
             }
         </script>
-        <script src="resources/js/global.js"></script>
         <?php
     }
 }

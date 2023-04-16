@@ -59,9 +59,6 @@ class PaginaOnce extends Web implements PaginaX
     {
     ?>
         <script>
-            document.getElementById('sideBar').style.display = 'none';
-            //document.getElementById('sideBar').style.display = 'block';
-
             let data = [
                 {
                     id: 1,

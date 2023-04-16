@@ -20,7 +20,7 @@ class PaginaOnce extends Web implements PaginaX
             <div id="contentConSidebar">
                 <div class="m-4">
                     
-                    <div class="container" style="width: 390px;">
+                    <div class="container" style="width: 450px;">
                         <div class="row">
                             <?= input_csrf_token(); ?>
                             <div class="col-lg-12 mb-1">
@@ -52,9 +52,6 @@ class PaginaOnce extends Web implements PaginaX
     {
         ?>
         <script>
-            document.getElementById('sideBar').style.display = 'none';
-            //document.getElementById('sideBar').style.display = 'block';
-
             document.getElementById('trabajar').addEventListener('click', async function(e) {
                 if(true){
                     let nickname = document.getElementById('nickname').value;
@@ -95,7 +92,6 @@ class PaginaOnce extends Web implements PaginaX
                 }
             }
         </script>
-        <script src="resources/js/global.js"></script>
         <?php
     }
 }
