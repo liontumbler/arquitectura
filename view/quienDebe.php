@@ -59,98 +59,98 @@ class PaginaOnce extends Web implements PaginaX
                     name: 'Item 1',
                     price: '$1',
                     monto: 10000,
-                    pago: true
+                    pago: 'debe'
                 },
                 {
                     id: 2,
                     name: 'Item 2',
                     price: '$2',
                     monto: 10000,
-                    pago: false
+                    pago: 'pazYsalvoEfectivo'
                 },
                 {
                     id: 2,
                     name: 'Item 2',
                     price: '$2',
                     monto: 10000,
-                    pago: true
+                    pago: 'debe'
                 },
                 {
                     id: 2,
                     name: 'Item 2',
                     price: '$2',
                     monto: 10000,
-                    pago: false
+                    pago: 'pazYsalvoDigital'
                 },
                 {
                     id: 2,
                     name: 'Item 2',
                     price: '$2',
                     monto: 10000,
-                    pago: true
+                    pago: 'digital'
                 },
                 {
                     id: 2,
                     name: 'Item 2',
                     price: '$2',
                     monto: 10000,
-                    pago: true
+                    pago: 'efectivo'
                 },
                 {
                     id: 2,
                     name: 'Item 2',
                     price: '$2',
                     monto: 10000,
-                    pago: true
+                    pago: 'debe'
                 },
                 {
                     id: 2,
                     name: 'Item 2',
                     price: '$2',
                     monto: 10000,
-                    pago: true
+                    pago: 'debe'
                 },
                 {
                     id: 2,
                     name: 'Item 2',
                     price: '$2',
                     monto: 10000,
-                    pago: true
+                    pago: 'debe'
                 },
                 {
                     id: 2,
                     name: 'Item 2',
                     price: '$2',
                     monto: 10000,
-                    pago: true
+                    pago: 'debe'
                 },
                 {
                     id: 2,
                     name: 'Item 2',
                     price: '$2',
                     monto: 10000,
-                    pago: true
+                    pago: 'debe'
+                },
+                {
+                    id: 2,
+                    name: 'Item 2wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww',
+                    price: '$2',
+                    monto: 10000,
+                    pago: 'debe'
                 },
                 {
                     id: 2,
                     name: 'Item 2',
                     price: '$2',
                     monto: 10000,
-                    pago: true
+                    pago: 'debe'
                 },
                 {
                     id: 2,
                     name: 'Item 2',
                     price: '$2',
                     monto: 10000,
-                    pago: true
-                },
-                {
-                    id: 2,
-                    name: 'Item 2',
-                    price: '$2',
-                    monto: 10000,
-                    pago: true
+                    pago: 'debe'
                 }
             ];
 
@@ -158,7 +158,6 @@ class PaginaOnce extends Web implements PaginaX
             $table.bootstrapTable({
                 cache: false,
                 toggle: 'quienDebeTable',
-                height: '393',
                 buttonsClass: 'dark',
                 buttonsOrder: ['export', 'columns', 'fullscreen'],
                 classes: 'table table-striped',
@@ -193,6 +192,8 @@ class PaginaOnce extends Web implements PaginaX
                 columns: [{
                     field: 'id',
                     title: 'Id',
+                    //width: '100',
+                    //widthUnit: 'px',
                     halign: 'center',
                     align: 'center',
                     searchable: false,
@@ -201,19 +202,30 @@ class PaginaOnce extends Web implements PaginaX
                 }, {
                     field: 'name',
                     title: 'Tipo Deuda',
+                    width: '150',
+                    widthUnit: 'px',
                     sortable: true,
                     falign: 'center',
                     footerFormatter: function (data) {
                         return 'Nombre del deudor';
-                    }
+                    },
+                    formatter: function (value, row, index) {
+                        return '<div style="width: inherit; overflow:hidden; white-space:nowrap; text-overflow: ellipsis;">'
+                            +row.name+
+                        '</div>';
+                    },
                 }, {
                     field: 'monto',//price
                     title: 'Valor',
+                    //width: '100',
+                    //widthUnit: 'px',
                     falign: 'center',
                     footerFormatter: function (data) {
                         let field = this.field
                         return '$' + data.map(function (row) {
-                            if (row.pago) {
+                            
+                            
+                            if (row.pago == 'debe') {
                                 return + row[field];
                             }else{
                                 return +0;
@@ -224,23 +236,77 @@ class PaginaOnce extends Web implements PaginaX
                     }
                 }, {
                     field: 'price',
-                    title: 'Fecha'
+                    title: 'Fecha',
+                    //width: '100',
+                    //widthUnit: 'px',
+                    footerFormatter: function (data) {
+                        return `<div class="d-grid gap-2">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="medio" id="digital">
+                                <label class="form-check-label" for="digital">
+                                    Digital
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="medio" id="efectivo" checked>
+                                <label class="form-check-label" for="efectivo">
+                                    Efectivo
+                                </label>
+                            </div>
+                        </div>`;
+                    }
                 }, {
                     title: 'Pagar',
                     field: 'pago',
+                    //width: '100',
+                    //widthUnit: 'px',
                     align: 'center',
                     halign: 'center',
+
                     formatter: function (value, row, index) {
-                        console.log(value, row, index, 'ejecuto alcargar?');
-                        let checked = value ? 'checked' : '';
+                        //console.log(value, row, index, 'ejecuto alcargar?');
+                        let checked = '';
+                        //if (value == 'debe') {
+                            checked = 'checked'
+                            row.pago = 'pazYsalvoEfectivo'
+                            /*let medio = document.querySelector('input[name="medio"]:checked').id;
+                            console.log(medio);
+                            if (medio == 'efectivo') {
+                                row.pago = 'pazYsalvoEfectivo'
+                            }else if (medio == 'digital') {
+                                row.pago ='pazYsalvoDigital'
+                            }*/
+                        //}
+                        
                         return '<input class="form-check-input checkPago" type="checkbox" '+checked+'>'
                     },
                     events: {
                         'click .checkPago': function (e, value, row, index) {
-                            row.pago = !row.pago;
-                            let total =  '$' + $table.bootstrapTable('getData').map(function (row) {
-                                if (row.pago) {
-                                    return + row['monto'];
+                            console.log(value, row, index, 'chech', this);
+
+                            let medio = document.querySelector('input[name="medio"]:checked').id;
+                            console.log(medio);
+                            if (row.pago.indexOf('debe') >= 0) {//row.pago.indexOf('pazYsalvo') >= 0
+                                if (medio == 'efectivo') {
+                                    row.pago = 'pazYsalvoEfectivo'
+                                }else if (medio == 'digital') {
+                                    row.pago ='pazYsalvoDigital'
+                                }
+                            }else{
+                                row.pago = 'debe'
+                            }
+                            console.log('row.pago', row.pago);
+
+                            let total =  '$' + $table.bootstrapTable('getData').map(function (rw) {
+
+                                if (rw.pago.indexOf('debe') < 0) {//rw.pago.indexOf('pazYsalvo') >= 0
+                                    if (medio == 'efectivo') {
+                                        rw.pago = 'pazYsalvoEfectivo'
+                                    }else if (medio == 'digital') {
+                                        rw.pago ='pazYsalvoDigital'
+                                    }
+
+                                    return + rw['monto'];
                                 }else{
                                     return +0;
                                 }
@@ -248,7 +314,9 @@ class PaginaOnce extends Web implements PaginaX
                                 return sum + i
                             }, 0)
 
-                            $('.fixed-table-footer .th-inner')[2].textContent = total;
+                            //$('.fixed-table-footer .th-inner')[2].textContent = total;
+                            $('tfoot .th-inner')[2].textContent = total;
+                            
                         },
                     },
                     footerFormatter: function (data) {

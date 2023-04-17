@@ -12,6 +12,11 @@ if (document.getElementById('btnSidebar')) {
     });
 }
 
+//document.querySelector('.table .table-striped')
+//$('.table.table-striped').css('width', '100%');
+
+
+
 function cargando() {
     if (!document.getElementById('cargando')) {
         let cargando = document.createElement('div');

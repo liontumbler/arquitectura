@@ -75,15 +75,14 @@ class Web
 
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-                <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.css">
-                <link rel="stylesheet" href="https://unpkg.com/placeholder-loading/dist/css/placeholder-loading.min.css">
+                <link rel="stylesheet" href="resources/libs/bootstrap-table.min.css">
                 
-                <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-                <script src="https://cdn.jsdelivr.net/npm/tableexport.jquery.plugin@1.10.21/tableExport.min.js"></script>
-                <script src="https://cdn.jsdelivr.net/npm/tableexport.jquery.plugin@1.10.21/libs/jsPDF/jspdf.min.js"></script>
-                <script src="https://cdn.jsdelivr.net/npm/tableexport.jquery.plugin@1.10.21/libs/jsPDF-AutoTable/jspdf.plugin.autotable.js"></script>
-                <script src="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.js"></script>
-                <script src="https://unpkg.com/bootstrap-table@1.21.4/dist/extensions/export/bootstrap-table-export.min.js"></script>
+                <script src="resources/libs/jquery-3.6.4.min.js"></script>
+                <script src="resources/libs/tableExport.min.js"></script>
+                <script src="resources/libs/jspdf.min.js"></script>
+                <script src="resources/libs/jspdf.plugin.autotable.js"></script>
+                <script src="resources/libs/bootstrap-table.min.js"></script>
+                <script src="resources/libs/bootstrap-table-export.min.js"></script>
 
                 <?= $this->libsCSS(); ?>
                 
