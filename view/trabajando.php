@@ -19,7 +19,7 @@ class PaginaOnce extends Web implements PaginaX
     {
         ?>
         <div class="d-flex">
-            <?php require_once 'layout/sidebar.php'; ?>
+            <?php require_once 'layout/sidebarTrabajador.php'; ?>
             <div id="contentConSidebar">
                 <div class="m-4">
                     <div>
@@ -73,11 +73,40 @@ class PaginaOnce extends Web implements PaginaX
         <?php
     }
 
+    public function nav()
+    {
+    ?>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+            <div class="container-fluid">
+                <a href="javascript:" class="navbar-brand" id="btnSidebar">Gimnasios</a>
+            </div>
+        </nav>
+    <?php
+    }
+
     public function footer()
     {
         ?>
         <script>
-            
+            document.getElementById('ligas').addEventListener('click', function (e) {
+                location.href = 'ligas';
+            })
+            document.getElementById('tienda').addEventListener('click', function (e) {
+                location.href = 'tienda';
+            })
+            document.getElementById('descuento').addEventListener('click', function (e) {
+                location.href = 'descuento';
+            })
+            document.getElementById('pagos').addEventListener('click', function (e) {
+                location.href = 'pagos';
+            })
+            document.getElementById('quienDebe').addEventListener('click', function (e) {
+                location.href = 'quienDebe';
+            })
+            document.getElementById('terminar').addEventListener('click', function (e) {
+                location.href = 'index';
+                //terminar sesion hacer cuentas hacer insercion de la terminacion
+            })
         </script>
         <?php
     }

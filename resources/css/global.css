@@ -10,6 +10,7 @@
     padding-top: 56px;
     width: 22%;
     z-index: 1029;
+    display: none;
 }
 
 #sideBarrar{
@@ -18,7 +19,7 @@
     position: fixed;
 }
 
-#sideBarrar ul{
+#sideBarrar #sbUl{
     display: block;
 }
 

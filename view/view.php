@@ -84,15 +84,9 @@ class Web
                 <script src="resources/libs/bootstrap-table.min.js"></script>
                 <script src="resources/libs/bootstrap-table-export.min.js"></script>
 
-                <?= $this->libsCSS(); ?>
-                
-                <style>
-                    
+                <script src="resources/libs/sweetalert2.js"></script>
 
-                    body{
-                        
-                    }
-                </style>
+                <?= $this->libsCSS(); ?>
             </head>
 
             <body>

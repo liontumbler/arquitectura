@@ -22,7 +22,8 @@ function redirec($redirec)
         if (isset($vars->data) && $vars->data != '')
             $data = $vars->data;
 
-        if (!isset($vars->csrf_token))
+        @\session_start();
+        if (!isset($vars->csrf_token) || $vars->csrf_token != $_SESSION['csrf_token'])
             throw new Exception('CSRF invalido');
         
         $obj = new $redirec($vars->csrf_token);

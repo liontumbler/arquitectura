@@ -5,7 +5,7 @@
             <span class="fs-4">Sidebar</span>
         </a>
         <hr>
-        <ul class="nav nav-pills flex-column mb-auto overflow-auto">
+        <ul class="nav nav-pills flex-column mb-auto overflow-auto" id="sbUl">
             <li class="nav-item">
                 <a href="javascript:" class="nav-link text-white" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false">
                     <i class="bi bi-house-door"></i>&nbsp;

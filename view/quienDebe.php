@@ -9,6 +9,7 @@ class PaginaOnce extends Web implements PaginaX
 {
     function __construct($title, $description, $keywords)
     {
+        csrf_token_update();
         parent::__construct($title, $description, $keywords);
     }
 
@@ -16,9 +17,10 @@ class PaginaOnce extends Web implements PaginaX
     {
     ?>
         <div class="d-flex">
-            <?php require_once 'layout/sidebar.php'; ?>
+            <?php require_once 'layout/sidebarTrabajador.php'; ?>
             <div id="contentConSidebar">
                 <div class="m-4">
+                    <?= input_csrf_token(); ?>
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active" id="quienDebe-tab" data-bs-toggle="tab" data-bs-target="#quienDebe" type="button" role="tab" aria-controls="quienDebe" aria-selected="true">Quien debe</button>
@@ -27,12 +29,16 @@ class PaginaOnce extends Web implements PaginaX
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="quienDebe" role="tabpanel" aria-labelledby="quienDebe-tab">
                             <div class="row g-3 mt-3">
-                                <div class="col-lg-4">
-                                    <label for="buscarDeudor" class="visually-hidden">Buscar Deudor</label>
-                                    <input type="text" class="form-control" id="buscarDeudor" placeholder="nombre y apellido del deudor">
+                                <div class="col-lg-2 col-sm-4">
+                                    <label for="nombre" class="visually-hidden">Nombre</label>
+                                    <input type="text" class="form-control" id="nombre" placeholder="nombre y apellido">
                                 </div>
-                                <div class="col-lg-3">
-                                    <button type="button" class="btn btn-primary mb-3">Buscar</button>
+                                <div class="col-lg-2 col-sm-4">
+                                    <label for="documento" class="visually-hidden">Documento</label>
+                                    <input type="text" class="form-control" id="documento" placeholder="documento">
+                                </div>
+                                <div class="col-lg-2 col-sm-4 d-grid gap-2">
+                                    <button type="button" class="btn btn-primary mb-3" id="buscar">Buscar</button>
                                 </div>
                             </div>
                             <table id="quienDebeTable"></table>
@@ -46,15 +52,51 @@ class PaginaOnce extends Web implements PaginaX
 
     public function nav()
     {
-        # code... nuevo nav con otras opciones
+    ?>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+            <div class="container-fluid">
+                <a href="javascript:" class="navbar-brand" id="btnSidebar">Gimnasios</a>
+            </div>
+        </nav>
+    <?php
     }
 
     public function footer()
     {
     ?>
         <script>
-            let data = [
-                {
+            document.getElementById('buscar').addEventListener('click', async function(e) {
+                this.disabled = true;
+                let nombre = document.getElementById('nombre').value;
+                let documento = document.getElementById('documento').value;
+                let rest = await fetch('controller/ControllerQuienDebe.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        accion: 'OptenerDeudor',
+                        data: {
+                            nombre,
+                            documento
+                        },
+                        csrf_token: document.getElementById('csrf_token').value
+                    })
+                }).then((res) => {
+                    this.disabled = false;
+                    if (res.status == 200) {
+                        return res.json()
+                    }
+                }).catch((res) => {
+                    this.disabled = false;
+                    console.error(res.statusText);
+                    return res;
+                })
+
+                console.log(rest);
+            })
+
+            let data = [{
                     id: 1,
                     name: 'Item 1',
                     price: '$1',
@@ -163,7 +205,7 @@ class PaginaOnce extends Web implements PaginaX
                 classes: 'table table-striped',
 
                 showExport: "true",
-                exportDataType: 'all',
+                exportDataType: '',
                 exportTypes: ['csv', 'excel', 'pdf'], //['json', 'xml', 'csv', 'txt', 'sql', 'excel', 'pdf'],
                 showFullscreen: "true",
 
@@ -192,8 +234,8 @@ class PaginaOnce extends Web implements PaginaX
                 columns: [{
                     field: 'id',
                     title: 'Id',
-                    //width: '100',
-                    //widthUnit: 'px',
+                    width: '100',
+                    widthUnit: 'px',
                     halign: 'center',
                     align: 'center',
                     searchable: false,
@@ -206,51 +248,49 @@ class PaginaOnce extends Web implements PaginaX
                     widthUnit: 'px',
                     sortable: true,
                     falign: 'center',
-                    footerFormatter: function (data) {
+                    footerFormatter: function(data) {
                         return 'Nombre del deudor';
                     },
-                    formatter: function (value, row, index) {
-                        return '<div style="width: inherit; overflow:hidden; white-space:nowrap; text-overflow: ellipsis;">'
-                            +row.name+
-                        '</div>';
+                    formatter: function(value, row, index) {
+                        return '<div style="width: inherit; overflow:hidden; white-space:nowrap; text-overflow: ellipsis;">' +
+                            row.name +
+                            '</div>';
                     },
                 }, {
-                    field: 'monto',//price
+                    field: 'monto', //price
                     title: 'Valor',
-                    //width: '100',
-                    //widthUnit: 'px',
+                    width: '100',
+                    widthUnit: 'px',
                     falign: 'center',
-                    footerFormatter: function (data) {
+                    footerFormatter: function(data) {
                         let field = this.field
-                        return '$' + data.map(function (row) {
-                            
-                            
-                            if (row.pago == 'debe') {
-                                return + row[field];
-                            }else{
+                        return '$' + data.map(function(row) {
+                            if (row.pago != 'debe') {
+                                return +row[field];
+                            } else {
                                 return +0;
                             }
-                        }).reduce(function (sum, i) {
+                        }).reduce(function(sum, i) {
                             return sum + i
                         }, 0)
                     }
                 }, {
                     field: 'price',
                     title: 'Fecha',
-                    //width: '100',
-                    //widthUnit: 'px',
-                    footerFormatter: function (data) {
-                        return `<div class="d-grid gap-2">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="medio" id="digital">
-                                <label class="form-check-label" for="digital">
-                                    Digital
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="medio" id="efectivo" checked>
+                    width: '215',
+                    widthUnit: 'px',
+                    footerFormatter: function(data) {
+                        return `<div class="gap-2">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="medio" id="efectivo" value="efectivo" checked>
                                 <label class="form-check-label" for="efectivo">
                                     Efectivo
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="medio" id="digital" value="digital">
+                                <label class="form-check-label" for="digital">
+                                    Digital
                                 </label>
                             </div>
                         </div>`;
@@ -258,68 +298,40 @@ class PaginaOnce extends Web implements PaginaX
                 }, {
                     title: 'Pagar',
                     field: 'pago',
-                    //width: '100',
-                    //widthUnit: 'px',
+                    width: '100',
+                    widthUnit: 'px',
                     align: 'center',
                     halign: 'center',
 
-                    formatter: function (value, row, index) {
+                    formatter: function(value, row, index) {
                         //console.log(value, row, index, 'ejecuto alcargar?');
                         let checked = '';
-                        //if (value == 'debe') {
+                        if (value == 'debe') {
                             checked = 'checked'
-                            row.pago = 'pazYsalvoEfectivo'
-                            /*let medio = document.querySelector('input[name="medio"]:checked').id;
-                            console.log(medio);
-                            if (medio == 'efectivo') {
-                                row.pago = 'pazYsalvoEfectivo'
-                            }else if (medio == 'digital') {
-                                row.pago ='pazYsalvoDigital'
-                            }*/
-                        //}
-                        
-                        return '<input class="form-check-input checkPago" type="checkbox" '+checked+'>'
+                            row.pago = true
+                        }
+
+                        return '<input class="form-check-input checkPago" type="checkbox" ' + checked + '>'
                     },
                     events: {
-                        'click .checkPago': function (e, value, row, index) {
-                            console.log(value, row, index, 'chech', this);
+                        'click .checkPago': function(e, value, row, index) {
+                            row.pago = !row.pago
 
-                            let medio = document.querySelector('input[name="medio"]:checked').id;
-                            console.log(medio);
-                            if (row.pago.indexOf('debe') >= 0) {//row.pago.indexOf('pazYsalvo') >= 0
-                                if (medio == 'efectivo') {
-                                    row.pago = 'pazYsalvoEfectivo'
-                                }else if (medio == 'digital') {
-                                    row.pago ='pazYsalvoDigital'
-                                }
-                            }else{
-                                row.pago = 'debe'
-                            }
-                            console.log('row.pago', row.pago);
-
-                            let total =  '$' + $table.bootstrapTable('getData').map(function (rw) {
-
-                                if (rw.pago.indexOf('debe') < 0) {//rw.pago.indexOf('pazYsalvo') >= 0
-                                    if (medio == 'efectivo') {
-                                        rw.pago = 'pazYsalvoEfectivo'
-                                    }else if (medio == 'digital') {
-                                        rw.pago ='pazYsalvoDigital'
-                                    }
-
-                                    return + rw['monto'];
-                                }else{
+                            let total = '$' + $table.bootstrapTable('getData').map(function(rw) {
+                                if (rw.pago) {
+                                    return +rw['monto'];
+                                } else {
                                     return +0;
                                 }
-                            }).reduce(function (sum, i) {
+                            }).reduce(function(sum, i) {
                                 return sum + i
                             }, 0)
 
                             //$('.fixed-table-footer .th-inner')[2].textContent = total;
                             $('tfoot .th-inner')[2].textContent = total;
-                            
                         },
                     },
-                    footerFormatter: function (data) {
+                    footerFormatter: function(data) {
                         return `<div class="d-grid gap-2">
                         <button type="button" class="btn btn-success" id="checkPagar">Pagar</button>
                         </div>`;
@@ -329,9 +341,69 @@ class PaginaOnce extends Web implements PaginaX
                 data: data
             });
 
-            $('#checkPagar').on('click', function (e) {
-                console.log('pago');
-            })
+            document.getElementById('checkPagar').addEventListener('click', function(e) {
+                /*pasar php
+                let medio = document.querySelector('input[name="medio"]:checked').id;
+                for (const i in dta) {
+                    console.log(dta[i]);
+
+                    const frw = dta[i];
+                    if (frw.pago) {
+                        if (medio == 'efectivo') {
+                            frw.pago = 'pazYsalvoEfectivo'
+                        }else if (medio == 'digital') {
+                            frw.pago ='pazYsalvoDigital'
+                        }
+                        fdta.push(frw)
+                        frw.pago = true
+                    }else{
+                        frw.pago = 'debe'
+                        fdta.push(frw)
+                        frw.pago = false
+                    }
+                }
+                for (let i = 0; i < dta.length; i++) {
+                    console.log(frw);
+
+                    const frw = dta[i];
+                    if (frw.pago) {
+                        if (medio == 'efectivo') {
+                            frw.pago = 'pazYsalvoEfectivo'
+                        }else if (medio == 'digital') {
+                            frw.pago ='pazYsalvoDigital'
+                        }
+                        
+                    }else{
+                        frw.pago = 'debe'
+                    }
+                }*/
+
+                //fdta = fdta.filter(rw => rw.pago != 'debe');
+
+                let dta = $table.bootstrapTable('getData').filter(rw => rw.pago != false);
+                let medio = document.querySelector('input[name="medio"]:checked').value
+                let total = document.querySelectorAll('tfoot .th-inner')[2].textContent.replace('$', '');
+
+                console.log(dta, medio, total);
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                        )
+                    }
+                })
+            });
 
             //$table.bootstrapTable('showLoading');
             //$table.bootstrapTable('hideLoading');
