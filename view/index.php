@@ -24,9 +24,6 @@ class PaginaOnce extends Web implements PaginaX
                     <p html lang="fr">ce paragraphe est en français</p>
                     <p html lang="ru">этот абзац на французском</p>
                     <p html lang="es">este párrafo está en español</p>
-                    <?= $rutasLegitima; ?>
-                    <br>
-                    <?= csrf_token_update(); ?>
                     <br>
                     <?= csrf_token(); ?>
                     <br>

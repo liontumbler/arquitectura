@@ -1,7 +1,12 @@
 <?php
+@\session_start();
 if (!$rutasLegitima) {
     header('Location: ../index');
+} elseif (!isset($_SESSION['SesionTrabajador']) || !$_SESSION['SesionTrabajador']){
+    header('Location: ./index');
 }
+//session_destroy();
+//echo $_SESSION['SesionTrabajador'];//
 
 require_once 'view.php';
 
@@ -178,7 +183,7 @@ class PaginaOnce extends Web implements PaginaX
             document.getElementById('agregarLiga').addEventListener('click', async function(e) {
                 let minDemas = 10;
                 //si es mas de las 11 no vender ligas
-                let checkCliente = document.getElementById('checkCliente'); //.checked;
+                let checkCliente = document.getElementById('checkCliente');
                 let cliente = document.getElementById('cliente');
                 let nombreYapellido = document.getElementById('nombreYapellido');
                 let documento = document.getElementById('documento');
@@ -200,7 +205,7 @@ class PaginaOnce extends Web implements PaginaX
 
                 data['hora'] = hora.value;
 
-                if (fechaDefault.checked) {//parametrizar minutos
+                if (fechaDefault.checked) {
                     data['fechaInicio'] = obtenerFechaHoraServer((new Date().getTime() + minDemas * 60000));
                 } else {
                     data['fechaInicio'] = obtenerFechaHoraServer(fechaInicio.value, minDemas);

@@ -1,10 +1,12 @@
 <?php
+@\session_start();
 if (!$rutasLegitima) {
     header('Location: ../index');
+} elseif (!isset($_SESSION['SesionTrabajador']) || !$_SESSION['SesionTrabajador']){
+    header('Location: ./index');
 }
-
-@\session_start();
-echo $_SESSION['inicioSesion'];
+//session_destroy();
+//echo $_SESSION['SesionTrabajador'];//
 
 require_once 'view.php';
 
@@ -112,7 +114,7 @@ class PaginaOnce extends Web implements PaginaX
     }
 }
 
-$index = new PaginaOnce('index titulo', 'descripcion pagina', 'palabras clave');
+$index = new PaginaOnce('DashBoard Trabajadores', '', '');
 echo $index->crearHtml();
 
 ?>

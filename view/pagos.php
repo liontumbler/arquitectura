@@ -1,7 +1,12 @@
 <?php
+@\session_start();
 if (!$rutasLegitima) {
     header('Location: ../index');
+} elseif (!isset($_SESSION['SesionTrabajador']) || !$_SESSION['SesionTrabajador']){
+    header('Location: ./index');
 }
+//session_destroy();
+//echo $_SESSION['SesionTrabajador'];//
 
 require_once 'view.php';
 
@@ -257,7 +262,7 @@ class PaginaOnce extends Web implements PaginaX
                     align: 'center',
                     valign: 'middle',
                     formatter: function (value, row, index) {
-                        console.log(value, row, index, 'ejecuto alcargar?');
+                        //console.log(value, row, index, 'ejecuto alcargar?');
                         let checked = value ? 'checked' : '';
                         return '<input class="form-check-input" type="checkbox" '+checked+'>'
                     }
@@ -279,7 +284,7 @@ class PaginaOnce extends Web implements PaginaX
     }
 }
 
-$index = new PaginaOnce('index titulo', 'descripcion pagina', 'palabras clave');
+$index = new PaginaOnce('Pagos', '', '');
 echo $index->crearHtml();
 
 ?>

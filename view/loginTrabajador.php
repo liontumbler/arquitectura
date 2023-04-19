@@ -53,27 +53,35 @@ class PaginaOnce extends Web implements PaginaX
         ?>
         <script>
             document.getElementById('trabajar').addEventListener('click', async function(e) {
+                this.disabled = true;
                 if(true){
                     let nickname = document.getElementById('nickname').value;
                     let clave = document.getElementById('clave').value;
                     let caja = document.getElementById('caja').value;
                     let csrf_token = document.getElementById('csrf_token').value;
 
-                    let res = await fetch('controller/ControllerTest.php', {
+                    let rdta = await fetch('controller/ControllerLogin.php', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
-                            accion: 'Datos2',
+                            accion: 'Login',
                             data:{ nickname, clave, caja},
                             csrf_token
                         })
                     }).then((res) => {
-                        return res.json()
-                    }) 
+                        this.disabled = false;
+                        if (res.status == 200) {
+                            return res.json()
+                        }
+                    }).catch((res) => {
+                        this.disabled = false;
+                        console.error(res.statusText);
+                        return res;
+                    })
 
-                    console.log(res, 'csrf_token');
+                    console.log(rdta, 'login');
                     
                 }
             });
@@ -82,21 +90,13 @@ class PaginaOnce extends Web implements PaginaX
                 this.value = this.value.replace(/[^0-9]/g, '');
             });
 
-            function llenarSelec(data, id) {
-                let select = document.getElementById(id);
-                select.innerHTML = '';
-                select.append(new Option('Seleccione una opcion', ''));
-                for (let i = 0; i < data.length; i++) {
-                    let op = new Option(data[i].name, data[i].id)
-                    select.append(op);
-                }
-            }
+            
         </script>
         <?php
     }
 }
 
-$index = new PaginaOnce('index titulo', 'descripcion pagina', 'palabras clave');
+$index = new PaginaOnce('Login Trabajadores', '', '');
 echo $index->crearHtml();
 
 ?>

@@ -1,7 +1,12 @@
 <?php
+@\session_start();
 if (!$rutasLegitima) {
     header('Location: ../index');
+} elseif (!isset($_SESSION['SesionTrabajador']) || !$_SESSION['SesionTrabajador']){
+    header('Location: ./index');
 }
+//session_destroy();
+//echo $_SESSION['SesionTrabajador'];//
 
 require_once 'view.php';
 
@@ -169,7 +174,7 @@ class PaginaOnce extends Web implements PaginaX
 
             document.getElementById('vender').addEventListener('click', async function (e) {
 
-                let checkCliente = document.getElementById('checkCliente');//.checked;
+                let checkCliente = document.getElementById('checkCliente');
                 let cliente = document.getElementById('cliente');
                 let nombreYapellido = document.getElementById('nombreYapellido');
                 let documento = document.getElementById('documento');
@@ -233,7 +238,7 @@ class PaginaOnce extends Web implements PaginaX
     }
 }
 
-$index = new PaginaOnce('Ligas', '', '');
+$index = new PaginaOnce('Tienda', '', '');
 echo $index->crearHtml();
 
 ?>

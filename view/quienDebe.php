@@ -1,7 +1,12 @@
 <?php
+@\session_start();
 if (!$rutasLegitima) {
     header('Location: ../index');
+} elseif (!isset($_SESSION['SesionTrabajador']) || !$_SESSION['SesionTrabajador']){
+    header('Location: ./index');
 }
+//session_destroy();
+//echo $_SESSION['SesionTrabajador'];//
 
 require_once 'view.php';
 
@@ -9,7 +14,6 @@ class PaginaOnce extends Web implements PaginaX
 {
     function __construct($title, $description, $keywords)
     {
-        csrf_token_update();
         parent::__construct($title, $description, $keywords);
     }
 
@@ -67,33 +71,36 @@ class PaginaOnce extends Web implements PaginaX
         <script>
             document.getElementById('buscar').addEventListener('click', async function(e) {
                 this.disabled = true;
-                let nombre = document.getElementById('nombre').value;
-                let documento = document.getElementById('documento').value;
-                let rest = await fetch('controller/ControllerQuienDebe.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        accion: 'OptenerDeudor',
-                        data: {
-                            nombre,
-                            documento
+                if(true){
+                    let nombre = document.getElementById('nombre').value;
+                    let documento = document.getElementById('documento').value;
+                    let rest = await fetch('controller/ControllerQuienDebe.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
                         },
-                        csrf_token: document.getElementById('csrf_token').value
+                        body: JSON.stringify({
+                            accion: 'OptenerDeudor',
+                            data: {
+                                nombre,
+                                documento
+                            },
+                            csrf_token: document.getElementById('csrf_token').value
+                        })
+                    }).then((res) => {
+                        this.disabled = false;
+                        if (res.status == 200) {
+                            return res.json()
+                        }
+                    }).catch((res) => {
+                        this.disabled = false;
+                        console.error(res.statusText);
+                        return res;
                     })
-                }).then((res) => {
-                    this.disabled = false;
-                    if (res.status == 200) {
-                        return res.json()
-                    }
-                }).catch((res) => {
-                    this.disabled = false;
-                    console.error(res.statusText);
-                    return res;
-                })
 
-                console.log(rest);
+                    console.log(rest);
+                }
+                
             })
 
             let data = [{
@@ -418,7 +425,7 @@ class PaginaOnce extends Web implements PaginaX
     }
 }
 
-$index = new PaginaOnce('index titulo', 'descripcion pagina', 'palabras clave');
+$index = new PaginaOnce('Quien Debe', '', '');
 echo $index->crearHtml();
 
 ?>

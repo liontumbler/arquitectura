@@ -13,6 +13,7 @@ class Web
 
     function __construct($title, $description, $keywords)
     {
+        csrf_token_update();
         $this->title = $title;
         $this->description = $description;
         $this->keywords = $keywords;
