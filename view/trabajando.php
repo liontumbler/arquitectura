@@ -19,19 +19,28 @@ class PaginaOnce extends Web implements PaginaX
 
     public function content()
     {
+        //primero validar si ya abia iniciado caja para no iniciarla
+        //cuando cargue la vista hacer consujlta de lo que se a ingresado hoy el trabajador
         ?>
         <div class="d-flex">
             <?php require_once 'layout/sidebarTrabajador.php'; ?>
             <div id="contentConSidebar">
                 <div class="m-4">
-                    <div>
-                        <ol>
-                            <li>ligas:</li>
-                            <li>tienda:</li>
-                            <li>caja:</li>
-                            <li>pagos:</li>
-                            <li>descuentos:-</li>
-                            <li>total:</li>
+                    <div style="width: 400px; margin: auto;">
+                        <ul>
+                            <li>ligas: <span><?= $_SESSION['ligas']; ?></span></li>
+                            <li>tienda: <span><?= $_SESSION['tienda']; ?></span></li>
+                            <li>pagos: <span><?= $_SESSION['pagos']; ?></span></li>
+                            <hr>
+                            <li>total Recaudado sin caja: <span>0</span></li>
+                            <hr>
+                            <li>caja: <span><?= $_SESSION['caja']; ?></span></li>
+                            <li>-descuentos: <span><?= $_SESSION['descuento']; ?></span></li>
+                            <hr>
+                            <li>total Recaudado con caja: <span>0</span></li>
+                            <hr>
+                            <li>total efectivo: <span><?= $_SESSION['totalefectivo']; ?></span></li>
+                            <li>total digital: <span><?= $_SESSION['digital']; ?></span></li>
                         </ul>
                     </div>
                     <div class="container" style="width: 450px;">
@@ -39,32 +48,44 @@ class PaginaOnce extends Web implements PaginaX
                         <div class="row">
                             <div class="col-lg-12 mb-1">
                                 <div class="d-grid gap-2">
-                                    <button id="ligas" class="btn btn-primary" type="button">Ligas</button>
+                                    <button id="ligas" class="btn btn-light" type="button">
+                                        <i class="bi bi-alarm"></i>&nbsp;Ligas
+                                    </button>
                                 </div>
                             </div>
                             <div class="col-lg-12 mb-1">
                                 <div class="d-grid gap-2">
-                                    <button id="tienda" class="btn btn-primary" type="button">Tienda</button>
+                                    <button id="tienda" class="btn btn-light" type="button">
+                                        <i class="bi bi-shop"></i>&nbsp;Tienda
+                                    </button>
                                 </div>
                             </div>
                             <div class="col-lg-12 mb-1">
                                 <div class="d-grid gap-2">
-                                    <button id="descuento" class="btn btn-secondary" type="button">Descuento</button>
-                                </div>
-                            </div>
-                            <div class="col-lg-12 mb-3">
-                                <div class="d-grid gap-2">
-                                    <button id="pagos" class="btn btn-secondary" type="button">pagos</button>
+                                    <button id="descuento" class="btn btn-light" type="button">
+                                        <i class="bi bi-dash"></i>&nbsp;Descuento
+                                    </button>
                                 </div>
                             </div>
                             <div class="col-lg-12 mb-1">
                                 <div class="d-grid gap-2">
-                                    <button id="quienDebe" class="btn btn-info" type="button">Quien Debe</button>
+                                    <button id="pagos" class="btn btn-light" type="button">
+                                        <i class="bi bi-wallet"></i>&nbsp;pagos
+                                    </button>
                                 </div>
                             </div>
                             <div class="col-lg-12 mb-1">
                                 <div class="d-grid gap-2">
-                                    <button id="terminar" class="btn btn-danger" type="button">Terminar</button>
+                                    <button id="quienDebe" class="btn btn-light" type="button">
+                                        <i class="bi bi-patch-question"></i>&nbsp;Quien Debe
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 mb-1">
+                                <div class="d-grid gap-2">
+                                    <button id="terminar" class="btn btn-danger" type="button">
+                                        <i class="bi bi-power"></i>&nbsp;Terminar
+                                    </button>
                                 </div>
                             </div>
                         </div>

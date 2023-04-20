@@ -70,8 +70,9 @@ class PaginaOnce extends Web implements PaginaX
     ?>
         <script>
             document.getElementById('buscar').addEventListener('click', async function(e) {
-                this.disabled = true;
+                
                 if(true){
+                    this.disabled = true;
                     let nombre = document.getElementById('nombre').value;
                     let documento = document.getElementById('documento').value;
                     let rest = await fetch('controller/ControllerQuienDebe.php', {

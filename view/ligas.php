@@ -35,8 +35,8 @@ class PaginaOnce extends Web implements PaginaX
                                 </label>
                             </div>
                             <div class="col-lg-12 mb-1" id="divClientePre">
-                                <label for="cliente" class="form-label">Clientes*</label>
-                                <select id="cliente" class="form-select">
+                                <label for="cliente" class="form-label">Clientes *</label>
+                                <select id="cliente" class="form-select" required>
                                     <option selected value="">Seleccione una opción</option>
                                     <option value="123123">pepe</option>
                                     <option value="701232400">pepa</option>
@@ -46,11 +46,11 @@ class PaginaOnce extends Web implements PaginaX
                             </div>
                             <div class="col-lg-6 mb-1" id="divClienteNA">
                                 <label for="nombreYapellido" class="form-label">Nombre Y Apellido *</label>
-                                <input type="text" class="form-control" id="nombreYapellido" placeholder="Nombre Y Apellido del Cliente" title="Nombre Y Apellido del Cliente">
+                                <input type="text" class="form-control" id="nombreYapellido" placeholder="Nombre Y Apellido del Cliente" title="Nombre Y Apellido del Cliente" required minlength="1" maxlength="50">
                             </div>
                             <div class="col-lg-6 mb-1" id="divClienteD">
                                 <label for="documento" class="form-label">Documento *</label>
-                                <input type="text" class="form-control" id="documento" placeholder="Documento del Cliente" title="Documento del Cliente">
+                                <input type="number" class="form-control" id="documento" placeholder="Documento del Cliente" title="Documento del Cliente" required min="1" max="999999999999">
                             </div>
                             <div class="col-lg-12 mb-1" id="divClienteEQ">
                                 <label for="equipo" class="form-label">Equipo</label>
@@ -64,7 +64,7 @@ class PaginaOnce extends Web implements PaginaX
                             </div>
                             <div class="col-lg-12 mb-1">
                                 <label for="hora" class="form-label">Hora *</label>
-                                <select id="hora" class="form-select">
+                                <select id="hora" class="form-select" required>
                                     <option selected value="">Seleccione una opción</option>
                                     <option value="5000">30 minutos</option>
                                     <option value="7000">1 hora</option>
@@ -80,7 +80,7 @@ class PaginaOnce extends Web implements PaginaX
                             </div>
                             <div class="col-lg-12 mb-1" id="divFechaDefault">
                                 <label for="fechaInicio" class="form-label">Fecha Y hora de inicio *</label>
-                                <input type="datetime-local" class="form-control" id="fechaInicio" placeholder="fecha y hora de inicio">
+                                <input type="datetime-local" class="form-control" id="fechaInicio" placeholder="fecha y hora de inicio" required>
                             </div>
                             <div class="col-lg-12 mb-1">
                                 <input class="form-check-input" type="checkbox" value="" id="pago" checked>
@@ -108,7 +108,9 @@ class PaginaOnce extends Web implements PaginaX
                             </div>
                             <div class="col-lg-12 mb-1">
                                 <div class="d-grid gap-2">
-                                    <button id="agregarLiga" class="btn btn-primary" type="button">Agregar Liga</button>
+                                    <button id="agregarLiga" class="btn btn-primary" type="button">
+                                        <i class="bi bi-alarm"></i>&nbsp;Agregar Liga
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -134,10 +136,36 @@ class PaginaOnce extends Web implements PaginaX
     {
     ?>
         <script>
-            if (document.getElementById('checkCliente').checked) {
-                document.getElementById('divClienteNA').style.display = 'none';
-                document.getElementById('divClienteD').style.display = 'none';
-                document.getElementById('divClienteEQ').style.display = 'none';
+            let validarForm1;
+            let validarForm2;
+            let validarForm3;
+            let validarForm4;
+            let validarForm5;
+            let validarForm6;
+            let validarForm7;
+            let validarForm8;
+
+            document.querySelector('body').onload = (e) => {
+                console.log('termino de cargar vista');
+
+                validarForm1 = new Validardor(['cliente', 'hora']);
+                validarForm2 = new Validardor(['cliente', 'hora', 'medio']);
+                validarForm3 = new Validardor(['cliente', 'hora', 'fechaInicio']);
+                validarForm4 = new Validardor(['cliente', 'hora', 'medio', 'fechaInicio']);
+                validarForm5 = new Validardor(['nombreYapellido', 'documento', 'equipo', 'hora']);
+                validarForm6 = new Validardor(['nombreYapellido', 'documento', 'equipo', 'hora', 'medio']);
+                validarForm7 = new Validardor(['nombreYapellido', 'documento', 'equipo', 'hora', 'fechaInicio']);
+                validarForm8 = new Validardor(['nombreYapellido', 'documento', 'equipo', 'hora', 'medio', 'fechaInicio']);
+
+                if(document.getElementById('checkCliente').checked){
+                    document.getElementById('divClienteNA').style.display = 'none';
+                    document.getElementById('divClienteD').style.display = 'none';
+                    document.getElementById('divClienteEQ').style.display = 'none';
+                }
+
+                if (document.getElementById('fechaDefault').checked) {
+                    document.getElementById('divFechaDefault').style.display = 'none';
+                }
             }
 
             document.getElementById('checkCliente').addEventListener('change', function(e) {
@@ -154,10 +182,6 @@ class PaginaOnce extends Web implements PaginaX
                 }
             });
 
-            if (document.getElementById('fechaDefault').checked) {
-                document.getElementById('divFechaDefault').style.display = 'none';
-            }
-
             document.getElementById('fechaDefault').addEventListener('change', function(e) {
                 if (this.checked)
                     document.getElementById('divFechaDefault').style.display = 'none';
@@ -173,7 +197,6 @@ class PaginaOnce extends Web implements PaginaX
             });
 
             document.getElementById('hora').addEventListener('change', function(e) {
-                console.log('hoe');
                 if (this.value)
                     document.getElementById('total').textContent = this.value;
                 else
@@ -183,69 +206,67 @@ class PaginaOnce extends Web implements PaginaX
             document.getElementById('agregarLiga').addEventListener('click', async function(e) {
                 let minDemas = 10;
                 //si es mas de las 11 no vender ligas
+
                 let checkCliente = document.getElementById('checkCliente');
-                let cliente = document.getElementById('cliente');
-                let nombreYapellido = document.getElementById('nombreYapellido');
-                let documento = document.getElementById('documento');
-                let equipo = document.getElementById('equipo');
-                let hora = document.getElementById('hora');
-                let fechaDefault = document.getElementById('fechaDefault');
                 let pago = document.getElementById('pago');
-                let medio = document.querySelector('input[name="medio"]:checked');
-
-                let data = {};
-
-                if (checkCliente.checked) {
-                    data['cliente'] = cliente.value;
-                } else {
-                    data['nombreYapellido'] = nombreYapellido.value;
-                    data['documento'] = documento.value;
-                    data['equipo'] = equipo.value;
+                let fechaDefault = document.getElementById('fechaDefault');
+                //console.log(valid, valid.validationMessage);
+                let form = '';
+                if(checkCliente.checked && pago.checked && fechaDefault.checked){
+                    form = validarForm2
+                } else if(checkCliente.checked && !pago.checked && fechaDefault.checked){
+                    form = validarForm1
+                } else if(!checkCliente.checked && !pago.checked && fechaDefault.checked){
+                    form = validarForm5
+                } else if(!checkCliente.checked && pago.checked && fechaDefault.checked){
+                    form = validarForm6
+                } else if(checkCliente.checked && !pago.checked && !fechaDefault.checked){
+                    form = validarForm3
+                } else if(!checkCliente.checked && !pago.checked && !fechaDefault.checked){
+                    form = validarForm7
+                } else if(!checkCliente.checked && pago.checked && !fechaDefault.checked){
+                    form = validarForm8
+                } else if(checkCliente.checked && pago.checked && !fechaDefault.checked){
+                    form = validarForm4
                 }
 
-                data['hora'] = hora.value;
-
-                if (fechaDefault.checked) {
-                    data['fechaInicio'] = obtenerFechaHoraServer((new Date().getTime() + minDemas * 60000));
-                } else {
-                    data['fechaInicio'] = obtenerFechaHoraServer(fechaInicio.value, minDemas);
-                }
-
-                if (pago.checked) {
-                    data['pago'] = medio.value;
-                } else {
-                    data['nombreYapellido'] = nombreYapellido.value;
-                    data['documento'] = documento.value;
-                    data['equipo'] = equipo.value;
-                }
-
-                console.log(data);
-
-                /*let rest = await fetch('controller/ControllerTienda.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        accion: 'Vender',
-                        data: {
-                            nombre,
-                            documento
-                        },
-                        csrf_token: document.getElementById('csrf_token').value
-                    })
-                }).then((res) => {
-                    this.disabled = false;
-                    if (res.status == 200) {
-                        return res.json()
+                let valid = form.validarCampos();
+                console.log(valid);
+                
+                if(valid && !valid.validationMessage){
+                    this.disabled = true;
+                    let edta = form.crearObjetoJson()
+                    if (fechaDefault.checked) {
+                        edta['fechaInicio'] = form.obtenerFechaHoraServer((new Date().getTime() + minDemas * 60000));
+                    } else {
+                        edta['fechaInicio'] = form.obtenerFechaHoraServer(fechaInicio.value, minDemas);
                     }
-                }).catch((res) => {
-                    this.disabled = false;
-                    console.error(res.statusText);
-                    return res;
-                })
 
-                console.log(rest);*/
+                    //console.log(edta);
+
+                    let rtda = await fetch('controller/ControllerLigas.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            accion: 'Vender',
+                            data: edta,
+                            csrf_token: document.getElementById('csrf_token').value
+                        })
+                    }).then((res) => {
+                        this.disabled = false;
+                        if (res.status == 200) {
+                            return res.json()
+                        }
+                    }).catch((res) => {
+                        this.disabled = false;
+                        console.error(res.statusText);
+                        return res;
+                    })
+
+                    console.log(rtda);
+                }
             });
 
             /*function llenarSelec(data, id) {
@@ -257,30 +278,6 @@ class PaginaOnce extends Web implements PaginaX
                     select.append(op);
                 }
             }*/
-
-            //pasar a nuevo objeto de validacion
-            function obtenerFechaHoraServer(value, minDeMas = 0) {
-
-                const fecha = new Date(value);
-                const anio = fecha.getFullYear();
-                const mes = fecha.getMonth() + 1 < 10 ? `0${fecha.getMonth() + 1}` : fecha.getMonth() + 1;
-                const dia = fecha.getDate() < 10 ? `0${fecha.getDate()}` : fecha.getDate();
-
-                let horas = fecha.getHours() < 10 ? `0${fecha.getHours()}` : fecha.getHours();
-                let minTotal = fecha.getMinutes() + minDeMas;
-                if (minTotal > 59) {
-                    minTotal = minTotal - 59;
-                    horas++;
-                    if (horas > 23) {
-                        horas = horas - 23;
-                    }
-                }
-
-                const minutos = minTotal < 10 ? `0${minTotal}` : minTotal;
-                const segundos = fecha.getSeconds() < 10 ? `0${fecha.getSeconds()}` : fecha.getSeconds();
-
-                return `${anio}-${mes}-${dia} ${horas}:${minutos}:${segundos}`;
-            }
         </script>
 <?php
     }

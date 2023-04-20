@@ -19,11 +19,15 @@ class ControllerLogin extends Controller
                 $_SESSION['Usuario'] = '1';
                 $_SESSION['Nombre'] = 'cuadros';
                 $_SESSION['gimnasio'] = 'cuadros';
-                $_SESSION['ligas'] = '0';
-                $_SESSION['tienda'] = '0';
-                $_SESSION['pagos'] = '0';
-                $_SESSION['descuento'] = '0';
+                $_SESSION['ligas'] = 0;
+                $_SESSION['tienda'] = 0;
+                $_SESSION['pagos'] = 0;
+                $_SESSION['descuento'] = 0;
                 $_SESSION['caja'] = $dta->caja;
+                $_SESSION['totalefectivo'] = 0;
+                $_SESSION['digital'] = 0;
+                $_SESSION['total'] = 0;
+
                 return true;
             }
         }
