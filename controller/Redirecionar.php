@@ -19,8 +19,13 @@ function redirec($redirec)
             $accion = strtolower($_SERVER["REQUEST_METHOD"]).$vars->accion;
 
         $data = null;
-        if (isset($vars->data) && $vars->data != '')
+        if (isset($vars->data) && $vars->data != ''){
+            //print_r($vars->data);
+            foreach ($vars->data as $i => $value) {
+                $vars->data->$i = preg_replace('/^<SCRIPT>|<\/SCRIPT>|<script>|<\/script>|<\/|<|>|=/', '', $value);
+            }
             $data = $vars->data;
+        }
 
         @\session_start();
         if (!isset($vars->csrf_token) || $vars->csrf_token != $_SESSION['csrf_token'])
