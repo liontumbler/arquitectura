@@ -139,7 +139,7 @@ class PaginaOnce extends Web implements PaginaX
     }
 }
 
-$index = new PaginaOnce('index titulo', 'descripcion pagina', 'palabras clave');
+$index = new PaginaOnce('Inicio', 'La mejor plataforma para administrar tu liga, y lo mejor de todo es gratis', 'administracion de ligas, administrador de ligas, administrador de gimnasios de gimnasia');
 echo $index->crearHtml();
 
 ?>

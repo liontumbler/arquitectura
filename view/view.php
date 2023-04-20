@@ -38,6 +38,42 @@ class Web
         <?php
     }
 
+    public function libBootstrapTable()
+    {
+        ?>
+        <link rel="stylesheet" href="resources/libs/bootstrap-table.min.css">
+        <script src="resources/libs/jquery-3.6.4.min.js"></script>
+        <script src="resources/libs/tableExport.min.js"></script>
+        <script src="resources/libs/jspdf.min.js"></script>
+        <script src="resources/libs/jspdf.plugin.autotable.js"></script>
+        <script src="resources/libs/bootstrap-table.min.js"></script>
+        <script src="resources/libs/bootstrap-table-export.min.js"></script>
+        <?php
+    }
+
+    public function libBootstrap5()
+    {
+        ?>
+        <link href="resources/libs/bootstrap.min.css" rel="stylesheet" >
+        <link href="resources/libs/bootstrap-icons.css" rel="stylesheet">
+        <script src="resources/libs/bootstrap.bundle.min.js"></script>
+        <?php
+    }
+
+    public function libSweetAlert()
+    {
+        ?>
+        <script src="resources/libs/sweetalert2.js"></script>
+        <?php
+    }
+
+    public function libsJSHeader()
+    {
+        $this->libBootstrap5();
+        $this->libBootstrapTable();
+        $this->libSweetAlert();
+    }
+
     public function crearHtml()
     {
         ?>
@@ -71,22 +107,7 @@ class Web
 
                 <title><?= $this->title; ?></title>
 
-                <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
-
-                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
-                <link rel="stylesheet" href="resources/libs/bootstrap-table.min.css">
-                
-                <script src="resources/libs/jquery-3.6.4.min.js"></script>
-                <script src="resources/libs/tableExport.min.js"></script>
-                <script src="resources/libs/jspdf.min.js"></script>
-                <script src="resources/libs/jspdf.plugin.autotable.js"></script>
-                <script src="resources/libs/bootstrap-table.min.js"></script>
-                <script src="resources/libs/bootstrap-table-export.min.js"></script>
-
-                <script src="resources/libs/sweetalert2.js"></script>
-
+                <?= $this->libsJSHeader(); ?>
                 <?= $this->libsCSS(); ?>
             </head>
 

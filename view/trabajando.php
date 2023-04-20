@@ -28,19 +28,19 @@ class PaginaOnce extends Web implements PaginaX
                 <div class="m-4">
                     <div style="width: 400px; margin: auto;">
                         <ul>
-                            <li>ligas: <span><?= $_SESSION['ligas']; ?></span></li>
-                            <li>tienda: <span><?= $_SESSION['tienda']; ?></span></li>
-                            <li>pagos: <span><?= $_SESSION['pagos']; ?></span></li>
+                            <li>Ligas: <span><?= $_SESSION['ligas']; ?></span></li>
+                            <li>Tienda: <span><?= $_SESSION['tienda']; ?></span></li>
+                            <li>Pagos: <span><?= $_SESSION['pagos']; ?></span></li>
                             <hr>
-                            <li>total Recaudado sin caja: <span>0</span></li>
+                            <li>Total Recaudado sin caja: <span>0</span></li>
                             <hr>
-                            <li>caja: <span><?= $_SESSION['caja']; ?></span></li>
-                            <li>-descuentos: <span><?= $_SESSION['descuento']; ?></span></li>
+                            <li>Caja: <span><?= $_SESSION['caja']; ?></span></li>
+                            <li>-Descuentos: <span><?= $_SESSION['descuento']; ?></span></li>
                             <hr>
-                            <li>total Recaudado con caja: <span>0</span></li>
+                            <li>Total Recaudado con caja: <span>0</span></li>
                             <hr>
-                            <li>total efectivo: <span><?= $_SESSION['totalefectivo']; ?></span></li>
-                            <li>total digital: <span><?= $_SESSION['digital']; ?></span></li>
+                            <li>Total efectivo: <span><?= $_SESSION['totalefectivo']; ?></span></li>
+                            <li>Total digital: <span><?= $_SESSION['digital']; ?></span></li>
                         </ul>
                     </div>
                     <div class="container" style="width: 450px;">
@@ -70,7 +70,7 @@ class PaginaOnce extends Web implements PaginaX
                             <div class="col-lg-12 mb-1">
                                 <div class="d-grid gap-2">
                                     <button id="pagos" class="btn btn-light" type="button">
-                                        <i class="bi bi-wallet"></i>&nbsp;pagos
+                                        <i class="bi bi-wallet"></i>&nbsp;Pagos
                                     </button>
                                 </div>
                             </div>
@@ -129,6 +129,7 @@ class PaginaOnce extends Web implements PaginaX
             document.getElementById('terminar').addEventListener('click', function (e) {
                 location.href = 'index';
                 //terminar sesion hacer cuentas hacer insercion de la terminacion
+                //abre una modal donde hace las cuantas paracerrar caja
             })
         </script>
         <?php
