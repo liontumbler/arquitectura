@@ -90,13 +90,13 @@ class PaginaOnce extends Web implements PaginaX
                             </div>
                             <div class="col-lg-12 mb-1" style="margin-left: 13px;" id="divpago">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="medio" id="efectivo" value="efectivo" checked>
+                                    <input class="form-check-input" type="radio" name="tipoPago" id="efectivo" value="efectivo" checked>
                                     <label class="form-check-label" for="efectivo">
                                         Efectivo
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="medio" id="digital" value="digital">
+                                    <input class="form-check-input" type="radio" name="tipoPago" id="digital" value="digital">
                                     <label class="form-check-label" for="digital">
                                         Digital
                                     </label>
@@ -149,13 +149,13 @@ class PaginaOnce extends Web implements PaginaX
                 console.log('termino de cargar vista');
 
                 validarForm1 = new Validardor(['cliente', 'hora']);
-                validarForm2 = new Validardor(['cliente', 'hora', 'medio']);
+                validarForm2 = new Validardor(['cliente', 'hora', 'tipoPago']);
                 validarForm3 = new Validardor(['cliente', 'hora', 'fechaInicio']);
-                validarForm4 = new Validardor(['cliente', 'hora', 'medio', 'fechaInicio']);
+                validarForm4 = new Validardor(['cliente', 'hora', 'tipoPago', 'fechaInicio']);
                 validarForm5 = new Validardor(['nombreYapellido', 'documento', 'equipo', 'hora']);
-                validarForm6 = new Validardor(['nombreYapellido', 'documento', 'equipo', 'hora', 'medio']);
+                validarForm6 = new Validardor(['nombreYapellido', 'documento', 'equipo', 'hora', 'tipoPago']);
                 validarForm7 = new Validardor(['nombreYapellido', 'documento', 'equipo', 'hora', 'fechaInicio']);
-                validarForm8 = new Validardor(['nombreYapellido', 'documento', 'equipo', 'hora', 'medio', 'fechaInicio']);
+                validarForm8 = new Validardor(['nombreYapellido', 'documento', 'equipo', 'hora', 'tipoPago', 'fechaInicio']);
 
                 if(document.getElementById('checkCliente').checked){
                     document.getElementById('divClienteNA').style.display = 'none';
@@ -205,6 +205,7 @@ class PaginaOnce extends Web implements PaginaX
 
             document.getElementById('agregarLiga').addEventListener('click', async function(e) {
                 let minDemas = 10;
+                let horDemas = 2;
                 //si es mas de las 11 no vender ligas
 
                 let checkCliente = document.getElementById('checkCliente');
@@ -238,8 +239,10 @@ class PaginaOnce extends Web implements PaginaX
                     let edta = form.crearObjetoJson()
                     if (fechaDefault.checked) {
                         edta['fechaInicio'] = form.obtenerFechaHoraServer((new Date().getTime() + minDemas * 60000));
+                        edta['fechaFin'] = form.obtenerFechaHoraServer((new Date().getTime() + minDemas * 60000), 0, horDemas);
                     } else {
                         edta['fechaInicio'] = form.obtenerFechaHoraServer(fechaInicio.value, minDemas);
+                        edta['fechaFin'] = form.obtenerFechaHoraServer(fechaInicio.value, minDemas, horDemas);
                     }
 
                     //console.log(edta);

@@ -290,13 +290,13 @@ class PaginaOnce extends Web implements PaginaX
                     footerFormatter: function(data) {
                         return `<div class="gap-2">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="medio" id="efectivo" value="efectivo" checked>
+                                <input class="form-check-input" type="radio" name="tipoPago" id="efectivo" value="efectivo" checked>
                                 <label class="form-check-label" for="efectivo">
                                     Efectivo
                                 </label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="medio" id="digital" value="digital">
+                                <input class="form-check-input" type="radio" name="tipoPago" id="digital" value="digital">
                                 <label class="form-check-label" for="digital">
                                     Digital
                                 </label>
@@ -351,15 +351,15 @@ class PaginaOnce extends Web implements PaginaX
 
             document.getElementById('checkPagar').addEventListener('click', function(e) {
                 /*pasar php
-                let medio = document.querySelector('input[name="medio"]:checked').id;
+                let tipoPago = document.querySelector('input[name="tipoPago"]:checked').id;
                 for (const i in dta) {
                     console.log(dta[i]);
 
                     const frw = dta[i];
                     if (frw.pago) {
-                        if (medio == 'efectivo') {
+                        if (tipoPago == 'efectivo') {
                             frw.pago = 'pazYsalvoEfectivo'
-                        }else if (medio == 'digital') {
+                        }else if (tipoPago == 'digital') {
                             frw.pago ='pazYsalvoDigital'
                         }
                         fdta.push(frw)
@@ -375,9 +375,9 @@ class PaginaOnce extends Web implements PaginaX
 
                     const frw = dta[i];
                     if (frw.pago) {
-                        if (medio == 'efectivo') {
+                        if (tipoPago == 'efectivo') {
                             frw.pago = 'pazYsalvoEfectivo'
-                        }else if (medio == 'digital') {
+                        }else if (tipoPago == 'digital') {
                             frw.pago ='pazYsalvoDigital'
                         }
                         
@@ -389,10 +389,10 @@ class PaginaOnce extends Web implements PaginaX
                 //fdta = fdta.filter(rw => rw.pago != 'debe');
 
                 let dta = $table.bootstrapTable('getData').filter(rw => rw.pago != false);
-                let medio = document.querySelector('input[name="medio"]:checked').value
+                let tipoPago = document.querySelector('input[name="tipoPago"]:checked').value
                 let total = document.querySelectorAll('tfoot .th-inner')[2].textContent.replace('$', '');
 
-                console.log(dta, medio, total);
+                console.log(dta, tipoPago, total);
 
                 Swal.fire({
                     title: 'Are you sure?',

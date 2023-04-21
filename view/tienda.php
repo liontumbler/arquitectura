@@ -84,13 +84,13 @@ class PaginaOnce extends Web implements PaginaX
                             </div>
                             <div class="col-lg-12 mb-1" style="margin-left: 13px;" id="divpago">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="medio" id="efectivo" value="efectivo" checked>
+                                    <input class="form-check-input" type="radio" name="tipoPago" id="efectivo" value="efectivo" checked>
                                     <label class="form-check-label" for="efectivo">
                                         Efectivo
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="medio" id="digital" value="digital">
+                                    <input class="form-check-input" type="radio" name="tipoPago" id="digital" value="digital">
                                     <label class="form-check-label" for="digital">
                                         Digital
                                     </label>
@@ -138,8 +138,8 @@ class PaginaOnce extends Web implements PaginaX
             document.querySelector('body').onload = (e) => {
                 console.log('termino de cargar vista');
 
-                validarForm1 = new Validardor(['cliente', 'producto' ,'cantidad', 'medio']);
-                validarForm2 = new Validardor(['nombreYapellido', 'documento', 'equipo', 'producto' ,'cantidad', 'medio']);
+                validarForm1 = new Validardor(['cliente', 'producto' ,'cantidad', 'tipoPago']);
+                validarForm2 = new Validardor(['nombreYapellido', 'documento', 'equipo', 'producto' ,'cantidad', 'tipoPago']);
                 validarForm3 = new Validardor(['cliente', 'producto' ,'cantidad']);
                 validarForm4 = new Validardor(['nombreYapellido', 'documento', 'equipo', 'producto' ,'cantidad']);
 

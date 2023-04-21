@@ -259,24 +259,19 @@ class Validardor {
         return data;
     }
 
-    obtenerFechaHoraServer(value, minDeMas = 0) {
+    obtenerFechaHoraServer(value, minDeMas = 0, horasDeMas = 0) {
 
         const fecha = new Date(value);
         const anio = fecha.getFullYear();
         const mes = fecha.getMonth() + 1 < 10 ? `0${fecha.getMonth() + 1}` : fecha.getMonth() + 1;
         const dia = fecha.getDate() < 10 ? `0${fecha.getDate()}` : fecha.getDate();
 
-        let horas = fecha.getHours() < 10 ? `0${fecha.getHours()}` : fecha.getHours();
-        let minTotal = fecha.getMinutes() + minDeMas;
-        if (minTotal > 59) {
-            minTotal = minTotal - 59;
-            horas++;
-            if (horas > 23) {
-                horas = horas - 23;
-            }
-        }
+        fecha.setHours(fecha.getHours() + horasDeMas);
+        const horas = fecha.getHours() < 10 ? `0${fecha.getHours()}` : fecha.getHours();
 
-        const minutos = minTotal < 10 ? `0${minTotal}` : minTotal;
+        fecha.setMinutes(fecha.getMinutes() + minDeMas);
+        const minutos = fecha.getMinutes() < 10 ? `0${fecha.getMinutes()}` : fecha.getMinutes();
+
         const segundos = fecha.getSeconds() < 10 ? `0${fecha.getSeconds()}` : fecha.getSeconds();
 
         return `${anio}-${mes}-${dia} ${horas}:${minutos}:${segundos}`;
