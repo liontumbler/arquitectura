@@ -147,5 +147,28 @@ class Database {
             return false;
         }
     }
+
+    public function generarArchivoInsertss($consulta, $parametros = array(), $nomArchivo = 'insert:') {//.date('Y-m-d H:i:s')
+        $resultado = $this->cn->prepare($consulta);
+        $resultado->execute($parametros);
+        $tabla = preg_match('/SELECT.*FROM\s+`?(\w+)`?\s*(.*)/i', $consulta, $match) ? $match[1] : 'tabla';
+    
+        $campos = array();
+        foreach ($resultado->fetchAll(PDO::FETCH_ASSOC) as $fila) {
+            $valores = array();
+            foreach ($fila as $campo => $valor) {
+                $campos[] = $campo;
+                $valores[] = "'" . $this->cn->quote($valor) . "'";
+            }
+            $linea = 'INSERT INTO ' . $tabla . ' (' . implode(', ', $campos) . ') VALUES (' . implode(', ', $valores) . ');';
+            $lineas[] = $linea;
+            unset($valores);
+        }
+        
+        $nombreArchivo = '../backups/'.$nomArchivo.'.sql';
+        $archivo = fopen($nombreArchivo, 'w');
+        fwrite($archivo, implode("\n", $lineas));
+        fclose($archivo);
+    }
 }
 ?>

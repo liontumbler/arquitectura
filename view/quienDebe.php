@@ -25,6 +25,11 @@ class PaginaOnce extends Web implements PaginaX
             <div id="contentConSidebar">
                 <div class="m-4">
                     <?= input_csrf_token(); ?>
+                    <?= password_verify(sha1('admin'), '$2y$10$VMHm4Z0auzJIOLEBSETNgeJ81bPRo.VU4hek.x9b9dbZNuS0V6IFu'); ?>
+
+                    <?php  print_r(preg_match('/SELECT.*FROM\s+`?(\w+)`?\s*(.*)/i', 'SELECT * FROM personas WHERE id=:id and nombre=:nombre or dired=:dired', $matches)); ?>
+                    
+                    <?php  print_r($matches) ?>
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active" id="quienDebe-tab" data-bs-toggle="tab" data-bs-target="#quienDebe" type="button" role="tab" aria-controls="quienDebe" aria-selected="true">Quien debe</button>
