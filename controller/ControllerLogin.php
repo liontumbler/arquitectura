@@ -16,9 +16,10 @@ class ControllerLogin extends Controller
         if ($dta->nickname != '' && $dta->nickname == 'cuadros@gim') {
             if ($dta->clave != '' && $dta->clave == '1234') {
                 $_SESSION['SesionTrabajador'] = true;
-                $_SESSION['Usuario'] = '1';
-                $_SESSION['Nombre'] = 'cuadros';
-                $_SESSION['gimnasio'] = 'cuadros';
+                $_SESSION['trabajadorId'] = '1';
+                $_SESSION['nombre'] = 'cuadros';
+                $_SESSION['nickName'] = 'cuadros@gim';
+                $_SESSION['gimnasio'] = 'Dinamic';
                 $_SESSION['ligas'] = 0;
                 $_SESSION['tienda'] = 0;
                 $_SESSION['pagos'] = 0;
@@ -26,7 +27,9 @@ class ControllerLogin extends Controller
                 $_SESSION['caja'] = $dta->caja;
                 $_SESSION['totalefectivo'] = 0;
                 $_SESSION['digital'] = 0;
-                $_SESSION['total'] = 0;
+
+                $_SESSION['trabajadoId'] = 0;
+                
 
                 return true;
             }

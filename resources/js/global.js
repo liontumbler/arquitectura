@@ -320,14 +320,14 @@ class Validardor {
 
             if(inputMask.type == 'text' || inputMask.type == 'number' || inputMask.type == 'password'){
                 //console.log(inputMask.getAttribute('maxlength'), inputMask.getAttribute('minlength'), inputMask.maxlength);
-                if(inputMask.getAttribute('maxlength') && parseInt(inputMask.value.length) > parseInt(inputMask.getAttribute('maxlength'))){
+                if(inputMask.value && inputMask.getAttribute('maxlength') && parseInt(inputMask.value.length) > parseInt(inputMask.getAttribute('maxlength'))){
                     input.setCustomValidity(inputMask.validationMessage);
                     input.focus();
                     if (input.select) 
                         input.select();
 
                     return input;
-                } else if(inputMask.getAttribute('minlength') && parseInt(inputMask.value.length) < parseInt(inputMask.getAttribute('minlength'))){
+                } else if(inputMask.value && inputMask.getAttribute('minlength') && parseInt(inputMask.value.length) < parseInt(inputMask.getAttribute('minlength'))){
                     input.setCustomValidity(inputMask.validationMessage);
                     input.focus();
                     if (input.select) 

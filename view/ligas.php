@@ -136,141 +136,137 @@ class PaginaOnce extends Web implements PaginaX
     {
     ?>
         <script>
-            let validarForm1;
-            let validarForm2;
-            let validarForm3;
-            let validarForm4;
-            let validarForm5;
-            let validarForm6;
-            let validarForm7;
-            let validarForm8;
-
             document.querySelector('body').onload = (e) => {
-                console.log('termino de cargar vista');
+                (function () {
 
-                validarForm1 = new Validardor(['cliente', 'hora']);
-                validarForm2 = new Validardor(['cliente', 'hora', 'tipoPago']);
-                validarForm3 = new Validardor(['cliente', 'hora', 'fechaInicio']);
-                validarForm4 = new Validardor(['cliente', 'hora', 'tipoPago', 'fechaInicio']);
-                validarForm5 = new Validardor(['nombreYapellido', 'documento', 'equipo', 'hora']);
-                validarForm6 = new Validardor(['nombreYapellido', 'documento', 'equipo', 'hora', 'tipoPago']);
-                validarForm7 = new Validardor(['nombreYapellido', 'documento', 'equipo', 'hora', 'fechaInicio']);
-                validarForm8 = new Validardor(['nombreYapellido', 'documento', 'equipo', 'hora', 'tipoPago', 'fechaInicio']);
+                    console.log('termino de cargar vista');
 
-                if(document.getElementById('checkCliente').checked){
-                    document.getElementById('divClienteNA').style.display = 'none';
-                    document.getElementById('divClienteD').style.display = 'none';
-                    document.getElementById('divClienteEQ').style.display = 'none';
-                }
+                    let validarForm1 = new Validardor(['cliente', 'hora']);
+                    let validarForm2 = new Validardor(['cliente', 'hora', 'tipoPago']);
+                    let validarForm3 = new Validardor(['cliente', 'hora', 'fechaInicio']);
+                    let validarForm4 = new Validardor(['cliente', 'hora', 'tipoPago', 'fechaInicio']);
+                    let validarForm5 = new Validardor(['nombreYapellido', 'documento', 'equipo', 'hora']);
+                    let validarForm6 = new Validardor(['nombreYapellido', 'documento', 'equipo', 'hora', 'tipoPago']);
+                    let validarForm7 = new Validardor(['nombreYapellido', 'documento', 'equipo', 'hora', 'fechaInicio']);
+                    let validarForm8 = new Validardor(['nombreYapellido', 'documento', 'equipo', 'hora', 'tipoPago', 'fechaInicio']);
 
-                if (document.getElementById('fechaDefault').checked) {
-                    document.getElementById('divFechaDefault').style.display = 'none';
-                }
-            }
-
-            document.getElementById('checkCliente').addEventListener('change', function(e) {
-                if (this.checked) {
-                    document.getElementById('divClienteNA').style.display = 'none';
-                    document.getElementById('divClienteD').style.display = 'none';
-                    document.getElementById('divClienteEQ').style.display = 'none';
-                    document.getElementById('divClientePre').style.display = 'block';
-                } else {
-                    document.getElementById('divClienteNA').style.display = 'block';
-                    document.getElementById('divClienteD').style.display = 'block';
-                    document.getElementById('divClienteEQ').style.display = 'block';
-                    document.getElementById('divClientePre').style.display = 'none';
-                }
-            });
-
-            document.getElementById('fechaDefault').addEventListener('change', function(e) {
-                if (this.checked)
-                    document.getElementById('divFechaDefault').style.display = 'none';
-                else
-                    document.getElementById('divFechaDefault').style.display = 'block';
-            });
-
-            document.getElementById('pago').addEventListener('change', function(e) {
-                if (!this.checked)
-                    document.getElementById('divpago').style.display = 'none';
-                else
-                    document.getElementById('divpago').style.display = 'block';
-            });
-
-            document.getElementById('hora').addEventListener('change', function(e) {
-                if (this.value)
-                    document.getElementById('total').textContent = this.value;
-                else
-                    document.getElementById('total').textContent = '';
-            });
-
-            document.getElementById('agregarLiga').addEventListener('click', async function(e) {
-                let minDemas = 10;
-                let horDemas = 2;
-                //si es mas de las 11 no vender ligas
-
-                let checkCliente = document.getElementById('checkCliente');
-                let pago = document.getElementById('pago');
-                let fechaDefault = document.getElementById('fechaDefault');
-                //console.log(valid, valid.validationMessage);
-                let form = '';
-                if(checkCliente.checked && pago.checked && fechaDefault.checked){
-                    form = validarForm2
-                } else if(checkCliente.checked && !pago.checked && fechaDefault.checked){
-                    form = validarForm1
-                } else if(!checkCliente.checked && !pago.checked && fechaDefault.checked){
-                    form = validarForm5
-                } else if(!checkCliente.checked && pago.checked && fechaDefault.checked){
-                    form = validarForm6
-                } else if(checkCliente.checked && !pago.checked && !fechaDefault.checked){
-                    form = validarForm3
-                } else if(!checkCliente.checked && !pago.checked && !fechaDefault.checked){
-                    form = validarForm7
-                } else if(!checkCliente.checked && pago.checked && !fechaDefault.checked){
-                    form = validarForm8
-                } else if(checkCliente.checked && pago.checked && !fechaDefault.checked){
-                    form = validarForm4
-                }
-
-                let valid = form.validarCampos();
-                console.log(valid);
-                
-                if(valid && !valid.validationMessage){
-                    this.disabled = true;
-                    let edta = form.crearObjetoJson()
-                    if (fechaDefault.checked) {
-                        edta['fechaInicio'] = form.obtenerFechaHoraServer((new Date().getTime() + minDemas * 60000));
-                        edta['fechaFin'] = form.obtenerFechaHoraServer((new Date().getTime() + minDemas * 60000), 0, horDemas);
-                    } else {
-                        edta['fechaInicio'] = form.obtenerFechaHoraServer(fechaInicio.value, minDemas);
-                        edta['fechaFin'] = form.obtenerFechaHoraServer(fechaInicio.value, minDemas, horDemas);
+                    if(document.getElementById('checkCliente').checked){
+                        document.getElementById('divClienteNA').style.display = 'none';
+                        document.getElementById('divClienteD').style.display = 'none';
+                        document.getElementById('divClienteEQ').style.display = 'none';
                     }
 
-                    //console.log(edta);
+                    if (document.getElementById('fechaDefault').checked) {
+                        document.getElementById('divFechaDefault').style.display = 'none';
+                    }
 
-                    let rtda = await fetch('controller/ControllerLigas.php', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            accion: 'Vender',
-                            data: edta,
-                            csrf_token: document.getElementById('csrf_token').value
-                        })
-                    }).then((res) => {
-                        this.disabled = false;
-                        if (res.status == 200) {
-                            return res.json()
+                    document.getElementById('checkCliente').addEventListener('change', function(e) {
+                        if (this.checked) {
+                            document.getElementById('divClienteNA').style.display = 'none';
+                            document.getElementById('divClienteD').style.display = 'none';
+                            document.getElementById('divClienteEQ').style.display = 'none';
+                            document.getElementById('divClientePre').style.display = 'block';
+                        } else {
+                            document.getElementById('divClienteNA').style.display = 'block';
+                            document.getElementById('divClienteD').style.display = 'block';
+                            document.getElementById('divClienteEQ').style.display = 'block';
+                            document.getElementById('divClientePre').style.display = 'none';
                         }
-                    }).catch((res) => {
-                        this.disabled = false;
-                        console.error(res.statusText);
-                        return res;
-                    })
+                    });
 
-                    console.log(rtda);
-                }
-            });
+                    document.getElementById('fechaDefault').addEventListener('change', function(e) {
+                        if (this.checked)
+                            document.getElementById('divFechaDefault').style.display = 'none';
+                        else
+                            document.getElementById('divFechaDefault').style.display = 'block';
+                    });
+
+                    document.getElementById('pago').addEventListener('change', function(e) {
+                        if (!this.checked)
+                            document.getElementById('divpago').style.display = 'none';
+                        else
+                            document.getElementById('divpago').style.display = 'block';
+                    });
+
+                    document.getElementById('hora').addEventListener('change', function(e) {
+                        if (this.value)
+                            document.getElementById('total').textContent = this.value;
+                        else
+                            document.getElementById('total').textContent = '';
+                    });
+
+                    document.getElementById('agregarLiga').addEventListener('click', async function(e) {
+                        let minDemas = 10;
+                        let horDemas = 2;
+                        //si es mas de las 11 no vender ligas
+
+                        let checkCliente = document.getElementById('checkCliente');
+                        let pago = document.getElementById('pago');
+                        let fechaDefault = document.getElementById('fechaDefault');
+                        //console.log(valid, valid.validationMessage);
+                        let form = '';
+                        if(checkCliente.checked && pago.checked && fechaDefault.checked){
+                            form = validarForm2
+                        } else if(checkCliente.checked && !pago.checked && fechaDefault.checked){
+                            form = validarForm1
+                        } else if(!checkCliente.checked && !pago.checked && fechaDefault.checked){
+                            form = validarForm5
+                        } else if(!checkCliente.checked && pago.checked && fechaDefault.checked){
+                            form = validarForm6
+                        } else if(checkCliente.checked && !pago.checked && !fechaDefault.checked){
+                            form = validarForm3
+                        } else if(!checkCliente.checked && !pago.checked && !fechaDefault.checked){
+                            form = validarForm7
+                        } else if(!checkCliente.checked && pago.checked && !fechaDefault.checked){
+                            form = validarForm8
+                        } else if(checkCliente.checked && pago.checked && !fechaDefault.checked){
+                            form = validarForm4
+                        }
+
+                        let valid = form.validarCampos();
+                        console.log(valid);
+                        
+                        if(valid && !valid.validationMessage){
+                            this.disabled = true;
+                            let edta = form.crearObjetoJson()
+                            if (fechaDefault.checked) {
+                                edta['fechaInicio'] = form.obtenerFechaHoraServer((new Date().getTime() + minDemas * 60000));
+                                edta['fechaFin'] = form.obtenerFechaHoraServer((new Date().getTime() + minDemas * 60000), 0, horDemas);
+                            } else {
+                                edta['fechaInicio'] = form.obtenerFechaHoraServer(fechaInicio.value, minDemas);
+                                edta['fechaFin'] = form.obtenerFechaHoraServer(fechaInicio.value, minDemas, horDemas);
+                            }
+
+                            //console.log(edta);
+
+                            let rtda = await fetch('controller/ControllerLigas.php', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    accion: 'Vender',
+                                    data: edta,
+                                    csrf_token: document.getElementById('csrf_token').value
+                                })
+                            }).then((res) => {
+                                this.disabled = false;
+                                if (res.status == 200) {
+                                    return res.json()
+                                }
+                            }).catch((res) => {
+                                this.disabled = false;
+                                console.error(res.statusText);
+                                return res;
+                            })
+
+                            console.log(rtda);
+                        }
+                    });
+                })();
+            }
+
+            
 
             /*function llenarSelec(data, id) {
                 let select = document.getElementById(id);

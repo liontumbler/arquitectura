@@ -179,7 +179,6 @@ class PaginaOnce extends Web implements PaginaX
             let $table = $('#ligasTable')
             $table.bootstrapTable({
                 cache: false,
-                toggle: 'ligasTable',
                 height: '460',
                 buttonsClass: 'dark',
 
