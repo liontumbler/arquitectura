@@ -11,32 +11,7 @@ class ControllerLogin extends Controller
 
     public function postLogin($dta)
     {
-        //echo 'llegue';
-        //print_r($dta);
-        if ($dta->nickname != '' && $dta->nickname == 'cuadros@gim') {
-            if ($dta->clave != '' && $dta->clave == '1234') {
-                $_SESSION['SesionTrabajador'] = true;
-                $_SESSION['trabajadorId'] = '1';
-                $_SESSION['nombre'] = 'cuadros';
-                $_SESSION['nickName'] = 'cuadros@gim';
-                $_SESSION['gimnasio'] = 'Dinamic';
-                $_SESSION['ligas'] = 0;
-                $_SESSION['tienda'] = 0;
-                $_SESSION['pagos'] = 0;
-                $_SESSION['descuento'] = 0;
-                $_SESSION['caja'] = $dta->caja;
-                $_SESSION['totalefectivo'] = 0;
-                $_SESSION['digital'] = 0;
-
-                $_SESSION['trabajadoId'] = 0;
-                
-
-                return true;
-            }
-        }
-
-        return false;
-        //llamar metodo para iniciar session
+        return $this->model('ModelLogin')->login($dta->nickname, $dta->clave, $dta->caja);
     }
 
     public function postCerrarSession()

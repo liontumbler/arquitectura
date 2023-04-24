@@ -2,7 +2,7 @@
 interface PaginaX
 {
     public function content();
-    public function footer();
+    public function libsJS();
 }
 
 class Web
@@ -24,7 +24,10 @@ class Web
         require_once 'layout/nav.php';
     }
 
-    public function libsJS()
+    public function libsJS(){}
+    public function footer(){}
+
+    public function libsJSGlobal()
     {
         ?>
         <script src="resources/js/global.js"></script>
@@ -115,6 +118,7 @@ class Web
                 <?= $this->nav(); ?>
                 <?= $this->content(); ?>
                 <?= $this->footer(); ?>
+                <?= $this->libsJSGlobal(); ?>
                 <?= $this->libsJS(); ?>
             </body>
         </html>

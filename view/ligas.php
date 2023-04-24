@@ -124,17 +124,30 @@ class PaginaOnce extends Web implements PaginaX
     public function nav()
     {
     ?>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-            <div class="container-fluid">
-                <a href="javascript:" class="navbar-brand" id="btnSidebar">Gimnasios</a>
-            </div>
-        </nav>
+        <?php require_once 'layout/navTrabajador.php'; ?>
     <?php
     }
 
     public function footer()
     {
     ?>
+        <style>
+            .navbar {
+                color: <?= $_SESSION['color']; ?> !important;
+                background: <?= $_SESSION['background']; ?> !important;
+            }
+            #sideBarrar {
+                color: <?= $_SESSION['color']; ?> !important;
+                background: <?= $_SESSION['background']; ?> !important;
+            }
+        </style>
+    <?php
+    }
+
+    public function libsJS()
+    {
+        ?>
+        <script src="resources/js/trabajadorGen.js"></script>
         <script>
             document.querySelector('body').onload = (e) => {
                 (function () {

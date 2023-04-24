@@ -6,21 +6,20 @@ class Database {
     private $database;
     private $cn;
 
-    public function __construct($host, $username, $password, $database) {
+    public function __construct($host, $username, $password, $database)
+    {
         $this->host = $host;
         $this->username = $username;
         $this->password = $password;
         $this->database = $database;
-
         try {
             $dsn = "mysql:host=$host;dbname=$database";
             $options = [
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-                PDO::ATTR_EMULATE_PREPARES => false,
+                PDO::ATTR_EMULATE_PREPARES   => 0,
             ];
             $this->cn = new PDO($dsn, $username, $password, $options);
-            //$this->cn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             echo "Error al conectar a la base de datos: " . $e->getMessage();
             die();
@@ -34,11 +33,6 @@ class Database {
         $values = ":" . $values;
 
         return "INSERT INTO $table ($fields) VALUES ($values)";
-    }
-
-    private function selectStr($table)
-    {
-        return "SELECT * FROM $table WHERE id=:id";
     }
 
     private function updateStr($table, $data)
@@ -57,27 +51,36 @@ class Database {
         return "DELETE FROM $table WHERE id=:id";
     }
 
-    public function create($table, $data) {
+    public function create($table, $data)
+    {
         try {
             $sql = $this->insertStr($table, $data);
 
             $statement = $this->cn->prepare($sql);
             $statement->execute($data);
+
+            ServerResponse::getResponse(200);
+            return $this->cn->lastInsertId();//$statement->rowCount();
         } catch (PDOException $e) {
-            throw new Exception("Failed to create a record in $table: " . $e->getMessage());
+            $logger = new Logger('../logs/myapp.log');
+            $logger->log('Error: '."Failed to create a record in $table: " . $e->getMessage());
+            ServerResponse::getResponse(500);
         }
     }
 
-    public function read($table, $id) {
+    public function read($table, $data = ['id' => 1], $where = 'id=:id') {
         try {
-            $sql = $this->selectStr($table);
+            $sql = "SELECT * FROM $table WHERE $where";
 
             $statement = $this->cn->prepare($sql);
-            $statement->execute(['id' => $id]);
+            $statement->execute($data);
 
+            ServerResponse::getResponse(200);
             return $statement->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            throw new Exception("Failed to read record from $table with id=$id: " . $e->getMessage());
+            $logger = new Logger('../logs/myapp.log');
+            $logger->log('Error: '."Failed to read record from $table with ".implode(',', $data).": " . $e->getMessage());
+            ServerResponse::getResponse(500);
         }
     }
 
@@ -169,6 +172,78 @@ class Database {
         $archivo = fopen($nombreArchivo, 'w');
         fwrite($archivo, implode("\n", $lineas));
         fclose($archivo);
+    }
+}
+
+class Logger {
+    private $logFile;
+    
+    public function __construct($logFile) {
+        $this->logFile = $logFile;
+        if (!file_exists($logFile)) {
+            fopen($logFile, 'w');
+        }
+    }
+    
+    public function log($message) {
+        $date = date('Y-m-d H:i:s');
+        $formattedMessage = "[$date] $message\n";
+        file_put_contents($this->logFile, $formattedMessage, FILE_APPEND);
+    }
+}
+
+class ServerResponse {
+    public static function getResponse($statusCode)
+    {
+        $statusCodes = array(
+            100 => 'Continue',
+            101 => 'Switching Protocols',
+            200 => 'OK',
+            201 => 'Created',
+            202 => 'Accepted',
+            203 => 'Non-Authoritative Information',
+            204 => 'No Content',
+            205 => 'Reset Content',
+            206 => 'Partial Content',
+            300 => 'Multiple Choices',
+            301 => 'Moved Permanently',
+            302 => 'Found',
+            303 => 'See Other',
+            304 => 'Not Modified',
+            305 => 'Use Proxy',
+            307 => 'Temporary Redirect',
+            400 => 'Bad Request',
+            401 => 'Unauthorized',
+            402 => 'Payment Required',
+            403 => 'Forbidden',
+            404 => 'Not Found',
+            405 => 'Method Not Allowed',
+            406 => 'Not Acceptable',
+            407 => 'Proxy Authentication Required',
+            408 => 'Request Timeout',
+            409 => 'Conflict',
+            410 => 'Gone',
+            411 => 'Length Required',
+            412 => 'Precondition Failed',
+            413 => 'Request Entity Too Large',
+            414 => 'Request-URI Too Long',
+            415 => 'Unsupported Media Type',
+            416 => 'Requested Range Not Satisfiable',
+            417 => 'Expectation Failed',
+            500 => 'Internal Server Error',
+            501 => 'Not Implemented',
+            502 => 'Bad Gateway',
+            503 => 'Service Unavailable',
+            504 => 'Gateway Timeout',
+            505 => 'HTTP Version Not Supported'
+        );
+
+        if (array_key_exists($statusCode, $statusCodes)) {
+            $statusMessage = $statusCodes[$statusCode];
+            header("HTTP/1.1 $statusCode $statusMessage");
+        } else {
+            header("HTTP/1.1 500 Internal Server Error");
+        }
     }
 }
 ?>

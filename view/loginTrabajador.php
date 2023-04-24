@@ -98,7 +98,7 @@ class PaginaOnce extends Web implements PaginaX
 
                             console.log(rdta, 'login');
                             if(rdta){
-                                location.href = 'trabajando';
+                                //location.href = 'trabajando';
                             }
                             
                         }

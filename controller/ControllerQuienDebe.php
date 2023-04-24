@@ -13,7 +13,7 @@ class ControllerQuienDebe extends Controller
 
     public function postOptenerDeudor($dta)
     {
-        try {
+        /*try {
             ServerResponse::getResponse(200);
             return 'llegue';
             //print_r($dta->nombre);
@@ -21,7 +21,7 @@ class ControllerQuienDebe extends Controller
             $logger = new Logger('../logs/myapp.log');
             $logger->log('Error: '.$e->getMessage());
             ServerResponse::getResponse(500);
-        }
+        }*/
     }
 }
 
