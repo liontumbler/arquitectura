@@ -21,7 +21,9 @@ class Database {
             ];
             $this->cn = new PDO($dsn, $username, $password, $options);
         } catch (PDOException $e) {
-            echo "Error al conectar a la base de datos: " . $e->getMessage();
+            $logger = new Logger('../logs/myapp.log');
+            $logger->log('Error: '."Error al conectar a la base de datos: " . $e->getMessage());
+            ServerResponse::getResponse(500);
             die();
         }
     }
