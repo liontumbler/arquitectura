@@ -53,60 +53,7 @@ class PaginaOnce extends Web implements PaginaX
     public function footer()
     {
         ?>
-        <script>
-            document.querySelector('body').onload = (e) => {
-                (function () {
-                    console.log('termino de cargar vista');
-                    let validar = new Validardor(['nickname', 'clave' ,'caja']);
-                    console.log(validar.nickname, validar);
-
-                    document.getElementById('trabajar').addEventListener('click', async function(e) {
-                        let valid = validar.validarCampos()
-
-                        console.log(valid, valid.validationMessage);
-
-                        
-                        if(valid && !valid.validationMessage){
-                            this.disabled = true;
-                            console.log(':)');
-                            //console.log(validar.crearFormData());
-                            //console.log(validar.crearObjetoJson());
-
-                            let edta = validar.crearObjetoJson();
-                            let csrf_token = document.getElementById('csrf_token').value;
-
-                            let rdta = await fetch('controller/ControllerLogin.php', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify({
-                                    accion: 'Login',
-                                    data: edta,
-                                    csrf_token
-                                })
-                            }).then((res) => {
-                                this.disabled = false;
-                                if (res.status == 200) {
-                                    return res.json()
-                                }
-                            }).catch((res) => {
-                                this.disabled = false;
-                                console.error(res.statusText);
-                                return res;
-                            })
-
-                            console.log(rdta, 'login');
-                            if(rdta){
-                                //location.href = 'trabajando';
-                            }
-                            
-                        }
-                    });
-
-                })();
-            }
-        </script>
+        <script src="resources/js/loginTrabajador.js"></script>
         <?php
     }
 }

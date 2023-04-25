@@ -38,10 +38,6 @@ class PaginaOnce extends Web implements PaginaX
                                 <label for="cliente" class="form-label">Clientes *</label>
                                 <select id="cliente" class="form-select" required>
                                     <option selected value="">Seleccione una opción</option>
-                                    <option value="123123">pepe</option>
-                                    <option value="701232400">pepa</option>
-                                    <option value="234234">papu</option>
-                                    <option value="1534234000">3 horas</option>
                                 </select>
                             </div>
                             <div class="col-lg-6 mb-1" id="divClienteNA">
@@ -56,20 +52,12 @@ class PaginaOnce extends Web implements PaginaX
                                 <label for="equipo" class="form-label">Equipo</label>
                                 <select id="equipo" class="form-select">
                                     <option selected value="">Seleccione una opción</option>
-                                    <option value="N/A">N/A</option>
-                                    <option value="1">BCA</option>
-                                    <option value="2">DEVIL'S</option>
-                                    <option value="3">NPC</option>
                                 </select>
                             </div>
                             <div class="col-lg-12 mb-1">
                                 <label for="producto" class="form-label">Producto *</label>
                                 <select id="producto" class="form-select" required>
                                     <option selected value="">Seleccione una opcion</option>
-                                    <option value="5000">papas fritasrisadas</option>
-                                    <option value="7000">gaseosa</option>
-                                    <option value="10000">dulces</option>
-                                    <option value="15000">bubalus</option>
                                 </select>
                             </div>
                             <div class="col-lg-12 mb-1">
@@ -142,110 +130,7 @@ class PaginaOnce extends Web implements PaginaX
     {
         ?>
         <script src="resources/js/trabajadorGen.js"></script>
-        <script>
-            document.querySelector('body').onload = (e) => {
-                (function () {
-                    console.log('termino de cargar vista');
-
-                    let validarForm1 = new Validardor(['cliente', 'producto' ,'cantidad', 'tipoPago']);
-                    let validarForm2 = new Validardor(['nombreYapellido', 'documento', 'equipo', 'producto' ,'cantidad', 'tipoPago']);
-                    let validarForm3 = new Validardor(['cliente', 'producto' ,'cantidad']);
-                    let validarForm4 = new Validardor(['nombreYapellido', 'documento', 'equipo', 'producto' ,'cantidad']);
-
-                    if(document.getElementById('checkCliente').checked){
-                        document.getElementById('divClienteNA').style.display = 'none';
-                        document.getElementById('divClienteD').style.display = 'none';
-                        document.getElementById('divClienteEQ').style.display = 'none';
-                    }
-
-                    document.getElementById('checkCliente').addEventListener('change', function (e) {
-                        if(this.checked){
-                            document.getElementById('divClienteNA').style.display = 'none';
-                            document.getElementById('divClienteD').style.display = 'none';
-                            document.getElementById('divClienteEQ').style.display = 'none';
-                            document.getElementById('divClientePre').style.display = 'block';
-                        }
-                        else{
-                            document.getElementById('divClienteNA').style.display = 'block';
-                            document.getElementById('divClienteD').style.display = 'block';
-                            document.getElementById('divClienteEQ').style.display = 'block';
-                            document.getElementById('divClientePre').style.display = 'none';
-                        }
-                    });
-                    
-                    document.getElementById('pago').addEventListener('change', function (params) {
-                        if(!this.checked)
-                            document.getElementById('divpago').style.display = 'none';
-                        else
-                            document.getElementById('divpago').style.display = 'block';
-                    });
-
-                    document.getElementById('producto').addEventListener('change', function (e) {
-                        if(this.value){
-                            let cantidad = document.getElementById('cantidad').value ? parseInt(document.getElementById('cantidad').value) : 0;
-                            document.getElementById('total').textContent = this.value * cantidad;
-                        }
-                        else
-                            document.getElementById('total').textContent = '';
-                    });
-
-                    document.getElementById('cantidad').addEventListener('input', function (e) {
-                        
-                        let cantidad = this.value ? parseInt(this.value) : 0;
-                        document.getElementById('total').textContent = document.getElementById('producto').value * cantidad;
-                        
-                    });
-
-                    document.getElementById('vender').addEventListener('click', async function (e) {
-                        let checkCliente = document.getElementById('checkCliente');
-                        let pago = document.getElementById('pago');
-                        //console.log(valid, valid.validationMessage);
-                        let form = '';
-                        if(checkCliente.checked && pago.checked){
-                            form = validarForm1
-                        }else if(!checkCliente.checked && pago.checked){
-                            form = validarForm2
-                        } else if(checkCliente.checked && !pago.checked){
-                            form = validarForm3
-                        } else if(!checkCliente.checked && !pago.checked){
-                            form = validarForm4
-                        }
-
-                        let valid = form.validarCampos();
-                        if(valid && !valid.validationMessage){
-                            this.disabled = true;
-                            //console.log(form.crearObjetoJson());
-                            let edta = form.crearObjetoJson();
-                            let rdta = await fetch('controller/ControllerTienda.php', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify({
-                                    accion: 'Vender',
-                                    data: edta,
-                                    csrf_token: document.getElementById('csrf_token').value
-                                })
-                            }).then((res) => {
-                                this.disabled = false;
-                                if (res.status == 200) {
-                                    return res.json()
-                                }
-                            }).catch((res) => {
-                                this.disabled = false;
-                                console.error(res.statusText);
-                                return res;
-                            })
-
-                            console.log(rdta);
-                        }
-                    })
-                })();
-                
-            }
-
-            
-        </script>
+        <script src="resources/js/tienda.js"></script>
         <?php
     }
 }

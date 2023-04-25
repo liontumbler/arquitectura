@@ -5,9 +5,11 @@ class Database {
     private $password;
     private $database;
     private $cn;
+    private $logger;
 
     public function __construct($host, $username, $password, $database)
     {
+        $this->logger = new Logger('../logs/gimnacioDb.log');
         $this->host = $host;
         $this->username = $username;
         $this->password = $password;
@@ -21,8 +23,7 @@ class Database {
             ];
             $this->cn = new PDO($dsn, $username, $password, $options);
         } catch (PDOException $e) {
-            $logger = new Logger('../logs/myapp.log');
-            $logger->log('Error: '."Error al conectar a la base de datos: " . $e->getMessage());
+            $this->logger->log('Error: '."Error al conectar a la base de datos: " . $e->getMessage());
             ServerResponse::getResponse(500);
             die();
         }
@@ -64,24 +65,24 @@ class Database {
             ServerResponse::getResponse(200);
             return $this->cn->lastInsertId();//$statement->rowCount();
         } catch (PDOException $e) {
-            $logger = new Logger('../logs/myapp.log');
-            $logger->log('Error: '."Failed to create a record in $table: " . $e->getMessage());
+            
+            $this->logger->log('Error: '."Failed to create a record in $table: " . $e->getMessage());
             ServerResponse::getResponse(500);
         }
     }
 
-    public function read($table, $data = ['id' => 1], $where = 'id=:id') {
+    public function read($table, $data = ['id' => 1], $where = 'id=:id', $campos = '*') {
         try {
-            $sql = "SELECT * FROM $table WHERE $where";
+            $sql = "SELECT $campos FROM $table ". ((count($data) > 0) ? "WHERE $where" : '');
 
             $statement = $this->cn->prepare($sql);
             $statement->execute($data);
 
             ServerResponse::getResponse(200);
-            return $statement->fetch(PDO::FETCH_ASSOC);
+            
+            return $statement->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            $logger = new Logger('../logs/myapp.log');
-            $logger->log('Error: '."Failed to read record from $table with ".implode(',', $data).": " . $e->getMessage());
+            $this->logger->log('Error: '."Failed to read record from $table with ".implode(',', $data).": " . $e->getMessage());
             ServerResponse::getResponse(500);
         }
     }
@@ -92,8 +93,12 @@ class Database {
 
             $statement = $this->cn->prepare($sql);
             $statement->execute(array_merge($data, ['id' => $id]));
+
+            ServerResponse::getResponse(200);
+            return $statement->rowCount();
         } catch (PDOException $e) {
-            throw new Exception("Failed to update record in $table with id=$id: " . $e->getMessage());
+            $this->logger->log('Error: '."Failed to update record in $table with id=$id: " . $e->getMessage());
+            ServerResponse::getResponse(500);
         }
     }
 
@@ -104,7 +109,8 @@ class Database {
             $statement = $this->cn->prepare($sql);
             $statement->execute(['id' => $id]);
         } catch (PDOException $e) {
-            throw new Exception("Failed to delete record from $table with id=$id: " . $e->getMessage());
+            $this->logger->log('Error: '."Failed to delete record from $table with id=$id: " . $e->getMessage());
+            ServerResponse::getResponse(500);
         }
     }
 

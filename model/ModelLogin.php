@@ -10,23 +10,26 @@ class ModelLogin extends Model
 
         $res = $cn->read('trabajador', ['nickname' => $usu], 'nickname=:nickname');
         //return $res;
-        if (!$res) {
+        if (!$res || count($res) == 0) {
             return $res;
         } else {
-            $claveDb = $res['clave'];
-            $idTrabajador = $res['id'];
-            $idGimnasio = $res['idGimnasio'];
-            $nombreTrabajador = $res['nombresYapellidos'];
-            $nickname = $res['nickname'];
+            $claveDb = $res[0]['clave'];
+            $idTrabajador = $res[0]['id'];
+            $idGimnasio = $res[0]['idGimnasio'];
+            $nombreTrabajador = $res[0]['nombresYapellidos'];
+            $nickname = $res[0]['nickname'];
+            $correo = '';//$res[0]['correo']
             
             $gimnasio = $cn->read('gimnasio', ['id' => $idGimnasio], "id=:id");
             //return $gimnasio;
 
-            $color = $gimnasio['color'];
-            $background = $gimnasio['background'];
-            $habilitado = $gimnasio['habilitado'];
-            $minDeMasLiga = $gimnasio['minDeMasLiga'];
-            $nombreGim = $gimnasio['nombre'];
+            $color = $gimnasio[0]['color'];
+            $background = $gimnasio[0]['background'];
+            $habilitado = $gimnasio[0]['habilitado'];
+            $minDeMasLiga = $gimnasio[0]['minDeMasLiga'];
+            $nombreGim = $gimnasio[0]['nombre'];
+            $gimnasioId = $gimnasio[0]['id'];
+            
 
             if ($habilitado) {
                 if ($clave != '' && password_verify(sha1($clave), $claveDb)) {
@@ -38,7 +41,7 @@ class ModelLogin extends Model
                     //return $yaInicioCaja;
                     $ini = false;
                     $trabajadoId = '';
-                    if (!$yaInicioCaja) {
+                    if (!$yaInicioCaja || count($yaInicioCaja) == 0) {
                         $trabajado = [
                             'fechaInicio' => date('Y-m-d H:i:s'),
                             'iniciCaja' => $caja,
@@ -53,8 +56,8 @@ class ModelLogin extends Model
                             $ini = true;
                         }
                     } else {
-                        $trabajadoId = $yaInicioCaja['id'];
-                        $_SESSION['caja'] = $yaInicioCaja['iniciCaja'];
+                        $trabajadoId = $yaInicioCaja[0]['id'];
+                        $_SESSION['caja'] = $yaInicioCaja[0]['iniciCaja'];
                         $ini = 600;
                         //mostrar msg que la caja ya fue iniciada y que la caja puesta no es correcta, si quiere iniciar una nueva session, terminar primero con la que no se a cerrado
                     }
@@ -62,12 +65,23 @@ class ModelLogin extends Model
                     $_SESSION['SesionTrabajador'] = true;
                     $_SESSION['trabajadorId'] = $idTrabajador;
                     $_SESSION['nombre'] = $nombreTrabajador;
+                    $_SESSION['correo'] = $correo;
                     $_SESSION['nickName'] = $nickname;
                     $_SESSION['gimnasio'] = $nombreGim;
+                    $_SESSION['gimnasioId'] = $gimnasioId;
                     $_SESSION['color'] = $color;
                     $_SESSION['background'] = $background;//'#ff8d34';
                     $_SESSION['trabajadoId'] = $trabajadoId;
-    
+
+                    //actualizar clave de caja  claveCaja, enviar codigo por correo 
+                    $claveCajaNueva = rand(1000, 9999);
+                    $updateTrabajador = $cn->update('trabajador', ['claveCaja' => $claveCajaNueva], $idTrabajador);
+                    if ($updateTrabajador > 0) {
+                        $_SESSION['claveCaja'] = $claveCajaNueva;
+                    } else {
+                        $_SESSION['claveCaja'] = 0000;
+                    }
+                    //return $updateTrabajador;
                     //mirar si se pasa cuando se consultan las ligas
                     $_SESSION['minDeMasLiga'] = $minDeMasLiga;
                     

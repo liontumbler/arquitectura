@@ -226,8 +226,6 @@ class Validardor {
                 }
             }else if(inputMask.type == 'number'){
                 formData.append(campo, parseInt(input.value));
-            }else if(inputMask.type == 'datetime-local'){
-                formData.append(campo, (input.value));
             }else{
                 formData.append(campo, input.value);
             }
@@ -248,12 +246,38 @@ class Validardor {
             if(inputMask.type == 'radio'){
                 let value = (inputMask.value && inputMask.value != 'on') ? inputMask.value : 1;
                 data[campo] = value;
-            }else if(input.type == 'file' && input.files.length > 0){
+            }else if(inputMask.type == 'file' && inputMask.files.length > 0){
                 data['files'] = input.files;
             }else if(inputMask.type == 'number'){
                 data[campo] = parseInt(input.value);
             }else{
                 data[campo] = input.value;
+            }
+        }
+        return data;
+    }
+
+    limpiar() {
+        let data = {};
+        for (const i in this.campos) {
+            const campo = this.campos[i];
+            const campoMask = '#'+campo+'Mask';
+
+            let input = this[campo];
+            let inputMask = this[campoMask];
+
+            if(inputMask.type == 'radio' || inputMask.type == 'checkbox'){
+                input.checked = false;
+                inputMask.checked = false;
+            }else if(input.type == 'file' && input.files.length > 0){
+                input.value = '';
+                inputMask.value = '';
+            }else if(inputMask.type == 'number'){
+                input.value = '';
+                inputMask.value = '';
+            }else{
+                input.value = '';
+                inputMask.value = '';
             }
         }
         return data;
@@ -290,7 +314,7 @@ class Validardor {
             }
 
             if (!inputMask.value && inputMask.required) {
-                //console.log('no hay valor');
+                //console.log('no hay valor', inputMask.value, '2', input.value);
                 input.setCustomValidity(inputMask.validationMessage);
                 input.focus();
                 if (input.select) 
