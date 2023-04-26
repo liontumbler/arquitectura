@@ -16,17 +16,17 @@ class ControllerTienda extends Controller
 
     public function postCargarClientes()
     {
-        return $this->model('ModelTienda')->clientes();
+        return $this->model('ModelCliente')->clientes();
     }
 
     public function postCargarProductos()
     {
-        return $this->model('ModelTienda')->productos();
+        return $this->model('ModelProducto')->productos();
     }
 
     public function postCargarEquipos()
     {
-        return $this->model('ModelTienda')->equipos();
+        return $this->model('ModelEquipo')->equipos();
     }
 
     

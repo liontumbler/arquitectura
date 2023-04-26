@@ -8,7 +8,7 @@ class ModelLogin extends Model
         //return "$usu, $clave, $caja";
         $cn = $this->conectar();
 
-        $res = $cn->read('trabajador', ['nickname' => $usu], 'nickname=:nickname');
+        $res = $cn->read('trabajador', ['nickname' => $usu], 'nickname=:nickname', 'clave, id, idGimnasio, nombresYapellidos, nickname, correo');
         //return $res;
         if (!$res || count($res) == 0) {
             return $res;
@@ -18,26 +18,24 @@ class ModelLogin extends Model
             $idGimnasio = $res[0]['idGimnasio'];
             $nombreTrabajador = $res[0]['nombresYapellidos'];
             $nickname = $res[0]['nickname'];
-            $correo = '';//$res[0]['correo']
+            $correo = $res[0]['correo'];
             
-            $gimnasio = $cn->read('gimnasio', ['id' => $idGimnasio], "id=:id");
+            $gimnasio = $cn->read('gimnasio', ['id' => $idGimnasio], "id=:id", 'color, background, habilitado, nombre, id');
             //return $gimnasio;
 
             $color = $gimnasio[0]['color'];
             $background = $gimnasio[0]['background'];
             $habilitado = $gimnasio[0]['habilitado'];
-            $minDeMasLiga = $gimnasio[0]['minDeMasLiga'];
             $nombreGim = $gimnasio[0]['nombre'];
             $gimnasioId = $gimnasio[0]['id'];
             
-
             if ($habilitado) {
                 if ($clave != '' && password_verify(sha1($clave), $claveDb)) {
                     //si existe en registro en caja sin cerrar tomo la sesion que no a cerrado
                     $yaInicioCaja = $cn->read('trabajado', ['idGimnasio' => $idGimnasio, 'idTrabajador' => $idTrabajador], "
                     `idGimnasio`=:idGimnasio
                     AND `idTrabajador`=:idTrabajador
-                    AND fechaFin is null;");//`fechaInicio` > '".date('Y-m-d')." 00:00:00' AND `fechaInicio` < '".date('Y-m-d')." 23:59:59'
+                    AND fechaFin is null;", 'id, iniciCaja');//`fechaInicio` > '".date('Y-m-d')." 00:00:00' AND `fechaInicio` < '".date('Y-m-d')." 23:59:59'
                     //return $yaInicioCaja;
                     $ini = false;
                     $trabajadoId = '';
@@ -55,11 +53,10 @@ class ModelLogin extends Model
                             $trabajadoId = $insert;
                             $ini = true;
                         }
-                    } else {
+                    } else {//sesion ya iniciada
                         $trabajadoId = $yaInicioCaja[0]['id'];
                         $_SESSION['caja'] = $yaInicioCaja[0]['iniciCaja'];
                         $ini = 600;
-                        //mostrar msg que la caja ya fue iniciada y que la caja puesta no es correcta, si quiere iniciar una nueva session, terminar primero con la que no se a cerrado
                     }
     
                     $_SESSION['SesionTrabajador'] = true;
@@ -73,17 +70,16 @@ class ModelLogin extends Model
                     $_SESSION['background'] = $background;//'#ff8d34';
                     $_SESSION['trabajadoId'] = $trabajadoId;
 
-                    //actualizar clave de caja  claveCaja, enviar codigo por correo 
+                    //actualizar clave de caja  claveCaja, enviar codigo por correo
                     $claveCajaNueva = rand(1000, 9999);
                     $updateTrabajador = $cn->update('trabajador', ['claveCaja' => $claveCajaNueva], $idTrabajador);
+                    //return $updateTrabajador;
+                    //TODO:quitar o cometar if cuando se pase la clave por correo
                     if ($updateTrabajador > 0) {
                         $_SESSION['claveCaja'] = $claveCajaNueva;
                     } else {
                         $_SESSION['claveCaja'] = 0000;
                     }
-                    //return $updateTrabajador;
-                    //mirar si se pasa cuando se consultan las ligas
-                    $_SESSION['minDeMasLiga'] = $minDeMasLiga;
                     
                     return $ini;
                 }
@@ -93,9 +89,6 @@ class ModelLogin extends Model
         }
 
         return false;
-
-
-        /**/
     }
 }
 

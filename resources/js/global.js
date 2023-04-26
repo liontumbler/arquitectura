@@ -99,7 +99,7 @@ class Validardor {
                 });
             }
 
-            if(input.getAttribute('numberNS') == ''){
+            if(input.getAttribute('numberns') == ''){
                 input.addEventListener('input', (e) => {
                     input.value = input.value.replace(/[^0-9]/g, '');
                 });
@@ -171,7 +171,7 @@ class Validardor {
                 });
             }
 
-            if(input.getAttribute('noCopy') == ''){
+            if(input.getAttribute('nocopy') == ''){
                 input.addEventListener('input', (e) => {
                     input.value = this.#quitarEventCopy(input);
                 });
@@ -266,7 +266,7 @@ class Validardor {
             let input = this[campo];
             let inputMask = this[campoMask];
 
-            if(inputMask.type == 'radio' || inputMask.type == 'checkbox'){
+            if(inputMask.type == 'checkbox'){ //inputMask.type == 'radio' || 
                 input.checked = false;
                 inputMask.checked = false;
             }else if(input.type == 'file' && input.files.length > 0){
@@ -290,10 +290,10 @@ class Validardor {
         const mes = fecha.getMonth() + 1 < 10 ? `0${fecha.getMonth() + 1}` : fecha.getMonth() + 1;
         const dia = fecha.getDate() < 10 ? `0${fecha.getDate()}` : fecha.getDate();
 
-        fecha.setHours(fecha.getHours() + horasDeMas);
+        fecha.setHours(fecha.getHours() + parseInt(horasDeMas));
         const horas = fecha.getHours() < 10 ? `0${fecha.getHours()}` : fecha.getHours();
 
-        fecha.setMinutes(fecha.getMinutes() + minDeMas);
+        fecha.setMinutes(fecha.getMinutes() + parseInt(minDeMas));
         const minutos = fecha.getMinutes() < 10 ? `0${fecha.getMinutes()}` : fecha.getMinutes();
 
         const segundos = fecha.getSeconds() < 10 ? `0${fecha.getSeconds()}` : fecha.getSeconds();

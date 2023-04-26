@@ -3,24 +3,6 @@ require_once 'Model.php';
 
 class ModelTienda extends Model
 {
-    public function clientes()
-    {
-        $cn = $this->conectar();
-        return $cn->read('cliente', []);
-    }
-
-    public function productos()
-    {
-        $cn = $this->conectar();
-        return $cn->read('producto', []);
-    }
-
-    public function equipos()
-    {
-        $cn = $this->conectar();
-        return $cn->read('equipo', []);
-    }
-
     public function vender($data)
     {
         $cn = $this->conectar();
