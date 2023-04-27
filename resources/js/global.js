@@ -87,13 +87,13 @@ class Validardor {
                 input.style.display = 'block';
             }
 
-            if(input.getAttribute('alfaNS') == ''){
+            if(input.getAttribute('alfans') == ''){
                 input.addEventListener('input', (e) => {
                     input.value = input.value.replace(/[^A-Za-zñÑ]/g, '');
                 });
             }
 
-            if(input.getAttribute('textNS') == ''){
+            if(input.getAttribute('textns') == ''){
                 input.addEventListener('input', (e) => {
                     input.value = input.value.replace(/[^0-9A-Za-zñÑ]/g, '');
                 });
@@ -105,13 +105,13 @@ class Validardor {
                 });
             }
 
-            if(input.getAttribute('alfaLowerCaseNS') == ''){
+            if(input.getAttribute('alfalowercasens') == ''){
                 input.addEventListener('input', (e) => {
                     input.value = input.value.replace(/[A-ZÑ]/g, input.value.toLowerCase()).replace(/[^a-zñ]/g, '');
                 });
             }
 
-            if(input.getAttribute('alfaUpperCaseNS') == ''){
+            if(input.getAttribute('alfauppercasens') == ''){
                 input.addEventListener('input', (e) => {
                     input.value = input.value.replace(/[a-zñ]/g, input.value.toUpperCase()).replace(/[^A-ZÑ]/g, '');
                 });
@@ -135,25 +135,29 @@ class Validardor {
                 });
             }
 
-            if(input.getAttribute('alfaLowerCase') == ''){
+            if(input.getAttribute('alfalowerCase') == ''){
                 input.addEventListener('input', (e) => {
-                    input.value = input.value.replace(/[A-ZÑ]/g, input.value.toLowerCase()).replace(/[^a-zñ ]/g, '').replace(/\s+/g, ' ');
+                    input.value = input.value.replace(/[A-ZÑ]/g, function(letra) {
+                        return letra.toLowerCase();
+                    }).replace(/[^a-zñ ]/g, '').replace(/\s+/g, ' ');
                 });
             }
 
-            if(input.getAttribute('alfaUpperCase') == ''){
+            if(input.getAttribute('alfaupperCase') == ''){
                 input.addEventListener('input', (e) => {
-                    input.value = input.value.replace(/[a-zñ]/g, input.value.toUpperCase()).replace(/[^A-ZÑ ]/g, '').replace(/\s+/g, ' ');
+                    input.value = input.value.replace(/[a-zñ]/g, function(letra) {
+                        return letra.toUpperCase();
+                    }).replace(/[^A-ZÑ ]/g, '').replace(/\s+/g, ' ');
                 });
             }
 
-            if(input.getAttribute('textTilde') == ''){
+            if(input.getAttribute('texttilde') == ''){
                 input.addEventListener('input', (e) => {
                     input.value = input.value.replace(/[^0-9A-Za-zñÑÁáÉéÍíÓóÚú.,:; ]/g, '').replace(/\s+/g, ' ');
                 });
             }
 
-            if(input.getAttribute('textTilde') == ''){
+            if(input.getAttribute('numberpoin') == ''){
                 input.addEventListener('input', (e) => {
                     input.value = input.value.replace(/[^0-9 ]/g, '').replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
                 });
@@ -165,7 +169,7 @@ class Validardor {
                 });
             }
 
-            if(input.getAttribute('textArroba') == ''){
+            if(input.getAttribute('textarroba') == ''){
                 input.addEventListener('input', (e) => {
                     input.value = input.value.replace(/[^0-9A-Za-zñÑ@]/g, '');
                 });
@@ -177,19 +181,19 @@ class Validardor {
                 });
             }
 
-            if(input.getAttribute('noPaste') == ''){
+            if(input.getAttribute('nopaste') == ''){
                 input.addEventListener('input', (e) => {
                     input.value = this.#quitarEventPaste(input);
                 });
             }
 
-            if(input.getAttribute('noCut') == ''){
+            if(input.getAttribute('nocut') == ''){
                 input.addEventListener('input', (e) => {
                     input.value = this.#quitarEventCut(input);
                 });
             }
 
-            if(input.getAttribute('noDrag') == ''){
+            if(input.getAttribute('nodrag') == ''){
                 input.addEventListener('input', (e) => {
                     input.value = this.#quitarEventDrag(input);
                 });
@@ -299,6 +303,18 @@ class Validardor {
         const segundos = fecha.getSeconds() < 10 ? `0${fecha.getSeconds()}` : fecha.getSeconds();
 
         return `${anio}-${mes}-${dia} ${horas}:${minutos}:${segundos}`;
+    }
+
+    convertirLetrasANumeroPoin(texto) {
+        let cadena = texto.toString();
+        cadena = cadena.replace(/[^\d.]/g, '').replace('.', ',');
+        if (!cadena)
+            return false;
+
+        let partes = cadena.split(',');
+        partes[0] = parseInt(partes[0]).toLocaleString();
+
+        return partes.join(',');
     }
 
     validarCampos() {

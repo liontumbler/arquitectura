@@ -15,6 +15,10 @@ VALUES (NULL, 'Nicolás Cuadros', '1033741944', '1', '2');
 INSERT INTO `horaliga` (`id`, `nombre`, `horas`, `precio`, `idGimnasio`) 
 VALUES (NULL, '1 Hora', '1.0', '7000', '1');
 
+INSERT INTO `producto` (`id`, `nombre`, `precio`, `idGimnasio`) 
+VALUES (NULL, 'papa 35gr', '3500', '1');
+
+
 SELECT * FROM `trabajado` 
 WHERE `fechaInicio` > '2023-04-24 00:00:00' AND `fechaInicio` < '2023-04-24 23:59:59' 
 AND `idGimnasio` = 1 

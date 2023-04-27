@@ -1,8 +1,6 @@
 document.querySelector('body').onload = (e) => {
     (function () {
-        console.log('termino de cargar vista');
         let validar = new Validardor(['nickname', 'clave' ,'caja']);
-        console.log(validar.nickname, validar);
 
         document.getElementById('trabajar').addEventListener('click', async function(e) {
             let valid = validar.validarCampos()

@@ -6,7 +6,7 @@ if (!$rutasLegitima) {
     header('Location: ./index');
 }
 //session_destroy();
-//echo $_SESSION['SesionTrabajador'];//
+//echo $_SESSION['SesionTrabajador'];
 
 require_once 'view.php';
 

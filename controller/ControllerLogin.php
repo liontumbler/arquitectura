@@ -14,15 +14,11 @@ class ControllerLogin extends Controller
         return $this->model('ModelLogin')->login($dta->nickname, $dta->clave, $dta->caja);
     }
 
-    public function postCerrarSession()
+    public function postCerrarCaja($dta)
     {
-        session_destroy();
-        session_unset();
-
-        return true;
+        return $dta;
+        //finSesion($plata)
     }
-
-    
 }
 
 require_once 'Redirecionar.php';

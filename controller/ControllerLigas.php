@@ -11,7 +11,7 @@ class ControllerLigas extends Controller
 
     public function postVender($dta)
     {
-        print_r($dta);
+        return $this->model('ModelLiga')->vender($dta);
     }
 
     public function postCargarHoras()

@@ -90,6 +90,12 @@ class ModelLogin extends Model
 
         return false;
     }
+
+    public function finSesion($plata)
+    {
+        //TODO: falta hacer cuentas y agregar la plata en trabajado
+        $this->cerrarSesion();
+    }
 }
 
 //echo __NAMESPACE__;

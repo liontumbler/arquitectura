@@ -6,7 +6,7 @@ if (!$rutasLegitima) {
     header('Location: ./index');
 }
 //session_destroy();
-//echo $_SESSION['SesionTrabajador'];//
+//echo $_SESSION['SesionTrabajador'];
 
 require_once 'view.php';
 
@@ -19,7 +19,6 @@ class PaginaOnce extends Web implements PaginaX
 
     public function content()
     {
-        //primero validar si ya abia iniciado caja para no iniciarla
         //cuando cargue la vista hacer consujlta de lo que se a ingresado hoy el trabajador
         ?>
         <div class="d-flex">

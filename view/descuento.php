@@ -6,7 +6,7 @@ if (!$rutasLegitima) {
     header('Location: ./index');
 }
 //session_destroy();
-//echo $_SESSION['SesionTrabajador'];//
+//echo $_SESSION['SesionTrabajador'];
 
 require_once 'view.php';
 
@@ -89,8 +89,6 @@ class PaginaOnce extends Web implements PaginaX
             document.querySelector('body').onload = (e) => {
                 (function () {
 
-                    console.log('termino de cargar vista');
-
                     let validarForm = new Validardor(['titulo', 'descripcion', 'total']);
 
                     document.getElementById('agregarDescuento').addEventListener('click', async function(e) {
@@ -129,18 +127,6 @@ class PaginaOnce extends Web implements PaginaX
                     });
                 })();
             }
-
-            
-
-            /*function llenarSelec(data, id) {
-                let select = document.getElementById(id);
-                select.innerHTML = '';
-                select.append(new Option('Seleccione una opción', ''));
-                for (let i = 0; i < data.length; i++) {
-                    let op = new Option(data[i].name, data[i].id)
-                    select.append(op);
-                }
-            }*/
         </script>
 <?php
     }

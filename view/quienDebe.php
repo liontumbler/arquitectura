@@ -6,7 +6,7 @@ if (!$rutasLegitima) {
     header('Location: ./index');
 }
 //session_destroy();
-//echo $_SESSION['SesionTrabajador'];//
+//echo $_SESSION['SesionTrabajador'];
 
 require_once 'view.php';
 
@@ -26,11 +26,7 @@ class PaginaOnce extends Web implements PaginaX
                 <div class="m-4">
                     <?= input_csrf_token(); ?>
                     <?= password_verify(sha1('admin'), '$2y$11$mjwkbMoRVY/tlZ9ttblRzOomcrFL2JhbGJRz1bpEPcrr9Pn/NtYHy'); ?>
-                    </?= password_hash(sha1('admin'), PASSWORD_BCRYPT, ["cost" => 11]) ?>
-
-                    <?php  print_r(preg_match('/SELECT.*FROM\s+`?(\w+)`?\s*(.*)/i', 'SELECT * FROM personas WHERE id=:id and nombre=:nombre or dired=:dired', $matches)); ?>
                     
-                    <?php  print_r($matches) ?>
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active" id="quienDebe-tab" data-bs-toggle="tab" data-bs-target="#quienDebe" type="button" role="tab" aria-controls="quienDebe" aria-selected="true">Quien debe</button>
@@ -98,7 +94,6 @@ class PaginaOnce extends Web implements PaginaX
                         console.log(valid);
                         if(valid && !valid.validationMessage){
                             this.disabled = true;
-                            //$table.bootstrapTable('showLoading');
 
                             let edta = validarForm1.crearObjetoJson()
                             console.log(edta);
@@ -124,7 +119,6 @@ class PaginaOnce extends Web implements PaginaX
                             })
 
                             console.log(rest);
-                            //$table.bootstrapTable('hideLoading');
 
                             crearTabla(data);
                         }

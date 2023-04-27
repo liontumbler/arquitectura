@@ -1,36 +1,5 @@
 document.querySelector('body').onload = (e) => {
     (function () {
-        console.log('termino de cargar vista');
-
-        async function cargarClientes() {
-            let clientes = await fetch('controller/ControllerTienda.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    accion: 'CargarClientes',
-                    //data: '',
-                    csrf_token: document.getElementById('csrf_token').value
-                })
-            }).then((res) => {
-                this.disabled = false;
-                if (res.status == 200) {
-                    return res.json()
-                }
-            }).catch((res) => {
-                this.disabled = false;
-                console.error(res.statusText);
-                return res;
-            })
-
-            let select = document.getElementById('cliente');
-            for (let i = 0; i < clientes.length; i++) {
-                //console.log(clientes[i], 'llena');
-                let op = new Option(clientes[i].nombresYapellidos, clientes[i].id)
-                select.append(op);
-            }
-        }
 
         async function cargarProductos() {
             let productos = await fetch('controller/ControllerTienda.php', {
@@ -59,36 +28,6 @@ document.querySelector('body').onload = (e) => {
                 //console.log(productos[i], 'llena');
                 let op = new Option(productos[i].nombre, productos[i].id)
                 op.setAttribute('precio', productos[i].precio);
-                select.append(op);
-            }
-        }
-
-        async function cargarEquipos() {
-            let equipos = await fetch('controller/ControllerTienda.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    accion: 'CargarEquipos',
-                    //data: '',
-                    csrf_token: document.getElementById('csrf_token').value
-                })
-            }).then((res) => {
-                this.disabled = false;
-                if (res.status == 200) {
-                    return res.json()
-                }
-            }).catch((res) => {
-                this.disabled = false;
-                console.error(res.statusText);
-                return res;
-            })
-
-            let select = document.getElementById('equipo');
-            for (let i = 0; i < equipos.length; i++) {
-                //console.log(equipos[i], 'llena');
-                let op = new Option(equipos[i].nombre, equipos[i].id)
                 select.append(op);
             }
         }
@@ -172,55 +111,51 @@ document.querySelector('body').onload = (e) => {
 
             let valid = form.validarCampos();
             if(valid && !valid.validationMessage){
-                this.disabled = true;
-                //console.log(form.crearObjetoJson());
-                let edta = form.crearObjetoJson();
-                let rdta = await fetch('controller/ControllerTienda.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        accion: 'Vender',
-                        data: edta,
-                        csrf_token: document.getElementById('csrf_token').value
-                    })
-                }).then((res) => {
-                    this.disabled = false;
-                    if (res.status == 200) {
-                        return res.json()
-                    }
-                }).catch((res) => {
-                    this.disabled = false;
-                    console.error(res.statusText);
-                    return res;
-                })
-
-                console.log(rdta);
-                if (rdta) {
-                    Swal.fire({
-                        title: '¡Producto Ingresado!',
-                        text: "Quieres mantenerte en la página o ir al home",
-                        icon: 'succes',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Mantenerme',
-                        cancelButtonText: 'Ir Home'
-                    }).then((result) => {
-                        console.log(result);
-                        if (result.isConfirmed) {
-                            validarForm1.limpiar();
-                            validarForm2.limpiar();
-                            validarForm3.limpiar();
-                            validarForm4.limpiar();
-                        }else if (result.isDismissed) {
-                            location.href = 'trabajando';
-                        }else{
-                            location.href = 'trabajando';
+                msgClave(async function () {
+                    this.disabled = true;
+                    //console.log(form.crearObjetoJson());
+                    let edta = form.crearObjetoJson();
+                    let rdta = await fetch('controller/ControllerTienda.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            accion: 'Vender',
+                            data: edta,
+                            csrf_token: document.getElementById('csrf_token').value
+                        })
+                    }).then((res) => {
+                        this.disabled = false;
+                        if (res.status == 200) {
+                            return res.json()
                         }
+                    }).catch((res) => {
+                        this.disabled = false;
+                        console.error(res.statusText);
+                        return res;
                     })
-                }
+
+                    //console.log(rdta);
+                    if (rdta) {
+                        Swal.fire({
+                            title: '¡Producto Ingresado!',
+                            text: "Quieres mantenerte en la página o ir al home",
+                            icon: 'success',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Mantenerme',
+                            cancelButtonText: 'Ir Home'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                location.href = location.href;
+                            }else{
+                                location.href = 'trabajando';
+                            }
+                        })
+                    }
+                }, location.href)
             }
         })
     })();

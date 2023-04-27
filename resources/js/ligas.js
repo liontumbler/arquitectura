@@ -1,35 +1,5 @@
 document.querySelector('body').onload = (e) => {
     (function () {
-        console.log('termino de cargar vista');
-
-        async function cargarClientes() {
-            let clientes = await fetch('controller/ControllerTienda.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    accion: 'CargarClientes',
-                    csrf_token: document.getElementById('csrf_token').value
-                })
-            }).then((res) => {
-                this.disabled = false;
-                if (res.status == 200) {
-                    return res.json()
-                }
-            }).catch((res) => {
-                this.disabled = false;
-                //console.error(res.statusText);
-                return res;
-            })
-
-            let select = document.getElementById('cliente');
-            for (let i = 0; i < clientes.length; i++) {
-                //console.log(clientes[i], 'llena');
-                let op = new Option(clientes[i].nombresYapellidos, clientes[i].id)
-                select.append(op);
-            }
-        }
 
         async function cargarHoras() {
             let horas = await fetch('controller/ControllerLigas.php', {
@@ -62,36 +32,6 @@ document.querySelector('body').onload = (e) => {
             }
         }
 
-        async function cargarEquipos() {
-            let equipos = await fetch('controller/ControllerTienda.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    accion: 'CargarEquipos',
-                    //data: '',
-                    csrf_token: document.getElementById('csrf_token').value
-                })
-            }).then((res) => {
-                this.disabled = false;
-                if (res.status == 200) {
-                    return res.json()
-                }
-            }).catch((res) => {
-                this.disabled = false;
-                //console.error(res.statusText);
-                return res;
-            })
-
-            let select = document.getElementById('equipo');
-            for (let i = 0; i < equipos.length; i++) {
-                //console.log(equipos[i], 'llena');
-                let op = new Option(equipos[i].nombre, equipos[i].id)
-                select.append(op);
-            }
-        }
-
         let minDemas = 0;
         async function cargarMinDemas() {
             let min = await fetch('controller/ControllerLigas.php', {
@@ -115,29 +55,6 @@ document.querySelector('body').onload = (e) => {
             })
 
             minDemas = min.minDeMasLiga;
-        }
-
-        async function claveCaja(clave) {
-            return await fetch('controller/ControllerLigas.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    accion: 'ClaveCaja',
-                    data: {clave},
-                    csrf_token: document.getElementById('csrf_token').value
-                })
-            }).then((res) => {
-                this.disabled = false;
-                if (res.status == 200) {
-                    return res.json();
-                }
-            }).catch((res) => {
-                this.disabled = false;
-                //console.error(res.statusText);
-                return res;
-            })
         }
 
         let validarForm1;
@@ -247,94 +164,60 @@ document.querySelector('body').onload = (e) => {
             //console.log(valid);
             
             if(valid && !valid.validationMessage){
-                Swal.fire({
-                    title: 'necesitas la clave de la caja para agregar',
-                    input: 'password',
-                    inputPlaceholder: 'Clave 4 digitos',
-                    inputAttributes: {
-                        'minlength': '4',
-                        'maxlength': '4',
-                        'oninput': "this.value = this.value.replace(/[^0-9]/g, '')"
-                    },
-                    inputValidator: (value) => {
-                        if (!value) {
-                            return '¡El campo no puede estar vacío!'
-                        }
-                    },
-                    showCancelButton: true,
-                    confirmButtonText: 'Ingresar Liga'
-                }).then(async (result) => {
-                    //console.log(result);
-                    if (result.isConfirmed) {
-                        let val = await claveCaja(result.value);
-                        if (val) {
-                            this.disabled = true;
-                            let edta = form.crearObjetoJson()
-                            //console.log(horDemas, minDemas);
-                            if (fechaDefault.checked) {
-                                edta['fechaInicio'] = form.obtenerFechaHoraServer((new Date().getTime() + minDemas * 60000));
-                                edta['fechaFin'] = form.obtenerFechaHoraServer((new Date().getTime()), minDemas, horDemas);
-                            } else {
-                                edta['fechaInicio'] = form.obtenerFechaHoraServer(fechaInicio.value, minDemas);
-                                edta['fechaFin'] = form.obtenerFechaHoraServer(fechaInicio.value, minDemas, horDemas);
-                            }
-                            //console.log(edta);
-
-                            let rtda = await fetch('controller/ControllerLigas.php', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify({
-                                    accion: 'Vender',
-                                    data: edta,
-                                    csrf_token: document.getElementById('csrf_token').value
-                                })
-                            }).then((res) => {
-                                this.disabled = false;
-                                if (res.status == 200) {
-                                    return res.json()
-                                }
-                            }).catch((res) => {
-                                this.disabled = false;
-                                //console.error(res.statusText);
-                                return res;
-                            })
-
-                            console.log(rtda);
-                        } else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Clave Incorrecta',
-                                showConfirmButton: false,
-                                timer: 1500
-                            }).then((result) => {
-                                if (result.dismiss == 'timer' && result.isDismissed) {
-                                    validarForm1.limpiar();
-                                    validarForm2.limpiar();
-                                    validarForm3.limpiar();
-                                    validarForm4.limpiar();
-                                    validarForm5.limpiar();
-                                    validarForm6.limpiar();
-                                    validarForm7.limpiar();
-                                    validarForm8.limpiar();
-                                }else{
-                                    //location.href = location.href;
-                                    alert('no seleciona ninguna op');
-                                }
-                            })
-                        }
-                    }else{
-                        validarForm1.limpiar();
-                        validarForm2.limpiar();
-                        validarForm3.limpiar();
-                        validarForm4.limpiar();
-                        validarForm5.limpiar();
-                        validarForm6.limpiar();
-                        validarForm7.limpiar();
-                        validarForm8.limpiar();
+                msgClave(async function () {
+                    this.disabled = true;
+                    let edta = form.crearObjetoJson();
+                    //console.log(horDemas, minDemas);
+                    if (fechaDefault.checked) {
+                        edta['fechaInicio'] = form.obtenerFechaHoraServer((new Date().getTime()), minDemas);
+                        edta['fechaFin'] = form.obtenerFechaHoraServer((new Date().getTime()), minDemas, horDemas);
+                    } else {
+                        edta['fechaInicio'] = form.obtenerFechaHoraServer(fechaInicio.value, minDemas);
+                        edta['fechaFin'] = form.obtenerFechaHoraServer(fechaInicio.value, minDemas, horDemas);
                     }
-                })
+                    //console.log(edta);
+
+                    let rdta = await fetch('controller/ControllerLigas.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            accion: 'Vender',
+                            data: edta,
+                            csrf_token: document.getElementById('csrf_token').value
+                        })
+                    }).then((res) => {
+                        this.disabled = false;
+                        if (res.status == 200) {
+                            return res.json()
+                        }
+                    }).catch((res) => {
+                        this.disabled = false;
+                        //console.error(res.statusText);
+                        return res;
+                    })
+
+                    //console.log(rdta);
+                    if (rdta) {
+                        Swal.fire({
+                            title: '¡Liga Ingresada!',
+                            text: "Quieres mantenerte en la página o ir al home",
+                            icon: 'success',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Mantenerme',
+                            cancelButtonText: 'Ir Home'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                location.href = location.href;
+                            }else{
+                                location.href = 'trabajando';
+                            }
+                        })
+                    }
+                }, location.href)
             }
         });
     })();
