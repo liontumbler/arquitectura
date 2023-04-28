@@ -27,3 +27,5 @@ AND fechaFin is null;
 
 INSERT INTO `tienda` (`id`, `cantidad`, `total`, `tipoPago`, `fecha`, `idProducto`, `idGimnasio`, `idTrabajado`, `idTrabajador`, `idCliente`) 
 VALUES (NULL, '1', '100000', 'debe', CURRENT_TIMESTAMP, '1', '1', '1', '2', '1');
+
+DELETE FROM `listapagos` WHERE pago = "Tienda"

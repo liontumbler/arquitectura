@@ -36,12 +36,14 @@ class PaginaOnce extends Web implements PaginaX
                         <div class="tab-pane fade show active" id="quienDebe" role="tabpanel" aria-labelledby="quienDebe-tab">
                             <div class="row g-3 mt-3">
                                 <div class="col-lg-2 col-sm-4">
-                                    <label for="nombre" class="visually-hidden">Nombre Y Apellido</label>
-                                    <input type="text" class="form-control" id="nombre" placeholder="Nombre Y Apellido" minlength="1" maxlength="50">
+                                    <label for="cliente" class="visually-hidden">Clientes</label>
+                                    <select id="cliente" class="form-select">
+                                        <option selected value="">Seleccione una opción</option>
+                                    </select>
                                 </div>
                                 <div class="col-lg-2 col-sm-4">
                                     <label for="documento" class="visually-hidden">Documento</label>
-                                    <input type="number" class="form-control" id="documento" placeholder="Documento" required min="1" max="999999999999">
+                                    <input type="number" class="form-control" id="documento" placeholder="Documento" min="1" max="999999999999">
                                 </div>
                                 <div class="col-lg-2 col-sm-4 d-grid gap-2">
                                     <button type="button" class="btn btn-primary mb-3" id="buscar">Buscar</button>
@@ -86,10 +88,17 @@ class PaginaOnce extends Web implements PaginaX
         <script>
             document.querySelector('body').onload = (e) => {
                 (function () {
-                    let validarForm1 = new Validardor(['nombre', 'documento']);
+                    let validarForm1;
+
+                    let resCli = cargarClientes();
                     let $table = $('#quienDebeTable')
 
+                    resCli.then(function () {
+                        validarForm1 = new Validardor(['cliente', 'documento']);
+                    })
+                    
                     document.getElementById('buscar').addEventListener('click', async function(e) {
+
                         let valid = validarForm1.validarCampos();
                         console.log(valid);
                         if(valid && !valid.validationMessage){
@@ -120,110 +129,9 @@ class PaginaOnce extends Web implements PaginaX
 
                             console.log(rest);
 
-                            crearTabla(data);
+                            crearTabla(rest);
                         }
-                        
                     })
-
-                    let data = [{
-                            id: 1,
-                            name: 'Item 1',
-                            price: '$1',
-                            monto: 10000,
-                            pago: 'debe'
-                        },
-                        {
-                            id: 2,
-                            name: 'Item 2',
-                            price: '$2',
-                            monto: 10000,
-                            pago: 'pazYsalvoEfectivo'
-                        },
-                        {
-                            id: 2,
-                            name: 'Item 2',
-                            price: '$2',
-                            monto: 10000,
-                            pago: 'debe'
-                        },
-                        {
-                            id: 2,
-                            name: 'Item 2',
-                            price: '$2',
-                            monto: 10000,
-                            pago: 'pazYsalvoDigital'
-                        },
-                        {
-                            id: 2,
-                            name: 'Item 2',
-                            price: '$2',
-                            monto: 10000,
-                            pago: 'digital'
-                        },
-                        {
-                            id: 2,
-                            name: 'Item 2',
-                            price: '$2',
-                            monto: 10000,
-                            pago: 'efectivo'
-                        },
-                        {
-                            id: 2,
-                            name: 'Item 2',
-                            price: '$2',
-                            monto: 10000,
-                            pago: 'debe'
-                        },
-                        {
-                            id: 2,
-                            name: 'Item 2',
-                            price: '$2',
-                            monto: 10000,
-                            pago: 'debe'
-                        },
-                        {
-                            id: 2,
-                            name: 'Item 2',
-                            price: '$2',
-                            monto: 10000,
-                            pago: 'debe'
-                        },
-                        {
-                            id: 2,
-                            name: 'Item 2',
-                            price: '$2',
-                            monto: 10000,
-                            pago: 'debe'
-                        },
-                        {
-                            id: 2,
-                            name: 'Item 2',
-                            price: '$2',
-                            monto: 10000,
-                            pago: 'debe'
-                        },
-                        {
-                            id: 2,
-                            name: 'Item 2wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww',
-                            price: '$2',
-                            monto: 10000,
-                            pago: 'debe'
-                        },
-                        {
-                            id: 2,
-                            name: 'Item 2',
-                            price: '$2',
-                            monto: 10000,
-                            pago: 'debe'
-                        },
-                        {
-                            id: 2,
-                            name: 'Item 2',
-                            price: '$2',
-                            monto: 10000,
-                            pago: 'debe'
-                        }
-                    ];
 
                     function crearTabla(dataT) {
                         $table.bootstrapTable({
@@ -271,7 +179,7 @@ class PaginaOnce extends Web implements PaginaX
                                 switchable: false,
                                 sortable: false,
                             }, {
-                                field: 'name',
+                                field: 'tipoDeuda',
                                 title: 'Tipo Deuda',
                                 width: '150',
                                 widthUnit: 'px',
@@ -282,11 +190,19 @@ class PaginaOnce extends Web implements PaginaX
                                 },
                                 formatter: function(value, row, index) {
                                     return '<div style="width: inherit; overflow:hidden; white-space:nowrap; text-overflow: ellipsis;">' +
-                                        row.name +
+                                        row.tipoDeuda +
                                         '</div>';
                                 },
                             }, {
-                                field: 'monto', //price
+                                field: 'descripcion',
+                                title: 'descripcion',
+                                width: '100',
+                                widthUnit: 'px',
+                                halign: 'center',
+                                align: 'center',
+                                sortable: true,
+                            }, {
+                                field: 'total',
                                 title: 'Valor',
                                 width: '100',
                                 widthUnit: 'px',
@@ -294,7 +210,7 @@ class PaginaOnce extends Web implements PaginaX
                                 footerFormatter: function(data) {
                                     let field = this.field
                                     return '$' + data.map(function(row) {
-                                        if (row.pago != 'debe') {
+                                        if (row.tipoPago != 'debe') {
                                             return +row[field];
                                         } else {
                                             return +0;
@@ -304,7 +220,7 @@ class PaginaOnce extends Web implements PaginaX
                                     }, 0)
                                 }
                             }, {
-                                field: 'price',
+                                field: 'fecha',
                                 title: 'Fecha',
                                 width: '215',
                                 widthUnit: 'px',
@@ -326,7 +242,7 @@ class PaginaOnce extends Web implements PaginaX
                                 }
                             }, {
                                 title: 'Pagar',
-                                field: 'pago',
+                                field: 'tipoPago',
                                 width: '100',
                                 widthUnit: 'px',
                                 align: 'center',
@@ -337,18 +253,18 @@ class PaginaOnce extends Web implements PaginaX
                                     let checked = '';
                                     if (value == 'debe') {
                                         checked = 'checked'
-                                        row.pago = true
+                                        row.tipoPago = true
                                     }
 
                                     return '<input class="form-check-input checkPago" type="checkbox" ' + checked + '>'
                                 },
                                 events: {
                                     'click .checkPago': function(e, value, row, index) {
-                                        row.pago = !row.pago
+                                        row.tipoPago = !row.tipoPago
 
                                         let total = '$' + $table.bootstrapTable('getData').map(function(rw) {
-                                            if (rw.pago) {
-                                                return +rw['monto'];
+                                            if (rw.tipoPago) {
+                                                return +rw.total;
                                             } else {
                                                 return +0;
                                             }
@@ -357,7 +273,7 @@ class PaginaOnce extends Web implements PaginaX
                                         }, 0)
 
                                         //$('.fixed-table-footer .th-inner')[2].textContent = total;
-                                        $('tfoot .th-inner')[2].textContent = total;
+                                        $('tfoot .th-inner')[3].textContent = total;
                                     },
                                 },
                                 footerFormatter: function(data) {
@@ -409,33 +325,38 @@ class PaginaOnce extends Web implements PaginaX
 
                             //fdta = fdta.filter(rw => rw.pago != 'debe');
 
-                            let dta = $table.bootstrapTable('getData').filter(rw => rw.pago != false);
+                            let dta = $table.bootstrapTable('getData').filter(rw => rw.tipoPago != false);
                             let tipoPago = document.querySelector('input[name="tipoPago"]:checked').value
-                            let total = document.querySelectorAll('tfoot .th-inner')[2].textContent.replace('$', '');
+                            let total = document.querySelectorAll('tfoot .th-inner')[3].textContent.replace('$', '');
 
+                            dta.push({'pago': tipoPago, 'idCliente': document.getElementById('cliente').value});
                             console.log(dta, tipoPago, total);
+                            msgClave(async function () {
+                                let rdta = await fetch('controller/ControllerQuienDebe.php', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({
+                                        accion: 'Pagar',
+                                        data: dta,
+                                        csrf_token: document.getElementById('csrf_token').value
+                                    })
+                                }).then((res) => {
+                                    this.disabled = false;
+                                    if (res.status == 200) {
+                                        return res.json()
+                                    }
+                                }).catch((res) => {
+                                    this.disabled = false;
+                                    //console.error(res.statusText);
+                                    return res;
+                                })
 
-                            Swal.fire({
-                                title: 'Are you sure?',
-                                text: "You won't be able to revert this!",
-                                icon: 'warning',
-                                showCancelButton: true,
-                                confirmButtonColor: '#3085d6',
-                                cancelButtonColor: '#d33',
-                                confirmButtonText: 'Yes, delete it!'
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    Swal.fire(
-                                        'Deleted!',
-                                        'Your file has been deleted.',
-                                        'success'
-                                    )
-                                }
-                            })
+                                console.log(rdta);
+                            }, location.href)
                         });
                     }
-
-                    
                 })();
             }
             

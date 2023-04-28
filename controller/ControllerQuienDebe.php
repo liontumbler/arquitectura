@@ -11,7 +11,15 @@ class ControllerQuienDebe extends Controller
 
     public function postOptenerDeudor($dta)
     {
-        return $this->model('ModelQuienDebe')->optenerDeudor($dta->nombre, $dta->documento);
+        if (empty($dta->cliente) && empty($dta->documento)) {
+            return false;
+        }
+        return $this->model('ModelQuienDebe')->optenerDeudor($dta->cliente, $dta->documento);
+    }
+
+    public function postPagar($dta)
+    {
+        return $this->model('ModelQuienDebe')->pagar($dta);
     }
 }
 

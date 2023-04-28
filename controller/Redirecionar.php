@@ -22,7 +22,13 @@ function redirec($redirec)
         if (isset($vars->data) && $vars->data != ''){
             //print_r($vars->data);
             foreach ($vars->data as $i => $value) {
-                $vars->data->$i = preg_replace('/^<SCRIPT>|<\/SCRIPT>|<script>|<\/script>|<\/|<|>|=/', '', $value);
+                if (!is_object($value) && !is_array($value)) {
+                    $vars->data->$i = preg_replace('/^<SCRIPT>|<\/SCRIPT>|<script>|<\/script>|<\/|<|>|=/', '', $value);
+                } else {
+                    foreach ($value as $e => $val) {
+                        $value->$e = preg_replace('/^<SCRIPT>|<\/SCRIPT>|<script>|<\/script>|<\/|<|>|=/', '', $val);
+                    }
+                }
             }
             $data = $vars->data;
         }
