@@ -248,7 +248,7 @@ class Validardor {
             let inputMask = this[campoMask];
 
             if(inputMask.type == 'radio'){
-                let value = (inputMask.value && inputMask.value != 'on') ? inputMask.value : 1;
+                let value = (document.querySelector('[name="'+campo+'"]:checked').value && document.querySelector('[name="'+campo+'"]:checked').value != 'on') ? document.querySelector('[name="'+campo+'"]:checked').value : 1;
                 data[campo] = value;
             }else if(inputMask.type == 'file' && inputMask.files.length > 0){
                 data['files'] = input.files;
