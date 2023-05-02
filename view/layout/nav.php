@@ -13,7 +13,7 @@
                     <a class="nav-link" href="loginTrabajador">Trabajadores</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="admin">Administradores</a>
+                    <a class="nav-link" href="loginAdmin">Administradores</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -27,9 +27,6 @@
                         </li>
                         <li><a class="dropdown-item" href="">Preguntas frecuentes</a></li>
                     </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="" tabindex="-1" aria-disabled="true">Disabled</a>
                 </li>
             </ul>
             <form class="d-flex">

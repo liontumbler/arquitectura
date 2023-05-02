@@ -1,14 +1,11 @@
 <?php
-require_once 'Model.php';
-
 class ModelLogin extends Model
 {
     public function login($usu, $clave, $caja)
     {
         //return "$usu, $clave, $caja";
-        $cn = $this->conectar();
 
-        $res = $cn->read('trabajador', ['nickname' => $usu], 'nickname=:nickname', 'clave, id, idGimnasio, nombresYapellidos, nickname, correo');
+        $res = $this->obtenerTrabajador($usu);
         //return $res;
         if (!$res || count($res) == 0) {
             return $res;
@@ -20,7 +17,7 @@ class ModelLogin extends Model
             $nickname = $res[0]['nickname'];
             $correo = $res[0]['correo'];
             
-            $gimnasio = $cn->read('gimnasio', ['id' => $idGimnasio], "id=:id", 'color, background, habilitado, nombre, id');
+            $gimnasio = $this->obtenerGimnasio($idGimnasio);
             //return $gimnasio;
 
             $color = $gimnasio[0]['color'];
@@ -32,21 +29,12 @@ class ModelLogin extends Model
             if ($habilitado) {
                 if ($clave != '' && password_verify(sha1($clave), $claveDb)) {
                     //si existe en registro en caja sin cerrar tomo la sesion que no a cerrado
-                    $yaInicioCaja = $cn->read('trabajado', ['idGimnasio' => $idGimnasio, 'idTrabajador' => $idTrabajador], "
-                    `idGimnasio`=:idGimnasio
-                    AND `idTrabajador`=:idTrabajador
-                    AND fechaFin is null;", 'id, iniciCaja');//`fechaInicio` > '".date('Y-m-d')." 00:00:00' AND `fechaInicio` < '".date('Y-m-d')." 23:59:59'
+                    $yaInicioCaja = $this->obtenerTrabajado($idGimnasio, $idTrabajador);//`fechaInicio` > '".date('Y-m-d')." 00:00:00' AND `fechaInicio` < '".date('Y-m-d')." 23:59:59'
                     //return $yaInicioCaja;
                     $ini = false;
                     $trabajadoId = '';
                     if (!$yaInicioCaja || count($yaInicioCaja) == 0) {
-                        $trabajado = [
-                            'fechaInicio' => date('Y-m-d H:i:s'),
-                            'iniciCaja' => $caja,
-                            'idGimnasio' => $idGimnasio,
-                            'idTrabajador' => $idTrabajador
-                        ];
-                        $insert = $cn->create('trabajado', $trabajado);
+                        $insert = $this->crearTrabajado($caja, $idGimnasio, $idTrabajador);
                         //return $insert;
                         if ($insert > 0) {
                             $_SESSION['caja'] = $caja;
@@ -70,17 +58,9 @@ class ModelLogin extends Model
                     $_SESSION['background'] = $background;//'#ff8d34';
                     $_SESSION['trabajadoId'] = $trabajadoId;
 
-                    //actualizar clave de caja  claveCaja, enviar codigo por correo
-                    $claveCajaNueva = rand(1000, 9999);
-                    $updateTrabajador = $cn->update('trabajador', ['claveCaja' => $claveCajaNueva], $idTrabajador);
+                    $updateTrabajador = $this->actualizarCaja($idTrabajador);
                     //return $updateTrabajador;
-                    //TODO:quitar o cometar if cuando se pase la clave por correo
-                    if ($updateTrabajador > 0) {
-                        $_SESSION['claveCaja'] = $claveCajaNueva;
-                    } else {
-                        $_SESSION['claveCaja'] = 0000;
-                    }
-                    
+
                     return $ini;
                 }
             } else {
@@ -97,6 +77,4 @@ class ModelLogin extends Model
         $this->cerrarSesion();
     }
 }
-
-//echo __NAMESPACE__;
 ?>

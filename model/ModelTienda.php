@@ -1,46 +1,21 @@
 <?php
-require_once 'Model.php';
-
 class ModelTienda extends Model
 {
     public function vender($data)
     {
-        $cn = $this->conectar();
-        //return $_SESSION;
-        
-        $producto = $cn->read('producto', ['id' => $data->producto], 'id=:id', 'precio');
+        $producto = $this->obtenerProducto($data->producto);
         $total = $data->cantidad * $producto[0]['precio'];
         //return $producto;
         
         if (empty($data->cliente)) {
-
-            $cliente = [
-                'nombresYapellidos' => $data->nombreYapellido,
-                'documento' => $data->documento,
-                'idEquipo' => $data->equipo,
-                'idGimnasio' => $_SESSION['gimnasioId']
-            ];
-
-            $resCliente = $cn->create('cliente', $cliente);
-            //return $resCliente;
-            $idCliente = $resCliente;
+            $idCliente = $this->crearCliente($data->nombreYapellido, $data->documento, $data->equipo, $_SESSION['gimnasioId']);
         } else {
             $idCliente = $data->cliente;
         }
+        //return $resCliente;
 
         if ($idCliente > 0) {
-            $tienda = [
-                'cantidad' => $data->cantidad,
-                'total' => $total,
-                'tipoPago' => (empty($data->tipoPago) ? 'debe': $data->tipoPago),
-                'idProducto' => $data->producto,
-                'idGimnasio' => $_SESSION['gimnasioId'],
-                'idTrabajado' => $_SESSION['trabajadoId'],
-                'idTrabajador' => $_SESSION['trabajadorId'],
-                'idCliente' => $idCliente
-            ];
-    
-            $resTienda = $cn->create('tienda', $tienda);
+            $resTienda = $this->crearTienda($data, $idCliente, $total, $_SESSION['gimnasioId'], $_SESSION['trabajadoId'], $_SESSION['trabajadorId']);
 
             return ($resTienda > 0);
         }

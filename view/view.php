@@ -1,4 +1,6 @@
 <?php
+require_once 'controller/ViewController.php';
+
 interface PaginaX
 {
     public function content();
@@ -123,6 +125,12 @@ class Web
             </body>
         </html>
         <?php
+    }
+
+    public function model($model, $metodo = null, $data = null)
+    {
+        $vc = new ViewController($model);
+        return $vc->metodo($metodo, $data);
     }
 }
 ?>

@@ -1,6 +1,5 @@
 <?php
 require_once 'Controller.php';
-use Controllers\Controller;
 
 class ControllerQuienDebe extends Controller
 {
@@ -23,6 +22,5 @@ class ControllerQuienDebe extends Controller
     }
 }
 
-require_once 'Redirecionar.php';
 echo redirec('ControllerQuienDebe');
 ?>

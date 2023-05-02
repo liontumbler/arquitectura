@@ -1,23 +1,18 @@
 <?php
-require_once 'Model.php';
-
 class ModelQuienDebe extends Model
 {
     public function optenerDeudor($client, $documento)
     {
-        $cn = $this->conectar();
-        $arr = ['documento' => $documento];
-        $cadena = '`documento`=:documento';
         if (empty($client)) {
             $arr = ['documento' => $documento];
             $cadena = '`documento`=:documento';
-            $cliente = $cn->read('cliente', $arr, $cadena, 'id');
+            $cliente = $this->obtenerClienteId($arr, $cadena);
         } elseif (empty($documento)){
             $cliente[0]['id'] = $client;
         } else {
             $arr = ['documento' => $documento, 'id' => $client];
             $cadena = '`documento`=:documento AND `id`=:id';
-            $cliente = $cn->read('cliente', $arr, $cadena, 'id');
+            $cliente = $this->obtenerClienteId($arr, $cadena);
         }
         //$arr = ['nombresYapellidos' => "%{$nombre}%", 'documento' => $documento];
         //$cadena = '`documento`=:documento AND `nombresYapellidos`LIKE :nombresYapellidos';
@@ -28,19 +23,37 @@ class ModelQuienDebe extends Model
             $cliente = $cliente[0]['id'];
 
             $returnArray = [];
-            $tienda = $cn->read('tienda', ['idCliente' => $cliente, 'tipoPago' => 'debe'], '`idCliente`=:idCliente AND `tipoPago`=:tipoPago', 'id, fecha, tipoPago, idProducto, total, cantidad');
+            $tienda = $this->obtenerTiendaDefault($cliente);
             //return $tienda;
             foreach ($tienda as $value) {
-                array_push($returnArray, array('id' => $value['id'], 'tipoPago' => $value['tipoPago'], 'total' => $value['total'], 'fecha' => $value['fecha'], 'tipoDeuda' => 'Tienda',
-                'descripcion' => 'el producto '.$value['idProducto'].' X '.$value['cantidad']));
+                array_push(
+                    $returnArray,
+                    array(
+                        'id' => $value['id'],
+                        'tipoPago' => $value['tipoPago'],
+                        'total' => $value['total'],
+                        'fecha' => $value['fecha'],
+                        'tipoDeuda' => 'Tienda',
+                        'descripcion' => 'el producto '.$value['idProducto'].' X '.$value['cantidad']
+                    )
+                );
             }
             //return $returnArray;
 
-            $ligas = $cn->read('ligas', ['idCliente' => $cliente, 'tipoPago' => 'debe'], '`idCliente`=:idCliente AND `tipoPago`=:tipoPago', 'id, fechaInicio, tipoPago, total');
+            $ligas = $this->obtenerLigaDefault($cliente);
             //return $ligas;
             foreach ($ligas as $value) {
-                array_push($returnArray, array('id' => $value['id'], 'tipoPago' => $value['tipoPago'], 'total' => $value['total'], 'fecha' => $value['fechaInicio'], 'tipoDeuda' => 'Liga',
-                'descripcion' => '1 liga'));
+                array_push(
+                    $returnArray,
+                    array(
+                        'id' => $value['id'],
+                        'tipoPago' => $value['tipoPago'],
+                        'total' => $value['total'],
+                        'fecha' => $value['fechaInicio'],
+                        'tipoDeuda' => 'Liga',
+                        'descripcion' => '1 liga'
+                    )
+                );
             }
             return $returnArray;
 
@@ -51,9 +64,6 @@ class ModelQuienDebe extends Model
 
     public function pagar($dta)
     {
-        $cn = $this->conectar();
-
-        //listapagos
         $listapagos = [];
 
         $pagos = [];
@@ -82,16 +92,14 @@ class ModelQuienDebe extends Model
         $pagos['idTrabajador'] = $_SESSION['trabajadorId'];
         //return $pagos;
 
-        $resTienda = $cn->create('pagos', $pagos);
+        $resTienda = $this->crearPagos($pagos);
         //return $resTienda;
 
         if ($resTienda > 0) {
-            //hacer inssercion de la lista
-
             //return $listapagos;
             foreach ($listapagos as $value) {
                 $value['idPagos'] = $resTienda;
-                $resListapagos = $cn->create('listapagos', $value);
+                $resListapagos = $this->crearListapagos($value);
 
                 //actualizar ligas o tienda segun corresponda a 'padoDeuda' 
             }

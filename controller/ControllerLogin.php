@@ -1,6 +1,5 @@
 <?php
 require_once 'Controller.php';
-use Controllers\Controller;
 
 class ControllerLogin extends Controller
 {
@@ -21,6 +20,5 @@ class ControllerLogin extends Controller
     }
 }
 
-require_once 'Redirecionar.php';
 echo redirec('ControllerLogin');
 ?>

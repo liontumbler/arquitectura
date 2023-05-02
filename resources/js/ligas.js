@@ -199,7 +199,7 @@ document.querySelector('body').onload = (e) => {
                     })
 
                     //console.log(rdta);
-                    if (rdta) {
+                    if (rdta == true) {
                         Swal.fire({
                             title: '¡Liga Ingresada!',
                             text: "Quieres mantenerte en la página o ir al home",
@@ -216,6 +216,19 @@ document.querySelector('body').onload = (e) => {
                                 location.href = 'trabajando';
                             }
                         })
+                    }else{
+                        if (rdta == -1) {
+                            clienteYaExiste(function (res) {
+                                validarForm1.limpiar();
+                                validarForm2.limpiar();
+                                validarForm3.limpiar();
+                                validarForm4.limpiar();
+                                validarForm5.limpiar();
+                                validarForm6.limpiar();
+                                validarForm7.limpiar();
+                                validarForm8.limpiar();
+                            })
+                        }
                     }
                 }, location.href)
             }

@@ -1,6 +1,5 @@
 <?php
 require_once 'Controller.php';
-use Controllers\Controller;
 
 class ControllerLigas extends Controller
 {
@@ -34,6 +33,5 @@ class ControllerLigas extends Controller
     
 }
 
-require_once 'Redirecionar.php';
 echo redirec('ControllerLigas');
 ?>

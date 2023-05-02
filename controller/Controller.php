@@ -1,5 +1,9 @@
 <?php
-namespace Controllers;
+require_once 'Redirecionar.php';
+require_once '../db/Logger.php';
+require_once '../db/Database.php';
+require_once '../db/ConsultasDB.php';
+require_once '../model/Model.php';
 
 $variablesPeticion = file_get_contents('php://input');
 $vars = json_decode($variablesPeticion);

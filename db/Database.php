@@ -4,12 +4,17 @@ class Database {
     private $username;
     private $password;
     private $database;
-    private $cn;
-    private $logger;
+    protected $cn;
+    protected $logger;
 
     public function __construct($host, $username, $password, $database)
     {
-        $this->logger = new Logger('../logs/gimnacioDb.log');
+        if (file_exists('../logs')) {
+            $this->logger = new Logger('../logs/gimnacioDb.log');
+        } else {
+            $this->logger = new Logger('logs/gimnacioDb.log');
+        }
+        
         $this->host = $host;
         $this->username = $username;
         $this->password = $password;
@@ -65,9 +70,12 @@ class Database {
             ServerResponse::getResponse(200);
             return $this->cn->lastInsertId();//$statement->rowCount();
         } catch (PDOException $e) {
-            
-            $this->logger->log('Error: '."Failed to create a record in $table: " . $e->getMessage());
-            ServerResponse::getResponse(500);
+            if (strpos($e->getMessage(), '1062') !== false) {//datos duplicados
+                return -1;
+            } else {
+                $this->logger->log('Error: '."Failed to create a record in $table: " . $e->getMessage());
+                ServerResponse::getResponse(500);
+            }
         }
     }
 

@@ -5,7 +5,7 @@ if (!$rutasLegitima) {
 } elseif (!isset($_SESSION['SesionTrabajador']) || !$_SESSION['SesionTrabajador']){
     header('Location: ./index');
 }
-//session_destroy();
+
 //echo $_SESSION['SesionTrabajador'];
 
 require_once 'view.php';
@@ -45,8 +45,8 @@ class PaginaOnce extends Web implements PaginaX
                                 <input type="text" class="form-control" id="nombreYapellido" placeholder="Nombre Y Apellido del Cliente" title="Nombre Y Apellido del Cliente" required minlength="1" maxlength="50">
                             </div>
                             <div class="col-lg-6 mb-1" id="divClienteD">
-                                <label for="documento" class="form-label">Documento *</label>
-                                <input type="number" class="form-control" id="documento" placeholder="Documento del Cliente" title="Documento del Cliente" required min="1" max="999999999999">
+                                <label for="documento" class="form-label">Documento</label>
+                                <input type="number" class="form-control" id="documento" placeholder="Documento del Cliente" title="Documento del Cliente" min="1" max="999999999999">
                             </div>
                             <div class="col-lg-12 mb-1" id="divClienteEQ">
                                 <label for="equipo" class="form-label">Equipo</label>

@@ -92,6 +92,17 @@ function msgClave(fun, redirec = location.href) {
     })
 }
 
+function clienteYaExiste(fun) {
+    Swal.fire({
+        icon: 'error',
+        title: 'El cliente ya existe',
+        showConfirmButton: false,
+        timer: 1500
+    }).then((result) => {
+        fun(result)
+    })
+}
+
 async function cargarClientes() {
     let clientes = await fetch('controller/ControllerTienda.php', {
         method: 'POST',
