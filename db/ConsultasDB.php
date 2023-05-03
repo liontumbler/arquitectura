@@ -1,8 +1,9 @@
 <?php
+include_once 'Conexion.php';
 class ConsultasDB extends Database {
     public function __construct()
     {
-        parent::__construct('92.204.97.231', 'edlion_admin', '[WeF!hXG{]V#', 'edlion_test1');
+        parent::__construct(HOST, USER, PASS, DB);
     }
 
     public function obtenerLigasPrecio($id)
