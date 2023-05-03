@@ -134,6 +134,7 @@ class PaginaOnce extends Web implements PaginaX
                     })
 
                     function crearTabla(dataT) {
+                        $table.bootstrapTable('destroy')
                         $table.bootstrapTable({
                             cache: false,
                             //toggle: 'quienDebeTable',
