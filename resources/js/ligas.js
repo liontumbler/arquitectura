@@ -57,6 +57,9 @@ document.querySelector('body').onload = (e) => {
             minDemas = min.minDeMasLiga;
         }
 
+        let audi;
+        let voz;
+
         let validarForm1;
         let validarForm2;
         let validarForm3;
@@ -84,6 +87,8 @@ document.querySelector('body').onload = (e) => {
                     validarForm6 = new Validardor(['nombreYapellido', 'documento', 'equipo', 'selectHora', 'tipoPago']);
                     validarForm7 = new Validardor(['nombreYapellido', 'documento', 'equipo', 'selectHora', 'fechaInicio']);
                     validarForm8 = new Validardor(['nombreYapellido', 'documento', 'equipo', 'selectHora', 'tipoPago', 'fechaInicio']);
+                    voz = new Voice().hoverTitle();
+                    audi = new PlaySound('resources/audio/iphone-notificacion.mp3');
                 })
             })
         })
@@ -135,6 +140,8 @@ document.querySelector('body').onload = (e) => {
         });
 
         document.getElementById('agregarLiga').addEventListener('click', async function(e) {
+            
+            //audi.reproducirAudio();
             //si es mas de las 11 no vender ligas
 
             let checkCliente = document.getElementById('checkCliente');

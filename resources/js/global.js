@@ -40,6 +40,79 @@ function endCargando() {
     }
 }
 
+class Voice {
+    #time = null;
+    #voice = null;
+    #nativeVoice = null;
+
+    constructor(){
+        if (!'speechSynthesis' in window) {
+            console.error('no soporta voz el navegador');
+        }else{
+            this.#nativeVoice = window.speechSynthesis;
+            this.#voice = new SpeechSynthesisUtterance();
+        }
+    }
+
+    validar() {
+        return (this.#voice && this.#nativeVoice);
+    }
+
+    hablar(text, voz = 7, velocidad = 1) {
+        if (this.validar() && this.#nativeVoice.getVoices()[voz]) {
+            this.#voice.voice = this.#nativeVoice.getVoices()[voz];//21
+            this.#voice.rate = velocidad;//2
+            //this.#voice.volume = 0.5;//1
+            this.#voice.text = text;
+            
+            this.#nativeVoice.speak(this.#voice);
+        }else{
+            console.error('El navegador no soporta voz');
+        }
+    }
+
+    hoverTitle() {
+        document.querySelectorAll('[title]').forEach((title) => {
+            title.addEventListener("mouseover", (e) => {
+                if (this.#voice.text == title.title && this.#nativeVoice.paused && this.#nativeVoice.speaking) {
+                    this.#nativeVoice.resume()
+                } else {
+                    this.#nativeVoice.cancel();
+                    this.#time = setTimeout(() => {
+                        this.hablar(title.title);
+                    }, 500);
+                }
+                //console.log(this.#voice, this.#nativeVoice, 1);
+            });
+        
+            title.addEventListener("mouseout", (e) => {
+                if (this.#nativeVoice.speaking) {
+                    this.#nativeVoice.pause();
+                }
+                clearTimeout(this.#time);
+            });
+        })
+    }
+}
+
+class PlaySound {
+    #audio;
+    constructor(rutaArchivo) {
+        this.#audio = new Audio(rutaArchivo);
+        this.#audio.preload = 'auto';
+        this.#audio.autoplay = true;
+        this.#audio.currentTime = 0.2;
+        this.#audio.id = 'voice';
+    }
+
+    reproducirAudio(fun = null) {
+        this.#audio.play();
+        this.#audio.onended = function (e) {
+            if(fun)
+                fun();
+        }
+    }
+}
 
 class Validardor {
     constructor(campos = []) {

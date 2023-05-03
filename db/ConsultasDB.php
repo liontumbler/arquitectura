@@ -20,9 +20,14 @@ class ConsultasDB extends Database {
         return $this->read('producto', []);
     }
 
-    public function obtenerProducto($producto)
+    public function obtenerProductoPrecio($producto)
     {
-        return $this->read('producto', ['id' => $producto], 'id=:id', 'precio');
+        $producto = $this->read('producto', ['id' => $producto], 'id=:id', 'precio');
+        if (count($producto) > 0) {
+            return $producto[0]['precio'];
+        } else {
+            return 0;
+        }
     }
 
     public function obtenerClienteId($arr, $cadena)

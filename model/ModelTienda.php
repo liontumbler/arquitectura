@@ -3,8 +3,8 @@ class ModelTienda extends Model
 {
     public function vender($data)
     {
-        $producto = $this->obtenerProducto($data->producto);
-        $total = $data->cantidad * $producto[0]['precio'];
+        $producto = $this->obtenerProductoPrecio($data->producto);
+        $total = $data->cantidad * $producto;
         //return $producto;
         
         if (empty($data->cliente)) {
