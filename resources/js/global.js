@@ -99,8 +99,6 @@ class PlaySound {
     #audio;
     constructor(rutaArchivo) {
         this.#audio = new Audio(rutaArchivo);
-        this.#audio.preload = 'auto';
-        this.#audio.autoplay = true;
         this.#audio.currentTime = 0.2;
         this.#audio.id = 'voice';
     }
