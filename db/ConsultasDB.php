@@ -131,12 +131,23 @@ class ConsultasDB extends Database {
     public function crearTrabajado($caja, $gimnasio, $trabajador)
     {
         $trabajado = [
-            'fechaInicio' => date('Y-m-d H:i:s'),
+            //'fechaInicio' => date('Y-m-d H:i:s'),
             'iniciCaja' => $caja,
             'idGimnasio' => $gimnasio,
             'idTrabajador' => $trabajador
         ];
         return $this->create('trabajado', $trabajado);
+    }
+
+    public function crearProducto($nombre, $precio, $gimnasio)
+    {
+        $producto = [
+            //'fecha' => date('Y-m-d H:i:s'),
+            'nombre' => $nombre,
+            'precio' => $precio,
+            'idGimnasio' => $gimnasio
+        ];
+        return $this->create('producto', $producto);
     }
 
     public function crearLigas($data, $idCliente, $total, $gimnasio, $trabajado, $trabajador)
