@@ -1,5 +1,5 @@
 #sideBar{
-    padding-top: 56px;
+    padding-top: 76.47px;/*56px*/
     width: 22%;
     z-index: 1029;
     display: none;
@@ -16,7 +16,7 @@
 }
 
 #contentConSidebar{
-    padding-top: 56px;
+    padding-top: 76.47px;/*56px*/
     width: 100%;
     display: block;
     margin: auto;
