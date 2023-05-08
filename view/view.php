@@ -90,6 +90,7 @@ class Web
                 <meta http-equiv="X-UA-Compatible" content="IE=edge">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <meta http-equiv="content-language" content="es-CO">
+                <link rel="icon" type="image/png" href="resources/img/adminLig.ico">
 
                 <!-- Chrome 25+, Firefox 23+ and Safari 7+ >
                 <meta http-equiv="Content-Security-Policy"
