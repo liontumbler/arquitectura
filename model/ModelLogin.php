@@ -16,6 +16,7 @@ class ModelLogin extends Model
             $nombreTrabajador = $res[0]['nombresYapellidos'];
             $nickname = $res[0]['nickname'];
             $correo = $res[0]['correo'];
+            $telefono = $res[0]['telefono'];
             
             $gimnasio = $this->obtenerGimnasio($idGimnasio);
             //return $gimnasio;
@@ -51,6 +52,7 @@ class ModelLogin extends Model
                     $_SESSION['trabajadorId'] = $idTrabajador;
                     $_SESSION['nombre'] = $nombreTrabajador;
                     $_SESSION['correo'] = $correo;
+                    $_SESSION['telefono'] = $telefono;
                     $_SESSION['nickName'] = $nickname;
                     $_SESSION['gimnasio'] = $nombreGim;
                     $_SESSION['gimnasioId'] = $gimnasioId;
@@ -58,8 +60,14 @@ class ModelLogin extends Model
                     $_SESSION['background'] = $background;//'#ff8d34';
                     $_SESSION['trabajadoId'] = $trabajadoId;
 
-                    $updateTrabajador = $this->actualizarCaja($idTrabajador);
+                    $medio = (!empty($telefono)) ? $telefono : $correo;
+                    $updateTrabajador = $this->actualizarCaja($idTrabajador, $medio);
                     //return $updateTrabajador;
+                    if ($updateTrabajador == -1) {
+                        $ini = $updateTrabajador;
+                    }elseif ($updateTrabajador == -2) {
+                        $ini = $updateTrabajador;
+                    }
 
                     return $ini;
                 }

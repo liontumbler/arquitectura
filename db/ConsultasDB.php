@@ -1,5 +1,6 @@
 <?php
 include_once 'Conexion.php';
+include_once 'Sms.php';
 class ConsultasDB extends Database {
     public function __construct()
     {
@@ -48,7 +49,10 @@ class ConsultasDB extends Database {
 
     public function obtenerTrabajador($trabajador)
     {
-        return $this->read('trabajador', ['nickname' => $trabajador], 'nickname=:nickname', 'clave, id, idGimnasio, nombresYapellidos, nickname, correo');
+        //$sms = new EnvioSMSLM(USERSMS, KEY);
+        //$sms->saldo()->credits;
+        //return $sms->preciosXPais();
+        return $this->read('trabajador', ['nickname' => $trabajador], 'nickname=:nickname', 'clave, id, idGimnasio, nombresYapellidos, nickname, correo, telefono');
     }
 
     public function obtenerTrabajado($gimnasio, $trabajador)
@@ -167,12 +171,26 @@ class ConsultasDB extends Database {
         return ($resTienda > 0);
     }
 
-    public function actualizarCaja($trabajador)
+    public function actualizarCaja($trabajador, $medio)
     {
-        //actualizar clave de caja  claveCaja, enviar codigo por correo
         $claveCajaNueva = rand(1000, 9999);
-        return $this->update('trabajador', ['claveCaja' => $claveCajaNueva], $trabajador);
-    }
+        $mj = 'El codigo para ingresar a la su caja el dia hoy '.date('Y-m-d H:i:s').' es '.$claveCajaNueva;
 
+        if (is_numeric($medio)) {
+            $sms = new EnvioSMSLM(USERSMS, KEY);
+            $smsRes = $sms->enviarSMS($mj, $medio);
+            if ($smsRes->code == '0') {
+                $this->update('trabajador', ['claveCaja' => $claveCajaNueva], $trabajador);
+                return 1;
+            }elseif ($smsRes->code == '403') {
+                return -1;
+            }elseif ($smsRes->code == '35') {
+                return -2;
+            }
+        }else{
+            //actualizar clave de caja  claveCaja, enviar codigo por correo
+            return 'correo';
+        }
+    }
 }
 ?>
