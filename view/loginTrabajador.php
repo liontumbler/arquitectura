@@ -27,15 +27,15 @@ class PaginaOnce extends Web implements PaginaX
                             <?= input_csrf_token(); ?>
                             <div class="col-lg-12 mb-1">
                                 <label for="nickname" class="form-label">Nickname *</label>
-                                <input type="text" class="form-control" id="nickname" placeholder="Dijite la nickname del trabajador" required minlength="1" maxlength="50" textarroba>
+                                <input type="text" class="form-control" id="nickname" placeholder="Digite la nickname del trabajador" required minlength="1" maxlength="50" textarroba>
                             </div>
                             <div class="col-lg-12 mb-1">
                                 <label for="clave" class="form-label">Clave *</label>
-                                <input type="password" class="form-control" id="clave" placeholder="Dijite la clave del trabajador" required minlength="1" maxlength="50">
+                                <input type="password" class="form-control" id="clave" placeholder="Digite la clave del trabajador" required minlength="1" maxlength="50">
                             </div>
                             <div class="col-lg-12 mb-1">
                                 <label for="caja" class="form-label">Caja *</label>
-                                <input type="number" class="form-control" id="caja" placeholder="Dijite el monto del efectivo" required max="1000000" min="0" value="0">
+                                <input type="number" class="form-control" id="caja" placeholder="Digite el monto del efectivo" required max="1000000" min="0" value="0">
                             </div>
                             <div class="col-lg-12 mb-1">
                                 <div class="d-grid gap-2">

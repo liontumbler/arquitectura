@@ -167,7 +167,7 @@ class Database {
         }
     }*/
 
-    public function generarArchivoInsertss($consulta, $parametros = array(), $nomArchivo = 'insert:') {//.date('Y-m-d H:i:s')
+    public function generarArchivoInsertss($consulta, $parametros = array(), $nomArchivo = 'insert:') {
         $resultado = $this->cn->prepare($consulta);
         $resultado->execute($parametros);
         $tabla = preg_match('/SELECT.*FROM\s+`?(\w+)`?\s*(.*)/i', $consulta, $match) ? $match[1] : 'tabla';

@@ -7,16 +7,21 @@ VALUES (NULL, 'lion_3214@hotmail.com', 'admin@admin', 'edwin velasquez', '$2y$11
 INSERT INTO `trabajador` (`id`, `nombresYapellidos`, `nickname`, `correo`, `documento`, `clave`, `claveCaja`, `idGimnasio`) 
 VALUES (NULL, 'test', 'test@test', 'lion_3214@hotmail.com', '1033741932', '$2y$11$mjwkbMoRVY/tlZ9ttblRzOomcrFL2JhbGJRz1bpEPcrr9Pn/NtYHy', NULL, '1');
 
-INSERT INTO `equipo` (`id`, `nombre`) VALUES (NULL, 'N/A'), (NULL, 'BCA');
+INSERT INTO `equipo` (`id`, `nombre`, `idGimnasio`) 
+VALUES (NULL, 'BCA - extreme', '1'), (NULL, 'NPC', '1');
 
-INSERT INTO `cliente` (`id`, `nombresYapellidos`, `documento`, `idGimnasio`, `idEquipo`) 
-VALUES (NULL, 'Nicolás Cuadros', '1033741944', '1', '2');
+INSERT INTO `cliente` (`id`, `correo`, `telefono`, `nombresYapellidos`, `documento`, `idGimnasio`, `idEquipo`) 
+VALUES (NULL, 'lion_3214@hotmail.com', '3102742576', 'edwin Velasquez', '1033741931', '1', '1');
 
 INSERT INTO `horaliga` (`id`, `nombre`, `horas`, `precio`, `idGimnasio`) 
 VALUES (NULL, '1 Hora', '1.0', '7000', '1');
 
 INSERT INTO `producto` (`id`, `nombre`, `precio`, `fecha`, `idGimnasio`)
 VALUES (NULL, 'papa 35gr', '2000', CURRENT_TIMESTAMP, '1');
+
+
+
+
 
 
 

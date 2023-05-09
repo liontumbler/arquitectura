@@ -5,7 +5,7 @@ class ModelLiga extends Model
     {
         $total = $this->obtenerLigasPrecio($data->selectHora);//$cn->read('horaliga', ['id' => $data->selectHora], 'id=:id', 'precio');
         if (empty($data->cliente)) {
-            $idCliente = $this->crearCliente($data->nombreYapellido, $data->documento, $data->equipo, $_SESSION['gimnasioId']);
+            $idCliente = $this->crearCliente($data, $_SESSION['gimnasioId']);
         } else {
             $idCliente = $data->cliente;
         }

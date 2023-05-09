@@ -50,7 +50,7 @@ document.querySelector('body').onload = (e) => {
                             validar.limpiar();
                         }else{
                             //location.href = location.href;
-                            alert('no seleciona ninguna op');
+                            alert('No selecciona ninguna op');
                         }
                     })
                 }else if(rdta == true){
@@ -65,13 +65,13 @@ document.querySelector('body').onload = (e) => {
                             location.href = 'trabajando';
                         }else{
                             //location.href = location.href;
-                            alert('no seleciona ninguna op');
+                            alert('No selecciona ninguna op');
                         }
                     })
                 }else if(rdta == 600){
                     //ya inicio caja
                     Swal.fire({
-                        title: '¿Ya abias iniciado sesión?',
+                        title: '¿Ya habías iniciado sesión?',
                         text: "Si quieres iniciar una sesión nueva, termina primero la que empezaste, por el momento la caja que ingresaste es errónea, ya que en la sesión anterior ya se había iniciado una caja",
                         icon: 'warning',
                         showCancelButton: false,
@@ -92,7 +92,7 @@ document.querySelector('body').onload = (e) => {
                                     location.href = 'trabajando';
                                 }else{
                                     //location.href = location.href;
-                                    alert('no seleciona ninguna op');
+                                    alert('No selecciona ninguna op');
                                 }
                             })
                         }
@@ -113,7 +113,7 @@ document.querySelector('body').onload = (e) => {
                             validar.limpiar();
                         }else{
                             //location.href = location.href;
-                            alert('no seleciona ninguna op');
+                            alert('No selecciona ninguna op');
                         }
                     })
                 }

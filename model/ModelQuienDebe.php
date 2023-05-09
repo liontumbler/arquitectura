@@ -86,25 +86,24 @@ class ModelQuienDebe extends Model
                 $pagos['idCliente'] = $value->idCliente;
             }
         }
-    
-        $pagos['idGimnasio'] = $_SESSION['gimnasioId'];
-        $pagos['idTrabajado'] = $_SESSION['trabajadoId'];
-        $pagos['idTrabajador'] = $_SESSION['trabajadorId'];
         //return $pagos;
 
-        $resTienda = $this->crearPagos($pagos);
+        $resTienda = $this->crearPagos($pagos, $_SESSION['gimnasioId'], $_SESSION['trabajadoId'], $_SESSION['trabajadorId']);
         //return $resTienda;
 
         if ($resTienda > 0) {
+            $conteoList = 0;
             //return $listapagos;
             foreach ($listapagos as $value) {
                 $value['idPagos'] = $resTienda;
                 $resListapagos = $this->crearListapagos($value);
-
-                //actualizar ligas o tienda segun corresponda a 'padoDeuda' 
+                if ($resListapagos > 0) {
+                    //actualizar ligas o tienda segun corresponda a 'padoDeuda'
+                    $conteoList++;
+                }
             }
 
-            return true;
+            return ($conteoList >= count($listapagos)) ? true : false;
         } else {
             return false;
         }

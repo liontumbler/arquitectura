@@ -8,7 +8,7 @@ class ModelTienda extends Model
         //return $producto;
         
         if (empty($data->cliente)) {
-            $idCliente = $this->crearCliente($data->nombreYapellido, $data->documento, $data->equipo, $_SESSION['gimnasioId']);
+            $idCliente = $this->$this->crearCliente($data, $_SESSION['gimnasioId']);
         } else {
             $idCliente = $data->cliente;
         }
