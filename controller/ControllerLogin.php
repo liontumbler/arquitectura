@@ -13,6 +13,11 @@ class ControllerLogin extends Controller
         return $this->model('ModelLogin')->login($dta->nickname, $dta->clave, $dta->caja);
     }
 
+    public function postLoginAdmin($dta)
+    {
+        return $this->model('ModelLogin')->loginAdmin($dta->nickname, $dta->clave);
+    }
+
     public function postCerrarCaja($dta)
     {
         return $dta;

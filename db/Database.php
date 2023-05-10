@@ -6,6 +6,7 @@ class Database {
     private $database;
     protected $cn;
     protected $logger;
+    protected $ID = 'id=:id';
 
     public function __construct($host, $username, $password, $database)
     {

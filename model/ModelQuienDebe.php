@@ -34,7 +34,7 @@ class ModelQuienDebe extends Model
                         'total' => $value['total'],
                         'fecha' => $value['fecha'],
                         'tipoDeuda' => 'Tienda',
-                        'descripcion' => 'el producto '.$value['idProducto'].' X '.$value['cantidad']
+                        'descripcion' => 'el producto '.$this->obtenerProductoNombre($value['idProducto']).' X '.$value['cantidad']
                     )
                 );
             }
@@ -89,7 +89,6 @@ class ModelQuienDebe extends Model
         //return $pagos;
 
         $resTienda = $this->crearPagos($pagos, $_SESSION['gimnasioId'], $_SESSION['trabajadoId'], $_SESSION['trabajadorId']);
-        //return $resTienda;
 
         if ($resTienda > 0) {
             $conteoList = 0;
@@ -97,12 +96,22 @@ class ModelQuienDebe extends Model
             foreach ($listapagos as $value) {
                 $value['idPagos'] = $resTienda;
                 $resListapagos = $this->crearListapagos($value);
-                if ($resListapagos > 0) {
-                    //actualizar ligas o tienda segun corresponda a 'padoDeuda'
-                    $conteoList++;
+                //return $resListapagos;
+                if ($resListapagos == 0) {
+                    $actualizo = 0;
+                    if ($value['pago'] == 'Tienda') {
+                        $actualizo = $this->update('tienda', ['tipoPago' => 'pazYsalvo'.ucfirst($pagos['tipoPago'])], $value['id']);
+                    } elseif ($value['pago'] == 'Liga') {
+                        $actualizo = $this->update('ligas', ['tipoPago' => 'pazYsalvo'.ucfirst($pagos['tipoPago'])], $value['id']);
+                    }
+
+                    if ($actualizo > 0) {
+                        $conteoList++;
+                    }
                 }
             }
 
+            //return $conteoList;
             return ($conteoList >= count($listapagos)) ? true : false;
         } else {
             return false;

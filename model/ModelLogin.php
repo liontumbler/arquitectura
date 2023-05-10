@@ -5,9 +5,9 @@ class ModelLogin extends Model
     {
         //return "$usu, $clave, $caja";
 
-        $res = $this->obtenerTrabajador($usu);
+        $res = $this->obtenerTrabajadorNickname($usu);
         //return $res;
-        if (!$res || count($res) == 0) {
+        if (!$res || empty($res)) {
             return $res;
         } else {
             $claveDb = $res[0]['clave'];
@@ -18,7 +18,7 @@ class ModelLogin extends Model
             $correo = $res[0]['correo'];
             $telefono = $res[0]['telefono'];
             
-            $gimnasio = $this->obtenerGimnasio($idGimnasio);
+            $gimnasio = $this->obtenerGimnasioPorId($idGimnasio);
             //return $gimnasio;
 
             $color = $gimnasio[0]['color'];
@@ -30,35 +30,36 @@ class ModelLogin extends Model
             if ($habilitado) {
                 if ($clave != '' && password_verify(sha1($clave), $claveDb)) {
                     //si existe en registro en caja sin cerrar tomo la sesion que no a cerrado
-                    $yaInicioCaja = $this->obtenerTrabajado($idGimnasio, $idTrabajador);//`fechaInicio` > '".date('Y-m-d')." 00:00:00' AND `fechaInicio` < '".date('Y-m-d')." 23:59:59'
+                    $yaInicioCaja = $this->obtenerTrabajadoTrabajador($idGimnasio, $idTrabajador);//`fechaInicio` > '".date('Y-m-d')." 00:00:00' AND `fechaInicio` < '".date('Y-m-d')." 23:59:59'
                     //return $yaInicioCaja;
                     $ini = false;
                     $trabajadoId = '';
-                    if (!$yaInicioCaja || count($yaInicioCaja) == 0) {
+                    if (!$yaInicioCaja || empty($yaInicioCaja)) {
                         $insert = $this->crearTrabajado($caja, $idGimnasio, $idTrabajador);
                         //return $insert;
                         if ($insert > 0) {
-                            $_SESSION['caja'] = $caja;
                             $trabajadoId = $insert;
                             $ini = true;
                         }
                     } else {//sesion ya iniciada
                         $trabajadoId = $yaInicioCaja[0]['id'];
-                        $_SESSION['caja'] = $yaInicioCaja[0]['iniciCaja'];
                         $ini = 600;
                     }
-    
-                    $_SESSION['SesionTrabajador'] = true;
-                    $_SESSION['trabajadorId'] = $idTrabajador;
-                    $_SESSION['nombre'] = $nombreTrabajador;
-                    $_SESSION['correo'] = $correo;
-                    $_SESSION['telefono'] = $telefono;
-                    $_SESSION['nickName'] = $nickname;
-                    $_SESSION['gimnasio'] = $nombreGim;
-                    $_SESSION['gimnasioId'] = $gimnasioId;
+
+                    $_SESSION['SesionTrabajador'] = array(
+                        'trabajadorId' => $idTrabajador,
+                        'nombre' => $nombreTrabajador,
+                        'correo' => $correo,
+                        'telefono' => $telefono,
+                        'nickName' => $nickname,
+                        'gimnasio' => $nombreGim,
+                        'gimnasioId' => $gimnasioId,
+                        'trabajadoId' => $trabajadoId,
+                    );
+
+                    //mandar esto en una consulta
                     $_SESSION['color'] = $color;
                     $_SESSION['background'] = $background;//'#ff8d34';
-                    $_SESSION['trabajadoId'] = $trabajadoId;
 
                     $medio = (!empty($telefono)) ? $telefono : $correo;
                     $updateTrabajador = $this->actualizarCaja($idTrabajador, $medio);
@@ -79,10 +80,48 @@ class ModelLogin extends Model
         return false;
     }
 
-    public function finSesion($plata)
+    public function loginAdmin($usu, $clave)
+    {
+        //return "$usu, $clave";
+
+        $res = $this->obtenerAdminNickname($usu);
+        //return $res;
+        if (!$res || empty($res)) {
+            return $res;
+        } else {
+            $claveDb = $res[0]['clave'];
+            $adminId = $res[0]['id'];
+            $nombre = $res[0]['nombre'];
+            $nickname = $res[0]['nickname'];
+            $correo = $res[0]['correo'];
+            $telefono = $res[0]['telefono'];
+            $habilitado = $res[0]['habilitado'];
+            
+            if ($habilitado) {
+                if ($clave != '' && password_verify(sha1($clave), $claveDb)) {
+    
+                    $_SESSION['SesionAdmin'] = array(
+                        'gimnasioId' => $adminId,
+                        'nombre' => $nombre,
+                        'correo' => $correo,
+                        'telefono' => $telefono,
+                        'nickName' => $nickname,
+                    );
+                    
+                    return true;
+                }
+            } else {
+                return 800;
+            }
+        }
+
+        return false;
+    }
+
+    /*public function finSesion($plata)
     {
         //TODO: falta hacer cuentas y agregar la plata en trabajado
         $this->cerrarSesion();
-    }
+    }*/
 }
 ?>

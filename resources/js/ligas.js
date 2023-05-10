@@ -87,8 +87,8 @@ document.querySelector('body').onload = (e) => {
                     validarForm6 = new Validardor(['nombreYapellido', 'documento', 'equipo', 'selectHora', 'tipoPago']);
                     validarForm7 = new Validardor(['nombreYapellido', 'documento', 'equipo', 'selectHora', 'fechaInicio']);
                     validarForm8 = new Validardor(['nombreYapellido', 'documento', 'equipo', 'selectHora', 'tipoPago', 'fechaInicio']);
-                    voz = new Voice().hoverTitle();
-                    audi = new PlaySound('resources/audio/iphone-notificacion.mp3');
+                    //voz = new Voice().hoverTitle();
+                    //audi = new PlaySound('resources/audio/iphone-notificacion.mp3');
                 })
             })
         })

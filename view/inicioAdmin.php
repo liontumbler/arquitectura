@@ -26,7 +26,7 @@ class PaginaOnce extends Web implements PaginaX
 
     public function content()
     {
-        print_r($this->model('ModelLiga', 'horas'));
+        print_r($this->model('ModelLiga', 'horas'));//
         //cuando cargue la vista hacer consujlta de lo que se a ingresado hoy el trabajador
         ?>
         <div class="d-flex">
@@ -127,7 +127,7 @@ class PaginaOnce extends Web implements PaginaX
     {
         ?>
         <script src="resources/js/trabajadorGen.js"></script>
-        <script>
+        <!--script>
             document.getElementById('ligas').addEventListener('click', function (e) {
                 location.href = 'ligas';
             })
@@ -148,7 +148,7 @@ class PaginaOnce extends Web implements PaginaX
                 //terminar sesion hacer cuentas hacer insercion de la terminacion
                 //abre una modal donde hace las cuantas paracerrar caja
             })
-        </script>
+        </script-->
         <?php
     }
 }

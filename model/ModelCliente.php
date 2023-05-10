@@ -3,7 +3,7 @@ class ModelCliente extends Model
 {
     public function clientes()
     {
-        return $this->obtenerCliente();
+        return $this->obtenerClientePorId();
     }
 
 }

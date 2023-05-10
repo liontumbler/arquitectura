@@ -9,9 +9,9 @@ class ConsultasDB extends Database
         parent::__construct(HOST, USER, PASS, DB);
     }
 
-    public function obtenerLigasPrecio($id)
+    public function obtenerLigasPrecio(string $id)
     {
-        $horaliga = $this->read('horaliga', ['id' => $id], 'id=:id', 'precio');
+        $horaliga = $this->read('horaliga', ['id' => $id], $this->ID, 'precio');
         if (!empty($horaliga)) {
             return $horaliga[0]['precio'];
         } else {
@@ -19,14 +19,9 @@ class ConsultasDB extends Database
         }
     }
 
-    public function obtenerProductos()
+    public function obtenerProductoPrecio(string $producto)
     {
-        return $this->read('producto', []);
-    }
-
-    public function obtenerProductoPrecio($producto)
-    {
-        $producto = $this->read('producto', ['id' => $producto], 'id=:id', 'precio');
+        $producto = $this->read('producto', ['id' => $producto], $this->ID, 'precio');
         if (!empty($producto)) {
             return $producto[0]['precio'];
         } else {
@@ -34,12 +29,83 @@ class ConsultasDB extends Database
         }
     }
 
-    public function obtenerClienteId($arr, $cadena)
+    public function obtenerProductoNombre(string $producto)
+    {
+        $producto = $this->read('producto', ['id' => $producto], $this->ID, 'nombre');
+        if (!empty($producto)) {
+            return $producto[0]['nombre'];
+        } else {
+            return 0;
+        }
+    }
+
+    public function obtenerHoraligaPorId(string $id = null)
+    {
+        $array = empty($id) ? [] : ['id' => $id];
+        $consulta = empty($id) ? '' : $this->ID;
+        return $this->read('horaliga', $array, $consulta, 'id, nombre, horas, precio, fecha');
+    }
+
+    public function obtenerProductoPorId(string $id = null)
+    {
+        $array = empty($id) ? [] : ['id' => $id];
+        $consulta = empty($id) ? '' : $this->ID;
+        return $this->read('producto', $array, $consulta, 'id, nombre, precio, fecha');
+    }
+
+    public function obtenerClaveCajaPorId(string $id = null)
+    {
+        $array = empty($id) ? [] : ['id' => $id];
+        $consulta = empty($id) ? '' : $this->ID;
+        return $this->read('trabajador', $array, $consulta, 'claveCaja');
+    }
+
+    public function obtenerPlanPorId(string $id = null)
+    {
+        $array = empty($id) ? [] : ['id' => $id];
+        $consulta = empty($id) ? '' : $this->ID;
+        return $this->read('plan', $array, $consulta);
+    }
+
+    public function obtenerGimnasioPorId(string $id = null)
+    {
+        $array = empty($id) ? [] : ['id' => $id];
+        $consulta = empty($id) ? '' : $this->ID;
+        return $this->read('gimnasio', $array, $consulta, 'color, background, habilitado, nombre, id');
+    }
+
+    public function obtenerTrabajadoPorId(string $id = null)
+    {
+        $array = empty($id) ? [] : ['id' => $id];
+        $consulta = empty($id) ? '' : $this->ID;
+        return $this->read('trabajado', $array, $consulta);
+    }
+
+    public function obtenerClientePorId(string $id = null)
+    {
+        $array = empty($id) ? [] : ['id' => $id];
+        $consulta = empty($id) ? '' : $this->ID;
+        return $this->read('cliente', $array, $consulta, 'id, nombresYapellidos, documento');
+    }
+
+    public function obtenerEquiposPorId(string $id = null)
+    {
+        $array = empty($id) ? [] : ['id' => $id];
+        $consulta = empty($id) ? '' : $this->ID;
+        return $this->read('equipo', $array, $consulta);
+    }
+
+    public function minDeMasLiga(string $gimnasio)
+    {
+        return $this->read('gimnasio', ['id' => $gimnasio], $this->ID, 'minDeMasLiga')[0];
+    }
+
+    public function obtenerClienteId(array $arr, string $cadena)
     {
         return $this->read('cliente', $arr, $cadena, 'id');
     }
 
-    public function obtenerTiendaDefault($cliente)
+    public function obtenerTiendaDefault(string $cliente)
     {
         return $this->read(
             'tienda',
@@ -49,7 +115,7 @@ class ConsultasDB extends Database
         );
     }
 
-    public function obtenerLigaDefault($cliente)
+    public function obtenerLigaDefault(string $cliente)
     {
         return $this->read(
             'ligas',
@@ -59,7 +125,7 @@ class ConsultasDB extends Database
         );
     }
 
-    public function obtenerTrabajador($trabajador)
+    public function obtenerTrabajadorNickname(string $trabajador)
     {
         //$sms = new EnvioSMSLM(USERSMS, KEY);
         //$sms->saldo()->credits;
@@ -72,7 +138,17 @@ class ConsultasDB extends Database
         );
     }
 
-    public function obtenerTrabajado($gimnasio, $trabajador)
+    public function obtenerAdminNickname(string $gimnasio)
+    {
+        return $this->read(
+            'gimnasio',
+            ['nickname' => $gimnasio],
+            'nickname=:nickname',
+            'clave, id, nombre, nickname, correo, telefono, habilitado'
+        );
+    }
+
+    public function obtenerTrabajadoTrabajador(string $gimnasio, string $trabajador)
     {
         return $this->read(
             'trabajado',
@@ -84,51 +160,41 @@ class ConsultasDB extends Database
         );
     }
 
-    public function obtenerGimnasio($gimnasio)
+    public function obtenerLigaHoy(string $trabajador)
     {
-        return $this->read('gimnasio', ['id' => $gimnasio], "id=:id", 'color, background, habilitado, nombre, id');
+        return $this->read(
+            'ligas',
+            ['idTrabajador' => $trabajador, ''],
+            '`idTrabajador`=:idTrabajador AND `fechaInicio` >= '.date('Y-m-d').' 00:00:00 AND `fechaInicio` <= '.date('Y-m-d').' 23:59:59',
+            'id, fechaInicio, fechaFin, tipoPago, total'
+        );
     }
 
-    public function obtenerHoraliga()
+    public function obtenerTiendaHoy(string $trabajador)
     {
-        return $this->read('horaliga', [], '', 'id, nombre, horas, precio');
+        return $this->read(
+            'ligas',
+            ['idTrabajador' => $trabajador, ''],
+            '`idTrabajador`=:idTrabajador AND `fecha` >= '.date('Y-m-d').' 00:00:00 AND `fecha` <= '.date('Y-m-d').' 23:59:59',
+            'id, cantidad, fecha, tipoPago, total, idProducto'
+        );
     }
 
-    public function obtenerCliente()
-    {
-        return $this->read('cliente', [], '', 'id, nombresYapellidos, documento');
-    }
-
-    public function obtenerEquipos()
-    {
-        return $this->read('equipo', []);
-    }
-
-    public function obtenerClaveCaja($trabajador)
-    {
-        return $this->read('trabajador', ['id' => $trabajador], 'id=:id', 'claveCaja');
-    }
-
-    public function minDeMasLiga($gimnasio)
-    {
-        return $this->read('gimnasio', ['id' => $gimnasio], 'id=:id', 'minDeMasLiga')[0];
-    }
-
-    public function crearCliente($data, $gimnasio)
+    public function crearCliente(object $data, string $gimnasio)
     {
         $cliente = [
             'nombresYapellidos' => $data->nombreYapellido,
-            'correo' => !empty($data->correo) ? $data->correo : NULL,
-            'telefono' => !empty($data->telefono) ? $data->telefono : NULL,
-            'documento' => !empty($data->documento) ? $data->documento : NULL,
-            'idEquipo' => !empty($data->equipo)? $data->equipo : NULL,
+            'correo' => !empty($data->correo) ? $data->correo : null,
+            'telefono' => !empty($data->telefono) ? $data->telefono : null,
+            'documento' => !empty($data->documento) ? $data->documento : null,
+            'idEquipo' => !empty($data->equipo)? $data->equipo : null,
             'idGimnasio' => $gimnasio
         ];
 
         return $this->create('cliente', $cliente);
     }
 
-    public function crearTienda($data, $idCliente, $total, $gimnasio, $trabajado, $trabajador)
+    public function crearTienda(object $data, string $idCliente, string $total, string $gimnasio, string $trabajado, string $trabajador)
     {
         $tienda = [
             'cantidad' => $data->cantidad,
@@ -144,21 +210,21 @@ class ConsultasDB extends Database
         return $this->create('tienda', $tienda);
     }
 
-    public function crearPagos($pagos, $gimnasio, $trabajado, $trabajador)
+    public function crearPagos(array $pagos, string $gimnasio, string $trabajado, string $trabajador)
     {
-        $pagos['descripcion'] = (!empty($pagos['descripcion'])) ? $pagos['descripcion'] : NULL;
+        $pagos['descripcion'] = (!empty($pagos['descripcion'])) ? $pagos['descripcion'] : null;
         $pagos['idGimnasio'] = $gimnasio;
         $pagos['idTrabajado'] = $trabajado;
         $pagos['idTrabajador'] = $trabajador;
         return $this->create('pagos', $pagos);
     }
 
-    public function crearListapagos($value)
+    public function crearListapagos(array $value)
     {
         return $this->create('listapagos', $value);
     }
 
-    public function crearTrabajado($caja, $gimnasio, $trabajador)
+    public function crearTrabajado(string $caja, string $gimnasio, string $trabajador)
     {
         $trabajado = [
             'iniciCaja' => $caja,
@@ -168,7 +234,7 @@ class ConsultasDB extends Database
         return $this->create('trabajado', $trabajado);
     }
 
-    public function crearProducto($data, $gimnasio)
+    public function crearProducto(object $data, string $gimnasio)
     {
         $producto = [
             'nombre' => $data->nombre,
@@ -178,13 +244,13 @@ class ConsultasDB extends Database
         return $this->create('producto', $producto);
     }
 
-    public function crearLigas($data, $idCliente, $total, $gimnasio, $trabajado, $trabajador)
+    public function crearLigas(object $data, string $idCliente, string $total, string $gimnasio, string $trabajado, string $trabajador)
     {
         $ligas = [
             'total' => $total,
             'tipoPago' => (empty($data->tipoPago) ? 'debe': $data->tipoPago),
-            'fechaInicio' => !empty($data->fechaInicio)? $data->fechaInicio : NULL,
-            'fechaFin' => !empty($data->fechaFin)? $data->fechaFin : NULL,
+            'fechaInicio' => !empty($data->fechaInicio)? $data->fechaInicio : null,
+            'fechaFin' => !empty($data->fechaFin)? $data->fechaFin : null,
             'idGimnasio' => $gimnasio,
             'idTrabajado' => $trabajado,
             'idTrabajador' => $trabajador,
@@ -195,11 +261,11 @@ class ConsultasDB extends Database
         return ($resTienda > 0);
     }
 
-    public function crearDescuento($data, $gimnasio, $trabajado, $trabajador)
+    public function crearDescuento(object $data, string $gimnasio, string $trabajado, string $trabajador)
     {
         $descuento = [];
         $descuento['titulo'] = $data->titulo;
-        $descuento['descripcion'] = (!empty($data->descripcion)) ? $data->descripcion : NULL;
+        $descuento['descripcion'] = (!empty($data->descripcion)) ? $data->descripcion : null;
         $descuento['total'] = $data->total;
         $descuento['idGimnasio'] = $gimnasio;
         $descuento['idTrabajado'] = $trabajado;
@@ -208,7 +274,7 @@ class ConsultasDB extends Database
         return $this->create('descuento', $descuento);
     }
 
-    public function crearHoraliga($data, $gimnasio)
+    public function crearHoraliga(object $data, string $gimnasio)
     {
         $horaliga = [];
         $horaliga['titulo'] = $data->titulo;
@@ -219,7 +285,7 @@ class ConsultasDB extends Database
         return $this->create('horaliga', $horaliga);
     }
 
-    public function crearPlan($data)
+    public function crearPlan(object $data)
     {
         $plan = [];
         $plan['nombre'] = $data->nombre;
@@ -235,15 +301,16 @@ class ConsultasDB extends Database
         return $this->create('plan', $plan);
     }
 
-    public function crearEquipo($data)
+    public function crearEquipo(string $nombre, string $gimnasio)
     {
         $equipo = [];
-        $equipo['nombre'] = $data->nombre;
+        $equipo['nombre'] = $nombre;
+        $equipo['idGimnasio'] = $gimnasio;
 
         return $this->create('equipo', $equipo);
     }
 
-    public function crearGimnasio($data)
+    public function crearGimnasio(object $data)
     {
         $gimnasio = [];
         $gimnasio['correo'] = $data->correo;
@@ -262,7 +329,7 @@ class ConsultasDB extends Database
         return $this->create('gimnasio', $gimnasio);
     }
 
-    public function crearTrabajador($data, $gimnasio)
+    public function crearTrabajador(object $data, string $gimnasio)
     {
         $trabajador = [];
         $trabajador['nombresYapellidos'] = $data->nombresYapellidos;
@@ -276,7 +343,7 @@ class ConsultasDB extends Database
         return $this->create('trabajador', $trabajador);
     }
 
-    public function actualizarCaja($trabajador, $medio)
+    public function actualizarCaja(string $trabajador, string $medio)
     {
         $claveCajaNueva = rand(1000, 9999);
         $mj = 'AdminLig: El codigo para ingresar a la su caja el dia hoy '.date('Y-m-d H:i:s').' es '.$claveCajaNueva;
@@ -298,5 +365,7 @@ class ConsultasDB extends Database
             return 'correo';
         }
     }
+    //$arr = ['nombresYapellidos' => "%{$nombre}%", 'documento' => $documento];
+    //$cadena = '`documento`=:documento AND `nombresYapellidos`LIKE :nombresYapellidos';
 }
 ?>

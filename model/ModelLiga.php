@@ -3,7 +3,7 @@ class ModelLiga extends Model
 {
     public function vender($data)
     {
-        $total = $this->obtenerLigasPrecio($data->selectHora);//$cn->read('horaliga', ['id' => $data->selectHora], 'id=:id', 'precio');
+        $total = $this->obtenerLigasPrecio($data->selectHora);
         if (empty($data->cliente)) {
             $idCliente = $this->crearCliente($data, $_SESSION['gimnasioId']);
         } else {
@@ -21,7 +21,7 @@ class ModelLiga extends Model
 
     public function horas()
     {
-        return $this->obtenerHoraliga();
+        return $this->obtenerHoraligaPorId();
     }
 
     public function minDemas()
@@ -31,7 +31,7 @@ class ModelLiga extends Model
 
     public function claveCaja($clave)
     {
-        $trabajador = $this->obtenerClaveCaja($_SESSION['trabajadorId']);
+        $trabajador = $this->obtenerClaveCajaPorId($_SESSION['trabajadorId']);
 
         $valido = false;
         if (count($trabajador) == 1 && $trabajador[0]['claveCaja'] == $clave) {

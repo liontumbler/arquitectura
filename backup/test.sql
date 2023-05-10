@@ -13,8 +13,8 @@ VALUES (NULL, 'BCA - extreme', '1'), (NULL, 'NPC', '1');
 INSERT INTO `cliente` (`id`, `correo`, `telefono`, `nombresYapellidos`, `documento`, `idGimnasio`, `idEquipo`) 
 VALUES (NULL, 'lion_3214@hotmail.com', '3102742576', 'edwin Velasquez', '1033741931', '1', '1');
 
-INSERT INTO `horaliga` (`id`, `nombre`, `horas`, `precio`, `idGimnasio`) 
-VALUES (NULL, '1 Hora', '1.0', '7000', '1');
+INSERT INTO `horaliga` (`id`, `nombre`, `horas`, `precio`, `fecha`, `idGimnasio`) 
+VALUES (NULL, '1H normal', '1.0', '7000', CURRENT_TIMESTAMP, '1');
 
 INSERT INTO `producto` (`id`, `nombre`, `precio`, `fecha`, `idGimnasio`)
 VALUES (NULL, 'papa 35gr', '2000', CURRENT_TIMESTAMP, '1');

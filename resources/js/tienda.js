@@ -24,12 +24,12 @@ document.querySelector('body').onload = (e) => {
             })
 
             let select = document.getElementById('producto');
-            for (let i = 0; i < productos.length; i++) {
-                //console.log(productos[i], 'llena');
-                let op = new Option(productos[i].nombre, productos[i].id)
-                op.setAttribute('precio', productos[i].precio);
+            productos.forEach(producto => {
+                //console.log(producto, 'llena');
+                let op = new Option(producto.nombre, producto.id);
+                op.setAttribute('precio', producto.precio);
                 select.append(op);
-            }
+            });
         }
 
         let validarForm1;
@@ -149,7 +149,7 @@ document.querySelector('body').onload = (e) => {
                             cancelButtonText: 'Ir Home'
                         }).then((result) => {
                             if (result.isConfirmed) {
-                                location.href = location.href;
+                                //location.href = location.href;
                             }else{
                                 location.href = 'trabajando';
                             }
