@@ -5,13 +5,13 @@ class ModelLiga extends Model
     {
         $total = $this->obtenerLigasPrecio($data->selectHora);
         if (empty($data->cliente)) {
-            $idCliente = $this->crearCliente($data, $_SESSION['gimnasioId']);
+            $idCliente = $this->crearCliente($data, $_SESSION['SesionTrabajador']['gimnasioId']);
         } else {
             $idCliente = $data->cliente;
         }
 
         if ($idCliente > 0) {
-            return $this->crearLigas($data, $idCliente, $total, $_SESSION['gimnasioId'], $_SESSION['trabajadoId'], $_SESSION['trabajadorId']);
+            return $this->crearLigas($data, $idCliente, $total, $_SESSION['SesionTrabajador']['gimnasioId'], $_SESSION['SesionTrabajador']['trabajadoId'], $_SESSION['SesionTrabajador']['trabajadorId']);
         } elseif ($idCliente == -1) {
             return $idCliente;
         }
@@ -26,12 +26,12 @@ class ModelLiga extends Model
 
     public function minDemas()
     {
-        return $this->minDeMasLiga($_SESSION['gimnasioId']);
+        return $this->minDeMasLiga($_SESSION['SesionTrabajador']['gimnasioId']);
     }
 
     public function claveCaja($clave)
     {
-        $trabajador = $this->obtenerClaveCajaPorId($_SESSION['trabajadorId']);
+        $trabajador = $this->obtenerClaveCajaPorId($_SESSION['SesionTrabajador']['trabajadorId']);
 
         $valido = false;
         if (count($trabajador) == 1 && $trabajador[0]['claveCaja'] == $clave) {

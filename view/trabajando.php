@@ -19,7 +19,51 @@ class PaginaOnce extends Web implements PaginaX
 
     public function content()
     {
-        //cuando cargue la vista hacer consujlta de lo que se a ingresado hoy el trabajador
+        $tiendaV = $this->model('ModelAdmin', 'obtenerTiendaTraba', $_SESSION['SesionTrabajador']['trabajadoId']);
+        $tiendaD = $this->model('ModelAdmin', 'obtenerTiendaTrabaDebe', $_SESSION['SesionTrabajador']['trabajadoId']);
+        $tiendaP = $this->model('ModelAdmin', 'obtenerTiendaTrabaPago', $_SESSION['SesionTrabajador']['trabajadoId']);
+        
+        $ligaV = $this->model('ModelAdmin', 'obtenerLigaTraba', $_SESSION['SesionTrabajador']['trabajadoId']);
+        $ligaD = $this->model('ModelAdmin', 'obtenerLigaTrabaDebe', $_SESSION['SesionTrabajador']['trabajadoId']);
+        $ligaP = $this->model('ModelAdmin', 'obtenerLigaTrabaPago', $_SESSION['SesionTrabajador']['trabajadoId']);
+        
+        $pagosP = $this->model('ModelAdmin', 'obtenerpagosTrabaPago', $_SESSION['SesionTrabajador']['trabajadoId']);
+
+        $totalTienda = 0;
+        foreach ($tiendaV as $i => $value) {
+            $totalTienda = $totalTienda + ($value['total']);
+        }
+        $totalTiendaDebe = 0;
+        foreach ($tiendaD as $i => $value) {
+            $totalTiendaDebe = $totalTiendaDebe + ($value['total']);
+        }
+        $totalTiendaPago = 0;
+        foreach ($tiendaP as $i => $value) {
+            $totalTiendaPago = $totalTiendaPago + ($value['total']);
+        }
+
+        $totalligas = 0;
+        foreach ($ligaV as $i => $value) {
+            $totalligas = $totalligas + ($value['total']);
+        }
+        $totalligasDebe = 0;
+        foreach ($ligaD as $i => $value) {
+            $totalligasDebe = $totalligasDebe + ($value['total']);
+        }
+        $totalligasPago = 0;
+        foreach ($ligaP as $i => $value) {
+            $totalligasPago = $totalligasPago + ($value['total']);
+        }
+
+        $totalPagosPagoefectivo = 0;
+        $totalPagosPagodigital = 0;
+        foreach ($pagosP as $i => $value) {
+            if ($value['tipoPago'] == 'efectivo') {
+                $totalPagosPagoefectivo = $totalPagosPagoefectivo + ($value['total']);
+            } elseif ($value['tipoPago'] == 'digital') {
+                $totalPagosPagodigital = $totalPagosPagodigital + ($value['total']);
+            }
+        }
         ?>
         <div class="d-flex">
             <?php require_once 'layout/sidebarTrabajador.php'; ?>
@@ -27,19 +71,30 @@ class PaginaOnce extends Web implements PaginaX
                 <div class="m-4">
                     <div style="width: 400px; margin: auto;">
                         <ul>
-                            <li>Ligas: <span><?= $_SESSION['ligas']; ?></span></li>
-                            <li>Tienda: <span><?= $_SESSION['tienda']; ?></span></li>
-                            <li>Pagos: <span><?= $_SESSION['pagos']; ?></span></li>
                             <hr>
-                            <li>Total Recaudado sin caja: <span>0</span></li>
                             <hr>
-                            <li>Caja: <span><?= $_SESSION['caja']; ?></span></li>
-                            <li>-Descuentos: <span><?= $_SESSION['descuento']; ?></span></li>
+                            <li>fiado de Ligas: <span><?= $totalligasDebe; ?></span></li>
+                            <li>vendido de Ligas: <span><?= $totalligasPago; ?></span></li>
+                            <li>Ligas en total: <span><?= $totalligas; ?></span></li>
                             <hr>
-                            <li>Total Recaudado con caja: <span>0</span></li>
                             <hr>
-                            <li>Total efectivo: <span><?= $_SESSION['totalefectivo']; ?></span></li>
-                            <li>Total digital: <span><?= $_SESSION['digital']; ?></span></li>
+                            <li>fiado de tienda: <span><?= $totalTiendaDebe; ?></span></li>
+                            <li>vendido de tienda: <span><?= $totalTiendaPago; ?></span></li>
+                            <li>Tienda en total: <span><?= $totalTienda; ?></span></li>
+                            <hr>
+                            <hr>
+                            <li>total fiado: <span><?= $totalligasDebe + $totalTiendaDebe; ?></span></li>
+                            <li>total pagos: <span><?= $totalligasPago + $totalTiendaPago; ?></span></li>
+                            <li>total vendido: <span><?= $totalligas + $totalTienda; ?></span></li>
+                            <hr>
+                            <hr>
+                            <li>pago efectivo: <span><?= $totalPagosPagoefectivo; ?></span></li>
+                            <li>pago digital: <span><?= $totalPagosPagodigital; ?></span></li>
+                            <li>total efectivo con digital: <span><?= $totalligasPago + $totalTiendaPago + ($totalPagosPagoefectivo + $totalPagosPagodigital); ?></span></li>
+                            <hr>
+                            <hr>
+
+                            falta lo que se anota en descuento
                         </ul>
                     </div>
                     <div class="container" style="width: 450px;">

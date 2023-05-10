@@ -125,6 +125,76 @@ class ConsultasDB extends Database
         );
     }
 
+    public function obtenerLigaTrabajado(string $trabajado)
+    {
+        return $this->read(
+            'ligas',
+            ['idTrabajado' => $trabajado],
+            '`idTrabajado`=:idTrabajado',
+            'id, fechaInicio, total, idCliente, fechaFin, tipoPago'
+        );
+    }
+
+    public function obtenerLigaTrabajadoDebe(string $trabajado)
+    {
+        return $this->read(
+            'ligas',
+            ['idTrabajado' => $trabajado],
+            '`idTrabajado`=:idTrabajado AND tipoPago = "debe" OR tipoPago = "pazYsalvoEfectivo" OR tipoPago = "pazYsalvoDigital"',
+            'id, fechaInicio, total, idCliente, fechaFin, tipoPago'
+        );
+    }
+
+    public function obtenerLigaTrabajadoPago(string $trabajado)
+    {
+        return $this->read(
+            'ligas',
+            ['idTrabajado' => $trabajado],
+            '`idTrabajado`=:idTrabajado AND tipoPago != "debe" AND tipoPago != "pazYsalvoEfectivo" AND tipoPago != "pazYsalvoDigital"',
+            'id, fechaInicio, total, idCliente, fechaFin, tipoPago'
+        );
+    }
+
+    public function obtenerTiendaTrabajado(string $trabajado)
+    {
+        return $this->read(
+            'tienda',
+            ['idTrabajado' => $trabajado],
+            '`idTrabajado`=:idTrabajado',
+            'id, cantidad, total, tipoPago, idProducto, idCliente'
+        );
+    }
+
+    public function obtenerTiendaTrabajadoPago(string $trabajado)
+    {
+        return $this->read(
+            'tienda',
+            ['idTrabajado' => $trabajado],
+            '`idTrabajado`=:idTrabajado AND tipoPago != "debe" AND tipoPago != "pazYsalvoEfectivo" AND tipoPago != "pazYsalvoDigital"',
+            'id, cantidad, total, tipoPago, idProducto, idCliente'
+        );
+    }
+
+    public function obtenerTiendaTrabajadoDebe(string $trabajado)
+    {
+        return $this->read(
+            'tienda',
+            ['idTrabajado' => $trabajado],
+            '`idTrabajado`=:idTrabajado AND tipoPago = "debe" OR tipoPago = "pazYsalvoEfectivo" OR tipoPago = "pazYsalvoDigital"',
+            'id, cantidad, total, tipoPago, idProducto, idCliente'
+        );
+    }
+
+    public function obtenerPagosTrabajadoPago(string $trabajado)
+    {
+        return $this->read(
+            'pagos',
+            ['idTrabajado' => $trabajado],
+            '`idTrabajado`=:idTrabajado AND tipoPago != "debe"',
+            'id, tipoPago, total, descripcion, fecha, idCliente	'
+        );
+    }
+
     public function obtenerTrabajadorNickname(string $trabajador)
     {
         //$sms = new EnvioSMSLM(USERSMS, KEY);
@@ -173,7 +243,7 @@ class ConsultasDB extends Database
     public function obtenerTiendaHoy(string $trabajador)
     {
         return $this->read(
-            'ligas',
+            'tienda',
             ['idTrabajador' => $trabajador, ''],
             '`idTrabajador`=:idTrabajador AND `fecha` >= '.date('Y-m-d').' 00:00:00 AND `fecha` <= '.date('Y-m-d').' 23:59:59',
             'id, cantidad, fecha, tipoPago, total, idProducto'

@@ -88,7 +88,7 @@ class ModelQuienDebe extends Model
         }
         //return $pagos;
 
-        $resTienda = $this->crearPagos($pagos, $_SESSION['gimnasioId'], $_SESSION['trabajadoId'], $_SESSION['trabajadorId']);
+        $resTienda = $this->crearPagos($pagos, $_SESSION['SesionTrabajador']['gimnasioId'], $_SESSION['SesionTrabajador']['trabajadoId'], $_SESSION['SesionTrabajador']['trabajadorId']);
 
         if ($resTienda > 0) {
             $conteoList = 0;
