@@ -63,7 +63,7 @@ class Controller
     {
         try {
             $value = true;
-            if (!isset($this->token) || $this->token != $_SESSION['csrf_token']) {
+            if (empty($this->token) || $this->token != $_SESSION['csrf_token']) {
                 $value = false;
             } else {
                 $this->csrf_token_update();

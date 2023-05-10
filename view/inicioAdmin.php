@@ -3,7 +3,7 @@
 if (!$rutasLegitima) {
     echo 'no es legitima';
     header('Location: ../index');
-} elseif (!isset($_SESSION['SesionAdmin']) || !$_SESSION['SesionAdmin']) {
+} elseif (empty($_SESSION['SesionAdmin']) || !$_SESSION['SesionAdmin']) {
     ?>
     <script>
         location.href = './index';

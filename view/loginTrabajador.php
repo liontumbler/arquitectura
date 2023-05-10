@@ -1,7 +1,7 @@
 <?php
 if (!$rutasLegitima) {
     header('Location: ../index');
-}elseif (isset($_SESSION['SesionTrabajador']) && $_SESSION['SesionTrabajador']){
+}elseif (!empty($_SESSION['SesionTrabajador']) && $_SESSION['SesionTrabajador']){
     header('Location: trabajando');
 }
 

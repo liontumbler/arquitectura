@@ -36,7 +36,7 @@ class Core
             $rutasLegitima = true;
             //echo '__'.$_GET['id'].'---';
             require_once $ruta;
-        } elseif (isset($view))  {
+        } elseif (!empty($view))  {
             //echo 'ddd'.$view.'ggg';
             ?>
             <script>
@@ -71,15 +71,15 @@ function input_csrf_token()
     return '<input type="hidden" id="csrf_token" value="'.$_SESSION['csrf_token'].'">';
 }
 
-if (!isset($_GET['view'])) {
+if (empty($_GET['view'])) {
     $_GET['view'] = null;
 }
 
-if (!isset($_GET['id'])) {
+if (empty($_GET['id'])) {
     $_GET['id'] = null;
 }
 
-if (!isset($_GET['accion'])){
+if (empty($_GET['accion'])){
     $_GET['accion'] = null;
 }
 

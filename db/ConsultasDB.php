@@ -199,7 +199,7 @@ class ConsultasDB extends Database
     {
         $descuento = [];
         $descuento['titulo'] = $data->titulo;
-        $descuento['descripcion'] = $data->descripcion;
+        $descuento['descripcion'] = (!empty($data->descripcion)) ? $data->descripcion : NULL;
         $descuento['total'] = $data->total;
         $descuento['idGimnasio'] = $gimnasio;
         $descuento['idTrabajado'] = $trabajado;

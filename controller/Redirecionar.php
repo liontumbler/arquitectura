@@ -15,11 +15,11 @@ function redirec($redirec)
 
     try {
         $accion = '';
-        if (isset($vars->accion) && $vars->accion != '')
+        if (!empty($vars->accion) && $vars->accion != '')
             $accion = strtolower($_SERVER["REQUEST_METHOD"]).$vars->accion;
 
         $data = null;
-        if (isset($vars->data) && $vars->data != ''){
+        if (!empty($vars->data) && $vars->data != ''){
             //print_r($vars->data);
             foreach ($vars->data as $i => $value) {
                 if (!is_object($value) && !is_array($value)) {
@@ -34,7 +34,7 @@ function redirec($redirec)
         }
 
         @\session_start();
-        if (!isset($vars->csrf_token) || $vars->csrf_token != $_SESSION['csrf_token'])
+        if (empty($vars->csrf_token) || $vars->csrf_token != $_SESSION['csrf_token'])
             throw new Exception('CSRF invalido');
         
         $obj = new $redirec($vars->csrf_token);
