@@ -96,33 +96,56 @@ class PaginaOnce extends Web implements PaginaX
                         console.log(valid);
                         
                         if(valid && !valid.validationMessage){
-                            this.disabled = true;
+                            msgClave(async function () {
+                                this.disabled = true;
 
-                            let edta = validarForm.crearObjetoJson()
+                                let edta = validarForm.crearObjetoJson()
+                                console.log(edta);
 
-                            let rtda = await fetch('controller/ControllerDescuento.php', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify({
-                                    accion: 'Descontar',
-                                    data: edta,
-                                    csrf_token: document.getElementById('csrf_token').value
+                                let rdta = await fetch('controller/ControllerDescuento.php', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({
+                                        accion: 'Descontar',
+                                        data: edta,
+                                        csrf_token: document.getElementById('csrf_token').value
+                                    })
+                                }).then((res) => {
+                                    this.disabled = false;
+                                    if (res.status == 200) {
+                                        return res.json()
+                                    }
+                                }).catch((res) => {
+                                    this.disabled = false;
+                                    console.error(res.statusText);
+                                    return res;
                                 })
-                            }).then((res) => {
-                                this.disabled = false;
-                                if (res.status == 200) {
-                                    return res.json()
+
+                                console.log(rdta);
+
+                                if (rdta == true) {
+                                    Swal.fire({
+                                        title: '¡Descuento Ingresada!',
+                                        text: "Quieres mantenerte en la página o ir al home",
+                                        icon: 'success',
+                                        showCancelButton: true,
+                                        confirmButtonColor: '#3085d6',
+                                        cancelButtonColor: '#d33',
+                                        confirmButtonText: 'Mantenerme',
+                                        cancelButtonText: 'Ir Home'
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            location.href = location.href;
+                                        }else{
+                                            location.href = 'trabajando';
+                                        }
+                                    })
+                                }else{
+                                    console.log('mal', rdta);
                                 }
-                            }).catch((res) => {
-                                this.disabled = false;
-                                console.error(res.statusText);
-                                return res;
-                            })
-
-                            console.log(rtda);
-
+                            }, location.href)
                         }
                     });
                 })();

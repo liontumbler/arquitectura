@@ -341,7 +341,8 @@ class ConsultasDB extends Database
         $descuento['idTrabajado'] = $trabajado;
         $descuento['idTrabajador'] = $trabajador;
 
-        return $this->create('descuento', $descuento);
+        $resDescuento = $this->create('descuento', $descuento);
+        return ($resDescuento > 0);
     }
 
     public function crearHoraliga(object $data, string $gimnasio)
