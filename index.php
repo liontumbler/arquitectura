@@ -29,8 +29,10 @@ class Core
         $ruta = 'view/'.$view.'.php';
         if (is_file($ruta) && $this->tienePermisos()) {
             //seteo la vida de la session en 31536000 segundos o 1 año
-            ini_set("session.cookie_lifetime","31536000");
-            ini_set("session.gc_maxlifetime","31536000");
+            ini_set("session.cookie_lifetime", "31536000");
+            ini_set("session.gc_maxlifetime", "31536000");
+            date_default_timezone_set("America/Bogota");
+            //echo date_default_timezone_get();
             
             @\session_start();
             $rutasLegitima = true;

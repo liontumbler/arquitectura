@@ -88,6 +88,20 @@ class ConsultasDB extends Database
         return $this->read('cliente', $array, $consulta, 'id, nombresYapellidos, documento');
     }
 
+    public function obtenerNombreClientePorId(string $id = null)
+    {
+        $array = empty($id) ? [] : ['id' => $id];
+        $consulta = empty($id) ? '' : $this->ID;
+        return $this->read('cliente', $array, $consulta, 'nombresYapellidos')[0]['nombresYapellidos'];
+    }
+
+    public function obtenerNombreProductoPorId(string $id = null)
+    {
+        $array = empty($id) ? [] : ['id' => $id];
+        $consulta = empty($id) ? '' : $this->ID;
+        return $this->read('producto', $array, $consulta, 'nombre')[0]['nombre'];
+    }
+
     public function obtenerEquiposPorId(string $id = null)
     {
         $array = empty($id) ? [] : ['id' => $id];
@@ -140,18 +154,48 @@ class ConsultasDB extends Database
         return $this->read(
             'ligas',
             ['idTrabajado' => $trabajado],
-            '`idTrabajado`=:idTrabajado AND tipoPago = "debe" OR tipoPago = "pazYsalvoEfectivo" OR tipoPago = "pazYsalvoDigital"',
+            '`idTrabajado`=:idTrabajado AND tipoPago = "debe"',
             'id, fechaInicio, total, idCliente, fechaFin, tipoPago'
         );
     }
 
-    public function obtenerLigaTrabajadoPago(string $trabajado)
+    public function obtenerLigaTrabajadoPagoE(string $trabajado)
     {
         return $this->read(
             'ligas',
             ['idTrabajado' => $trabajado],
-            '`idTrabajado`=:idTrabajado AND tipoPago != "debe" AND tipoPago != "pazYsalvoEfectivo" AND tipoPago != "pazYsalvoDigital"',
+            '`idTrabajado`=:idTrabajado AND tipoPago = "efectivo"',
             'id, fechaInicio, total, idCliente, fechaFin, tipoPago'
+        );
+    }
+
+    public function obtenerLigaTrabajadoPagoD(string $trabajado)
+    {
+        return $this->read(
+            'ligas',
+            ['idTrabajado' => $trabajado],
+            '`idTrabajado`=:idTrabajado AND tipoPago = "digital"',
+            'id, fechaInicio, total, idCliente, fechaFin, tipoPago'
+        );
+    }
+
+    public function obtenerLigaPorId(string $id)
+    {
+        return $this->read(
+            'ligas',
+            ['id' => $id],
+            '`id`=:id',
+            'id, fechaInicio, total, idCliente, fechaFin, tipoPago'
+        );
+    }
+
+    public function obtenerTiendaPorId(string $id)
+    {
+        return $this->read(
+            'tienda',
+            ['id' => $id],
+            '`id`=:id',
+            'id, cantidad, total, tipoPago, idProducto, idCliente, fecha'
         );
     }
 
@@ -161,16 +205,26 @@ class ConsultasDB extends Database
             'tienda',
             ['idTrabajado' => $trabajado],
             '`idTrabajado`=:idTrabajado',
-            'id, cantidad, total, tipoPago, idProducto, idCliente'
+            'id, cantidad, total, tipoPago, idProducto, idCliente, fecha'
         );
     }
 
-    public function obtenerTiendaTrabajadoPago(string $trabajado)
+    public function obtenerTiendaTrabajadoPagoE(string $trabajado)
     {
         return $this->read(
             'tienda',
             ['idTrabajado' => $trabajado],
-            '`idTrabajado`=:idTrabajado AND tipoPago != "debe" AND tipoPago != "pazYsalvoEfectivo" AND tipoPago != "pazYsalvoDigital"',
+            '`idTrabajado`=:idTrabajado AND tipoPago = "efectivo"',
+            'id, cantidad, total, tipoPago, idProducto, idCliente'
+        );
+    }
+
+    public function obtenerTiendaTrabajadoPagoD(string $trabajado)
+    {
+        return $this->read(
+            'tienda',
+            ['idTrabajado' => $trabajado],
+            '`idTrabajado`=:idTrabajado AND tipoPago = "digital"',
             'id, cantidad, total, tipoPago, idProducto, idCliente'
         );
     }
@@ -180,8 +234,28 @@ class ConsultasDB extends Database
         return $this->read(
             'tienda',
             ['idTrabajado' => $trabajado],
-            '`idTrabajado`=:idTrabajado AND tipoPago = "debe" OR tipoPago = "pazYsalvoEfectivo" OR tipoPago = "pazYsalvoDigital"',
+            '`idTrabajado`=:idTrabajado AND tipoPago = "debe"',
             'id, cantidad, total, tipoPago, idProducto, idCliente'
+        );
+    }
+
+    public function obtenerPagosTrabajado(string $trabajado)
+    {
+        return $this->read(
+            'pagos',
+            ['idTrabajado' => $trabajado],
+            '`idTrabajado`=:idTrabajado',
+            'id, tipoPago, total, descripcion, fecha, idCliente'
+        );
+    }
+
+    public function obtenerListaPagosId(string $id)
+    {
+        return $this->read(
+            'listapagos',
+            ['idPagos' => $id],
+            '`idPagos`=:idPagos',
+            'id, pago, idPagos'
         );
     }
 

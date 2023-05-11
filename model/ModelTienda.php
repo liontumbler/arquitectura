@@ -22,5 +22,15 @@ class ModelTienda extends Model
 
         return false;
     }
+
+    public function cargarTiendaCaja()
+    {
+        return $this->obtenerTiendaTrabajado($_SESSION['SesionTrabajador']['trabajadoId']);
+    }
+
+    public function cargarTiendaPorId($id)
+    {
+        return $this->obtenerTiendaPorId($id);
+    }
 }
 ?>

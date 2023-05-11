@@ -1,65 +1,42 @@
 <?php
 class ModelQuienDebe extends Model
 {
-    public function optenerDeudor($client, $documento)
+    public function optenerDeudor($client)
     {
-        if (empty($client)) {
-            $arr = ['documento' => $documento];
-            $cadena = '`documento`=:documento';
-            $cliente = $this->obtenerClienteId($arr, $cadena);
-        } elseif (empty($documento)){
-            $cliente[0]['id'] = $client;
-        } else {
-            $arr = ['documento' => $documento, 'id' => $client];
-            $cadena = '`documento`=:documento AND `id`=:id';
-            $cliente = $this->obtenerClienteId($arr, $cadena);
+        $returnArray = [];
+        $tienda = $this->obtenerTiendaDefault($client);
+        //return $tienda;
+        foreach ($tienda as $value) {
+            array_push(
+                $returnArray,
+                array(
+                    'id' => $value['id'],
+                    'tipoPago' => $value['tipoPago'],
+                    'total' => $value['total'],
+                    'fecha' => $value['fecha'],
+                    'tipoDeuda' => 'Tienda',
+                    'descripcion' => 'el producto '.$this->obtenerProductoNombre($value['idProducto']).' X '.$value['cantidad']
+                )
+            );
         }
-        //$arr = ['nombresYapellidos' => "%{$nombre}%", 'documento' => $documento];
-        //$cadena = '`documento`=:documento AND `nombresYapellidos`LIKE :nombresYapellidos';
+        //return $returnArray;
 
-        //return $cliente;
-
-        if ($cliente > 0) {
-            $cliente = $cliente[0]['id'];
-
-            $returnArray = [];
-            $tienda = $this->obtenerTiendaDefault($cliente);
-            //return $tienda;
-            foreach ($tienda as $value) {
-                array_push(
-                    $returnArray,
-                    array(
-                        'id' => $value['id'],
-                        'tipoPago' => $value['tipoPago'],
-                        'total' => $value['total'],
-                        'fecha' => $value['fecha'],
-                        'tipoDeuda' => 'Tienda',
-                        'descripcion' => 'el producto '.$this->obtenerProductoNombre($value['idProducto']).' X '.$value['cantidad']
-                    )
-                );
-            }
-            //return $returnArray;
-
-            $ligas = $this->obtenerLigaDefault($cliente);
-            //return $ligas;
-            foreach ($ligas as $value) {
-                array_push(
-                    $returnArray,
-                    array(
-                        'id' => $value['id'],
-                        'tipoPago' => $value['tipoPago'],
-                        'total' => $value['total'],
-                        'fecha' => $value['fechaInicio'],
-                        'tipoDeuda' => 'Liga',
-                        'descripcion' => '1 liga'
-                    )
-                );
-            }
-            return $returnArray;
-
-        } else {
-            return false;
+        $ligas = $this->obtenerLigaDefault($client);
+        //return $ligas;
+        foreach ($ligas as $value) {
+            array_push(
+                $returnArray,
+                array(
+                    'id' => $value['id'],
+                    'tipoPago' => $value['tipoPago'],
+                    'total' => $value['total'],
+                    'fecha' => $value['fechaInicio'],
+                    'tipoDeuda' => 'Liga',
+                    'descripcion' => '1 liga'
+                )
+            );
         }
+        return $returnArray;
     }
 
     public function pagar($dta)

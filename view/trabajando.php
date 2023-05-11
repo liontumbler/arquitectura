@@ -19,41 +19,62 @@ class PaginaOnce extends Web implements PaginaX
 
     public function content()
     {
-        $tiendaV = $this->model('ModelAdmin', 'obtenerTiendaTraba', $_SESSION['SesionTrabajador']['trabajadoId']);
-        $tiendaD = $this->model('ModelAdmin', 'obtenerTiendaTrabaDebe', $_SESSION['SesionTrabajador']['trabajadoId']);
-        $tiendaP = $this->model('ModelAdmin', 'obtenerTiendaTrabaPago', $_SESSION['SesionTrabajador']['trabajadoId']);
         
-        $ligaV = $this->model('ModelAdmin', 'obtenerLigaTraba', $_SESSION['SesionTrabajador']['trabajadoId']);
+        
+        
         $ligaD = $this->model('ModelAdmin', 'obtenerLigaTrabaDebe', $_SESSION['SesionTrabajador']['trabajadoId']);
-        $ligaP = $this->model('ModelAdmin', 'obtenerLigaTrabaPago', $_SESSION['SesionTrabajador']['trabajadoId']);
+        $ligaVE = $this->model('ModelAdmin', 'obtenerLigaTrabaPagoE', $_SESSION['SesionTrabajador']['trabajadoId']);
+        $ligaVD = $this->model('ModelAdmin', 'obtenerLigaTrabaPagoD', $_SESSION['SesionTrabajador']['trabajadoId']);
+        $ligaT = $this->model('ModelAdmin', 'obtenerLigaTraba', $_SESSION['SesionTrabajador']['trabajadoId']);
         
+        
+
+        
+        $tiendaD = $this->model('ModelAdmin', 'obtenerTiendaTrabaDebe', $_SESSION['SesionTrabajador']['trabajadoId']);
+        $tiendaVE = $this->model('ModelAdmin', 'obtenerTiendaTrabaPagoE', $_SESSION['SesionTrabajador']['trabajadoId']);
+        $tiendaVD = $this->model('ModelAdmin', 'obtenerTiendaTrabaPagoD', $_SESSION['SesionTrabajador']['trabajadoId']);
+        $tiendaT = $this->model('ModelAdmin', 'obtenerTiendaTraba', $_SESSION['SesionTrabajador']['trabajadoId']);
+
+
         $pagosP = $this->model('ModelAdmin', 'obtenerpagosTrabaPago', $_SESSION['SesionTrabajador']['trabajadoId']);
 
         $totalTienda = 0;
-        foreach ($tiendaV as $i => $value) {
+        foreach ($tiendaT as $i => $value) {
             $totalTienda = $totalTienda + ($value['total']);
         }
         $totalTiendaDebe = 0;
         foreach ($tiendaD as $i => $value) {
             $totalTiendaDebe = $totalTiendaDebe + ($value['total']);
         }
-        $totalTiendaPago = 0;
-        foreach ($tiendaP as $i => $value) {
-            $totalTiendaPago = $totalTiendaPago + ($value['total']);
+        $totalTiendaPagoE = 0;
+        foreach ($tiendaVE as $i => $value) {
+            $totalTiendaPagoE = $totalTiendaPagoE + ($value['total']);
+        }
+        $totalTiendaPagoD = 0;
+        foreach ($tiendaVD as $i => $value) {
+            $totalTiendaPagoD = $totalTiendaPagoD + ($value['total']);
         }
 
+
+
         $totalligas = 0;
-        foreach ($ligaV as $i => $value) {
+        foreach ($ligaT as $i => $value) {
             $totalligas = $totalligas + ($value['total']);
         }
         $totalligasDebe = 0;
         foreach ($ligaD as $i => $value) {
             $totalligasDebe = $totalligasDebe + ($value['total']);
         }
-        $totalligasPago = 0;
-        foreach ($ligaP as $i => $value) {
-            $totalligasPago = $totalligasPago + ($value['total']);
+        $totalligasPagoE = 0;
+        foreach ($ligaVE as $i => $value) {
+            $totalligasPagoE = $totalligasPagoE + ($value['total']);
         }
+        $totalligasPagoD = 0;
+        foreach ($ligaVD as $i => $value) {
+            $totalligasPagoD = $totalligasPagoD + ($value['total']);
+        }
+
+
 
         $totalPagosPagoefectivo = 0;
         $totalPagosPagodigital = 0;
@@ -74,23 +95,34 @@ class PaginaOnce extends Web implements PaginaX
                             <hr>
                             <hr>
                             <li>fiado de Ligas: <span><?= $totalligasDebe; ?></span></li>
-                            <li>vendido de Ligas: <span><?= $totalligasPago; ?></span></li>
+                            <li>vendido de Ligas E: <span><?= $totalligasPagoE; ?></span></li>
+                            <li>vendido de Ligas D: <span><?= $totalligasPagoD; ?></span></li>
+
+
+                            <li>fiado de Tienda: <span><?= $totalTiendaDebe; ?></span></li>
+                            <li>vendido de Tienda E: <span><?= $totalTiendaPagoE; ?></span></li>
+                            <li>vendido de Tienda D: <span><?= $totalTiendaPagoD; ?></span></li>
+
+
+
+
+                            <li>tienda en total: <span><?= $totalTienda; ?></span></li>
                             <li>Ligas en total: <span><?= $totalligas; ?></span></li>
                             <hr>
                             <hr>
                             <li>fiado de tienda: <span><?= $totalTiendaDebe; ?></span></li>
-                            <li>vendido de tienda: <span><?= $totalTiendaPago; ?></span></li>
+
                             <li>Tienda en total: <span><?= $totalTienda; ?></span></li>
                             <hr>
                             <hr>
                             <li>total fiado: <span><?= $totalligasDebe + $totalTiendaDebe; ?></span></li>
-                            <li>total pagos: <span><?= $totalligasPago + $totalTiendaPago; ?></span></li>
+                            
                             <li>total vendido: <span><?= $totalligas + $totalTienda; ?></span></li>
                             <hr>
                             <hr>
                             <li>pago efectivo: <span><?= $totalPagosPagoefectivo; ?></span></li>
                             <li>pago digital: <span><?= $totalPagosPagodigital; ?></span></li>
-                            <li>total efectivo con digital: <span><?= $totalligasPago + $totalTiendaPago + ($totalPagosPagoefectivo + $totalPagosPagodigital); ?></span></li>
+                            <li>total efectivo con digital: <span><?= ($totalPagosPagoefectivo + $totalPagosPagodigital); ?></span></li>
                             <hr>
                             <hr>
 

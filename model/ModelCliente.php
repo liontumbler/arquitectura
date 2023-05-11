@@ -6,5 +6,12 @@ class ModelCliente extends Model
         return $this->obtenerClientePorId();
     }
 
+    public function cargarNombreClientePorId($id)
+    {
+        return $this->obtenerNombreClientePorId($id);
+    }
+
+    
+
 }
 ?>

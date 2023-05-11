@@ -40,10 +40,6 @@ class PaginaOnce extends Web implements PaginaX
                                         <option selected value="">Seleccione una opción</option>
                                     </select>
                                 </div>
-                                <div class="col-lg-2 col-sm-4">
-                                    <label for="documento" class="visually-hidden">Documento</label>
-                                    <input type="number" class="form-control" id="documento" placeholder="Documento" min="1" max="999999999999">
-                                </div>
                                 <div class="col-lg-2 col-sm-4 d-grid gap-2">
                                     <button type="button" class="btn btn-primary mb-3" id="buscar">Buscar</button>
                                 </div>

@@ -1,3 +1,0 @@
-[2023-05-10 20:13:02] Error: Failed to read record from horaliga with : SQLSTATE[42S22]: Column not found: 1054 Unknown column 'fecha' in 'field list'
-[2023-05-10 20:18:23] Error: Failed to read record from horaliga with : SQLSTATE[42S22]: Column not found: 1054 Unknown column 'fecha' in 'field list'
-[2023-05-10 20:32:54] Error: Failed to read record from horaliga with : SQLSTATE[42S22]: Column not found: 1054 Unknown column 'fecha' in 'field list'

@@ -6,7 +6,7 @@ document.querySelector('body').onload = (e) => {
         let $table = $('#quienDebeTable')
 
         resCli.then(function () {
-            validarForm1 = new Validardor(['cliente', 'documento']);
+            validarForm1 = new Validardor(['cliente']);
         })
         
         document.getElementById('buscar').addEventListener('click', async function(e) {

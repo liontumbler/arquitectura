@@ -9,7 +9,6 @@ document.querySelector('body').onload = (e) => {
                 },
                 body: JSON.stringify({
                     accion: 'CargarProductos',
-                    //data: '',
                     csrf_token: document.getElementById('csrf_token').value
                 })
             }).then((res) => {

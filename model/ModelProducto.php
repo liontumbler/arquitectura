@@ -6,5 +6,10 @@ class ModelProducto extends Model
         return $this->obtenerProductoPorId();
     }
 
+    public function cargarNombreProductoPorId($id)
+    {
+        return $this->obtenerNombreProductoPorId($id);
+    }
+
 }
 ?>

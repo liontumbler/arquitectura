@@ -41,6 +41,16 @@ class ModelLiga extends Model
         return $valido;
     }
 
+    public function cargarLigasCaja()
+    {
+        return $this->obtenerLigaTrabajado($_SESSION['SesionTrabajador']['trabajadoId']);
+    }
+
+    public function cargarLigaPorId($id)
+    {
+        return $this->obtenerLigaPorId($id);
+    }
+
     
 
     

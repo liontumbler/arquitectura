@@ -11,9 +11,14 @@ class ModelAdmin extends Model
         return $this->obtenerLigaTrabajadoDebe($trabajado);
     }
 
-    public function obtenerLigaTrabaPago($trabajado)
+    public function obtenerLigaTrabaPagoE($trabajado)
     {
-        return $this->obtenerLigaTrabajadoPago($trabajado);
+        return $this->obtenerLigaTrabajadoPagoE($trabajado);
+    }
+
+    public function obtenerLigaTrabaPagoD($trabajado)
+    {
+        return $this->obtenerLigaTrabajadoPagoD($trabajado);
     }
 
     public function obtenerTiendaTraba($trabajado)
@@ -26,9 +31,14 @@ class ModelAdmin extends Model
         return $this->obtenerTiendaTrabajadoDebe($trabajado);
     }
 
-    public function obtenerTiendaTrabaPago($trabajado)
+    public function obtenerTiendaTrabaPagoE($trabajado)
     {
-        return $this->obtenerTiendaTrabajadoPago($trabajado);
+        return $this->obtenerTiendaTrabajadoPagoE($trabajado);
+    }
+
+    public function obtenerTiendaTrabaPagoD($trabajado)
+    {
+        return $this->obtenerTiendaTrabajadoPagoD($trabajado);
     }
 
     public function obtenerPagosTrabaPago($trabajado)
