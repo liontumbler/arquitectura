@@ -98,13 +98,12 @@ document.querySelector('body').onload = (e) => {
                     widthUnit: 'px',
                     sortable: true,
                     falign: 'center',
-                    footerFormatter: function(data) {
-                        return 'Nombre del deudor';
-                    },
+                    halign: 'center',
+                    align: 'center',
                     formatter: function(value, row, index) {
-                        return '<div style="width: inherit; overflow:hidden; white-space:nowrap; text-overflow: ellipsis;">' +
+                        return '<div style="width: inherit; overflow:hidden; white-space:nowrap; text-overflow: ellipsis; display: block; margin: auto;"">' +
                             row.tipoDeuda +
-                            '</div>';
+                        '</div>';
                     },
                 }, {
                     field: 'descripcion',
@@ -120,6 +119,8 @@ document.querySelector('body').onload = (e) => {
                     width: '100',
                     widthUnit: 'px',
                     falign: 'center',
+                    halign: 'center',
+                    align: 'center',
                     footerFormatter: function(data) {
                         let field = this.field
                         return '$' + data.map(function(row) {
@@ -137,21 +138,25 @@ document.querySelector('body').onload = (e) => {
                     title: 'Fecha',
                     width: '215',
                     widthUnit: 'px',
+                    halign: 'center',
+                    align: 'center',
                     footerFormatter: function(data) {
-                        return `<div class="gap-2">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="tipoPago" id="efectivo" value="efectivo" checked>
-                                <label class="form-check-label" for="efectivo">
-                                    Efectivo
-                                </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="tipoPago" id="digital" value="digital">
-                                <label class="form-check-label" for="digital">
-                                    Digital
-                                </label>
-                            </div>
-                        </div>`;
+                        if (dataT.length > 0) {
+                            return `<div class="gap-2">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="tipoPago" id="efectivo" value="efectivo" checked>
+                                    <label class="form-check-label" for="efectivo">
+                                        Efectivo
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="tipoPago" id="digital" value="digital">
+                                    <label class="form-check-label" for="digital">
+                                        Digital
+                                    </label>
+                                </div>
+                            </div>`;
+                        }
                     }
                 }, {
                     title: 'Pagar',
@@ -190,9 +195,11 @@ document.querySelector('body').onload = (e) => {
                         },
                     },
                     footerFormatter: function(data) {
-                        return `<div class="d-grid gap-2">
-                        <button type="button" class="btn btn-success" id="checkPagar">Pagar</button>
-                        </div>`;
+                        if (dataT.length > 0) {
+                            return `<div class="d-grid gap-2">
+                                <button type="button" class="btn btn-success" id="checkPagar">Pagar</button>
+                            </div>`;
+                        }
                     }
                 }],
 
