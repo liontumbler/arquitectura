@@ -38,6 +38,10 @@ class PaginaOnce extends Web implements PaginaX
                                 <input type="number" class="form-control" id="caja" placeholder="Digite el monto del efectivo" required max="1000000" min="0" value="0">
                             </div>
                             <div class="col-lg-12 mb-1">
+                                <script src="resources/libs/RecaptchaV2/recaptchaV2.js"></script>
+                                <div id="recaptcha"></div>
+                            </div>
+                            <div class="col-lg-12 mb-1">
                                 <div class="d-grid gap-2">
                                     <button id="trabajar" class="btn btn-primary" type="button">Trabajar</button>
                                 </div>

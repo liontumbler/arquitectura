@@ -6,5 +6,12 @@ class ModelDescontar extends Model
         return $this->crearDescuento($data, $_SESSION['SesionTrabajador']['gimnasioId'], $_SESSION['SesionTrabajador']['trabajadoId'], $_SESSION['SesionTrabajador']['trabajadorId']);
     }
 
+    public function cargarDescuentosPorId($trabajado)
+    {
+        return $this->obtenerDescuentoTrabajado($trabajado);
+    }
+
+
+
 }
 ?>

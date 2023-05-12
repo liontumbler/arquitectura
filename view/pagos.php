@@ -35,6 +35,9 @@ class PaginaOnce extends Web implements PaginaX
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="pagos-tab" data-bs-toggle="tab" data-bs-target="#pagos" type="button" role="tab" aria-controls="pagos" aria-selected="false">Pagos</button>
                         </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="descuentos-tab" data-bs-toggle="tab" data-bs-target="#descuentos" type="button" role="tab" aria-controls="descuentos" aria-selected="false">Descuentos</button>
+                        </li>
                     </ul>
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="ligas" role="tabpanel" aria-labelledby="ligas-tab">
@@ -45,6 +48,9 @@ class PaginaOnce extends Web implements PaginaX
                         </div>
                         <div class="tab-pane fade" id="pagos" role="tabpanel" aria-labelledby="pagos-tab">
                             <table id="pagosTable"></table>
+                        </div>
+                        <div class="tab-pane fade" id="descuentos" role="tabpanel" aria-labelledby="descuentos-tab">
+                            <table id="descuentosTable"></table>
                         </div>
                     </div>
 
@@ -150,10 +156,34 @@ class PaginaOnce extends Web implements PaginaX
                 })
             }
 
+            async function cargarDescuentos() {
+                return await fetch('controller/ControllerPagos.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        accion: 'CargarDescuentos',
+                        csrf_token: document.getElementById('csrf_token').value
+                    })
+                }).then((res) => {
+                    this.disabled = false;
+                    if (res.status == 200) {
+                        return res.json()
+                    }
+                }).catch((res) => {
+                    this.disabled = false;
+                    console.error(res.statusText);
+                    return res;
+                })
+            }
+
             let data;
             let $table = $('#ligasTable')
-            cargarLigasCaja().then((dta) => {
-                dta.forEach(async function (dt, i) {
+            cargarLigasCaja().then(async (dta) => {
+                let limite = dta.length-1;
+                let i = 0;
+                for (const dt of dta) {
                     let id = dt.idCliente;
                     let nombreCliente = await fetch('controller/ControllerPagos.php', {
                         method: 'POST',
@@ -178,13 +208,11 @@ class PaginaOnce extends Web implements PaginaX
 
                     dt.idCliente = nombreCliente;
 
-                    if (dta.length - 1 == i) {
-                        console.log('nombreCliente');
+                    if (limite == i) {
                         data = dta;
 
                         $table.bootstrapTable({
                             cache: false,
-                            height: '460',
                             buttonsClass: 'dark',
 
                             buttonsOrder: ['export', 'columns', 'fullscreen'],
@@ -195,15 +223,13 @@ class PaginaOnce extends Web implements PaginaX
                             showColumns: "true",
                             showColumnsToggleAll: "true",
 
-                            pagination: true,
-                            paginationVAlign: "both",
-                            paginationParts: 'pageList',
-                            pageSize: 5,
                             pageList: '[]',
 
                             search: true,
                             searchAccentNeutralise: "true",
                             searchAlign: "left",
+
+                            showFooter: true,
 
                             classes: 'table table-striped',
                             formatNoMatches: function() {
@@ -248,7 +274,18 @@ class PaginaOnce extends Web implements PaginaX
                                 title: 'Fin'
                             }, {
                                 field: 'total',
-                                title: 'Precio'
+                                title: 'Precio',
+                                falign: 'center',
+                                halign: 'center',
+                                align: 'center',
+                                footerFormatter: function(data) {
+                                    let field = this.field
+                                    return '$' + data.map(function(row) {
+                                        return +row[field];
+                                    }).reduce(function(sum, i) {
+                                        return sum + i
+                                    }, 0)
+                                }
                             }, {
                                 title: 'Pago?',
                                 align: 'center',
@@ -266,15 +303,18 @@ class PaginaOnce extends Web implements PaginaX
                             data: data
                         })
                     }
-                });
+                    i++;
+                }
             })
 
             let data1;
             let $table1 = $('#tiendaTable')
-            cargarTiendaCaja().then((dta) => {
+            cargarTiendaCaja().then(async (dta) => {
                 console.log(dta,'tienda');
 
-                dta.forEach(async function (dt, i) {
+                let limite = dta.length-1;
+                let i = 0;
+                for (const dt of dta) {
                     let id = dt.idCliente;
                     let idPro = dt.idProducto;
                     let nombreCliente = await fetch('controller/ControllerPagos.php', {
@@ -322,12 +362,11 @@ class PaginaOnce extends Web implements PaginaX
                     dt.idCliente = nombreCliente;
                     dt.idProducto = nombreProducto;
 
-                    if (dta.length - 1 == i) {
+                    if (limite == i) {
                         data1 = dta;
 
                         $table1.bootstrapTable({
                             cache: false,
-                            height: '460',
                             buttonsClass: 'dark',
 
                             buttonsOrder: ['export', 'columns', 'fullscreen'],
@@ -338,15 +377,13 @@ class PaginaOnce extends Web implements PaginaX
                             showColumns: "true",
                             showColumnsToggleAll: "true",
 
-                            pagination: true,
-                            paginationVAlign: "both",
-                            paginationParts: 'pageList',
-                            pageSize: 5,
                             pageList: '[]',
 
                             search: true,
                             searchAccentNeutralise: "true",
                             searchAlign: "left",
+
+                            showFooter: true,
 
                             classes: 'table table-striped',
                             formatNoMatches: function() {
@@ -392,7 +429,18 @@ class PaginaOnce extends Web implements PaginaX
                                 title: 'Producto'
                             }, {
                                 field: 'total',
-                                title: 'Precio'
+                                title: 'Precio',
+                                falign: 'center',
+                                halign: 'center',
+                                align: 'center',
+                                footerFormatter: function(data) {
+                                    let field = this.field
+                                    return '$' + data.map(function(row) {
+                                        return +row[field];
+                                    }).reduce(function(sum, i) {
+                                        return sum + i
+                                    }, 0)
+                                }
                             }, {
                                 title: 'Pago?',
                                 align: 'center',
@@ -410,15 +458,17 @@ class PaginaOnce extends Web implements PaginaX
                             data: data1
                         })
                     }
-                });
+                }
             })
 
             let data2;
             let $table2 = $('#pagosTable')
-            cargarPagosCaja().then((dta) => {
+            cargarPagosCaja().then(async (dta) => {
                 console.log(dta,'pagos');
 
-                dta.forEach(async function (dt, i) {
+                let limite = dta.length-1;
+                let i = 0;
+                for (const dt of dta) {
                     let id = dt.idCliente;
                     let idPro = dt.idProducto;
                     let nombreCliente = await fetch('controller/ControllerPagos.php', {
@@ -444,12 +494,11 @@ class PaginaOnce extends Web implements PaginaX
 
                     dt.idCliente = nombreCliente;
 
-                    if (dta.length - 1 == i) {
+                    if (limite == i) {
                         data2 = dta;
                 
                         $table2.bootstrapTable({
                             cache: false,
-                            height: '460',
                             buttonsClass: 'dark',
 
                             buttonsOrder: ['export', 'columns', 'fullscreen'],
@@ -460,15 +509,13 @@ class PaginaOnce extends Web implements PaginaX
                             showColumns: "true",
                             showColumnsToggleAll: "true",
 
-                            pagination: true,
-                            paginationVAlign: "both",
-                            paginationParts: 'pageList',
-                            pageSize: 5,
                             pageList: '[]',
 
                             search: true,
                             searchAccentNeutralise: "true",
                             searchAlign: "left",
+
+                            showFooter: true,
 
                             classes: 'table table-striped',
                             formatNoMatches: function() {
@@ -511,9 +558,6 @@ class PaginaOnce extends Web implements PaginaX
                                     let listaP = document.getElementById('listPro'+id)
                                     listaP.innerHTML = '';
                                     data.forEach(async d => {
-                                        console.log('---------', d);
-
-
                                         if (d.pago == 'Liga') {
                                             let ligas = await fetch('controller/ControllerPagos.php', {
                                                 method: 'POST',
@@ -625,7 +669,18 @@ class PaginaOnce extends Web implements PaginaX
                                 },
                             }, {
                                 field: 'total',
-                                title: 'Precio'
+                                title: 'Precio',
+                                falign: 'center',
+                                halign: 'center',
+                                align: 'center',
+                                footerFormatter: function(data) {
+                                    let field = this.field
+                                    return '$' + data.map(function(row) {
+                                        return +row[field];
+                                    }).reduce(function(sum, i) {
+                                        return sum + i
+                                    }, 0)
+                                }
                             }, {
                                 title: 'Pago?',
                                 align: 'center',
@@ -643,7 +698,84 @@ class PaginaOnce extends Web implements PaginaX
                             data: data2
                         })
                     }
-                });
+                    i++;
+                }
+            })
+
+            let data3;
+            let $table3 = $('#descuentosTable')
+            cargarDescuentos().then((dta) => {
+                console.log(dta,'decuentos');
+
+                data3 = dta;
+
+                $table3.bootstrapTable({
+                    cache: false,
+                    buttonsClass: 'dark',
+
+                    buttonsOrder: ['export', 'columns', 'fullscreen'],
+                    showExport: "true",
+                    exportDataType: 'all',
+                    exportTypes: ['csv', 'excel', 'pdf'], //['json', 'xml', 'csv', 'txt', 'sql', 'excel', 'pdf'],
+                    showFullscreen: "true",
+                    showColumns: "true",
+                    showColumnsToggleAll: "true",
+
+                    pageList: '[]',
+
+                    search: true,
+                    searchAccentNeutralise: "true",
+                    searchAlign: "left",
+
+                    showFooter: true,
+
+                    classes: 'table table-striped',
+                    formatNoMatches: function() {
+                        return "No se encontraron registros coincidentes"
+                    },
+                    formatSearch: function() {
+                        return "Buscar"
+                    },
+                    formatColumnsToggleAll: function() {
+                        return "Mostrar Todo"
+                    },
+                    loadingTemplate(message) {
+                        return '<div class="ph-item"><div class="ph-picture"></div></div>';
+                    },
+                    columns: [{
+                        field: 'id',
+                        title: 'ID',
+                        halign: 'center',
+                        valign: 'middle',
+                        align: 'center',
+                        searchable: 'false'
+                    }, {
+                        field: 'titulo',
+                        title: 'Titulo'
+                    }, {
+                        field: 'descripcion',
+                        title: 'Descripción'
+                    },{
+                        field: 'fecha',
+                        title: 'Fecha'
+                    }, {
+                        field: 'total',
+                        title: 'Precio',
+                        falign: 'center',
+                        halign: 'center',
+                        align: 'center',
+                        footerFormatter: function(data) {
+                            let field = this.field
+                            return '-$' + data.map(function(row) {
+                                return +row[field];
+                            }).reduce(function(sum, i) {
+                                return sum + i
+                            }, 0)
+                        }
+                    }],
+
+                    data: data3
+                })
             })
         </script>
 <?php

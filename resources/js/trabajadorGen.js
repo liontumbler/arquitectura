@@ -53,7 +53,7 @@ async function claveCaja(clave) {
 
 function msgClave(fun, redirec = location.href) {
     Swal.fire({
-        title: 'Necesitas la clave de la caja para agregar',
+        title: 'Necesitas la clave de la caja para realizar la acción',
         input: 'password',
         inputPlaceholder: 'Clave 4 digitos',
         inputAttributes: {
@@ -83,11 +83,15 @@ function msgClave(fun, redirec = location.href) {
                     showConfirmButton: false,
                     timer: 1500
                 }).then((result) => {
-                    location.href = redirec;
+                    if (redirec != '') {
+                        location.href = redirec;
+                    }
                 })
             }
         }else{
-            location.href = redirec;
+            if (redirec != '') {
+                location.href = redirec;
+            }
         }
     })
 }

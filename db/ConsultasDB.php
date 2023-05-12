@@ -6,6 +6,7 @@ class ConsultasDB extends Database
 {
     public function __construct()
     {
+        date_default_timezone_set("America/Bogota");
         parent::__construct(HOST, USER, PASS, DB);
     }
 
@@ -179,6 +180,58 @@ class ConsultasDB extends Database
         );
     }
 
+    public function obtenerDescuentoTrabajado(string $trabajado)
+    {
+        return $this->read(
+            'descuento',
+            ['idTrabajado' => $trabajado],
+            '`idTrabajado`=:idTrabajado',
+            'id, titulo, descripcion, total, fecha'
+        );
+    }
+
+    public function obtenerCajaTrabajado(string $trabajado)
+    {
+        return $this->read(
+            'trabajado',
+            ['id' => $trabajado],
+            "`id`=:id",
+            'iniciCaja'
+        )[0]['iniciCaja'];
+    }
+
+    
+
+    public function obtenerPagosTrabajado(string $trabajado)
+    {
+        return $this->read(
+            'pagos',
+            ['idTrabajado' => $trabajado],
+            '`idTrabajado`=:idTrabajado',
+            'id, tipoPago, total, descripcion, fecha, idCliente'
+        );
+    }
+
+    public function obtenerPagosTrabajadoPagoE(string $trabajado)
+    {
+        return $this->read(
+            'pagos',
+            ['idTrabajado' => $trabajado],
+            '`idTrabajado`=:idTrabajado AND tipoPago = "efectivo"',
+            'id, tipoPago, total, descripcion, fecha, idCliente'
+        );
+    }
+
+    public function obtenerPagosTrabajadoPagoD(string $trabajado)
+    {
+        return $this->read(
+            'pagos',
+            ['idTrabajado' => $trabajado],
+            '`idTrabajado`=:idTrabajado AND tipoPago = "digital"',
+            'id, tipoPago, total, descripcion, fecha, idCliente'
+        );
+    }
+
     public function obtenerLigaPorId(string $id)
     {
         return $this->read(
@@ -239,16 +292,6 @@ class ConsultasDB extends Database
         );
     }
 
-    public function obtenerPagosTrabajado(string $trabajado)
-    {
-        return $this->read(
-            'pagos',
-            ['idTrabajado' => $trabajado],
-            '`idTrabajado`=:idTrabajado',
-            'id, tipoPago, total, descripcion, fecha, idCliente'
-        );
-    }
-
     public function obtenerListaPagosId(string $id)
     {
         return $this->read(
@@ -256,16 +299,6 @@ class ConsultasDB extends Database
             ['idPagos' => $id],
             '`idPagos`=:idPagos',
             'id, pago, idPagos'
-        );
-    }
-
-    public function obtenerPagosTrabajadoPago(string $trabajado)
-    {
-        return $this->read(
-            'pagos',
-            ['idTrabajado' => $trabajado],
-            '`idTrabajado`=:idTrabajado AND tipoPago != "debe"',
-            'id, tipoPago, total, descripcion, fecha, idCliente	'
         );
     }
 
@@ -509,6 +542,11 @@ class ConsultasDB extends Database
             //actualizar clave de caja  claveCaja, enviar codigo por correo
             return 'correo';
         }
+    }
+
+    public function actualizarFinCaja($finCaja, $trabajado)
+    {
+        return $this->update('trabajado', ['finCaja' => $finCaja, 'fechaFin' => date('Y-m-d H:i:s')], $trabajado);
     }
     //$arr = ['nombresYapellidos' => "%{$nombre}%", 'documento' => $documento];
     //$cadena = '`documento`=:documento AND `nombresYapellidos`LIKE :nombresYapellidos';

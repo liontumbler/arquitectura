@@ -48,6 +48,10 @@ class ControllerPagos extends Controller
         return $this->model('ModelProducto')->cargarNombreProductoPorId($dta->id);
     }
 
+    public function postCargarDescuentos()
+    {
+        return $this->model('ModelDescontar')->cargarDescuentosPorId($_SESSION['SesionTrabajador']['trabajadoId']);
+    }
     
 
     

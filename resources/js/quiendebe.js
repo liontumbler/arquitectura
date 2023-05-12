@@ -206,62 +206,64 @@ document.querySelector('body').onload = (e) => {
                 data: dataT
             });
 
-            document.getElementById('checkPagar').addEventListener('click', function(e) {
+            if (dataT.length > 0) {
+                document.getElementById('checkPagar').addEventListener('click', function(e) {
 
-                let dta = $table.bootstrapTable('getData').filter(rw => rw.tipoPago != false);
-                let tipoPago = document.querySelector('input[name="tipoPago"]:checked').value
-                //let total = document.querySelectorAll('tfoot .th-inner')[3].textContent.replace('$', '');
+                    let dta = $table.bootstrapTable('getData').filter(rw => rw.tipoPago != false);
+                    let tipoPago = document.querySelector('input[name="tipoPago"]:checked').value
+                    //let total = document.querySelectorAll('tfoot .th-inner')[3].textContent.replace('$', '');
 
-                dta.push({'pago': tipoPago, 'idCliente': document.getElementById('cliente').value});
-                console.log(dta, tipoPago);
-                msgClave(async function () {
-                    let rdta = await fetch('controller/ControllerQuienDebe.php', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            accion: 'Pagar',
-                            data: dta,
-                            csrf_token: document.getElementById('csrf_token').value
-                        })
-                    }).then((res) => {
-                        this.disabled = false;
-                        if (res.status == 200) {
-                            return res.json()
-                        }
-                    }).catch((res) => {
-                        this.disabled = false;
-                        //console.error(res.statusText);
-                        return res;
-                    })
-
-                    if (rdta == true) {
-                        Swal.fire({
-                            title: '¡Pago Ingresado!',
-                            text: "Quieres mantenerte en la página o ir al home",
-                            icon: 'success',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText: 'Mantenerme',
-                            cancelButtonText: 'Ir Home'
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                location.href = location.href;
-                            }else{
-                                location.href = 'trabajando';
-                            }
-                        })
-                    }else{
-                        if (rdta == -1) {
-                            clienteYaExiste(function (res) {
-                                validarForm1.limpiar();
+                    dta.push({'pago': tipoPago, 'idCliente': document.getElementById('cliente').value});
+                    console.log(dta, tipoPago);
+                    msgClave(async function () {
+                        let rdta = await fetch('controller/ControllerQuienDebe.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                accion: 'Pagar',
+                                data: dta,
+                                csrf_token: document.getElementById('csrf_token').value
                             })
+                        }).then((res) => {
+                            this.disabled = false;
+                            if (res.status == 200) {
+                                return res.json()
+                            }
+                        }).catch((res) => {
+                            this.disabled = false;
+                            //console.error(res.statusText);
+                            return res;
+                        })
+
+                        if (rdta == true) {
+                            Swal.fire({
+                                title: '¡Pago Ingresado!',
+                                text: "Quieres mantenerte en la página o ir al home",
+                                icon: 'success',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Mantenerme',
+                                cancelButtonText: 'Ir Home'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    location.href = location.href;
+                                }else{
+                                    location.href = 'trabajando';
+                                }
+                            })
+                        }else{
+                            if (rdta == -1) {
+                                clienteYaExiste(function (res) {
+                                    validarForm1.limpiar();
+                                })
+                            }
                         }
-                    }
-                }, location.href)
-            });
+                    }, location.href)
+                });
+            }
         }
     })();
 }

@@ -41,9 +41,31 @@ class ModelAdmin extends Model
         return $this->obtenerTiendaTrabajadoPagoD($trabajado);
     }
 
-    public function obtenerPagosTrabaPago($trabajado)
+    public function obtenerPagosTraba($trabajado)
     {
-        return $this->obtenerPagosTrabajadoPago($trabajado);
+        return $this->obtenerPagosTrabajado($trabajado);
     }
+
+    public function obtenerPagosTrabaPagoE($trabajado)
+    {
+        return $this->obtenerPagosTrabajadoPagoE($trabajado);
+    }
+
+    public function obtenerPagosTrabaPagoD($trabajado)
+    {
+        return $this->obtenerPagosTrabajadoPagoD($trabajado);
+    }
+
+    public function obtenerDescuentoTraba($trabajado)
+    {
+        return $this->obtenerDescuentoTrabajado($trabajado);
+    }
+
+    public function obtenerCajaTraba($trabajado)
+    {
+        return $this->obtenerCajaTrabajado($trabajado);
+    }
+
+    
 }
 ?>
