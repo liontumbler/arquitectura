@@ -9,7 +9,7 @@ class ModelLiga extends Model
             
             @\session_start();
             unset($_SESSION['SesionTrabajador']);
-            header('Location: index');
+            header('Location: ../index');
         } else {//sesion ya iniciada
             $total = $this->obtenerLigasPrecio($data->selectHora);
             if (empty($data->cliente)) {
