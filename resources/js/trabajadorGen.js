@@ -165,3 +165,90 @@ async function cargarEquipos() {
         select.append(op);
     }
 }
+
+async function terminar(e) {
+    msgClave(async function () {
+
+        Swal.fire({
+            title: 'Ingresa el fectivo actual de la caja',
+            input: 'text',
+            inputLabel: 'Valor Caja',
+            showCancelButton: true,
+            inputAttributes: {
+                'minlength': '1',
+                'maxlength': '10',
+                'oninput': "this.value = this.value.replace(/[^0-9]/g, '')",
+                'style': 'text-align: center;'
+            },
+            inputValidator: (value) => {
+                if (!value) {
+                    return '¡El campo no puede estar vacío!'
+                }
+            }
+        }).then(async (result) => {
+            console.log(result);
+            if (result.isConfirmed) {
+                let rest = await fetch('controller/ControllerTrabajando.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        accion: 'Cerrarcaja',
+                        data: {finCaja: result.value},
+                        csrf_token: document.getElementById('csrf_token').value
+                    })
+                }).then((res) => {
+                    this.disabled = false;
+                    if (res.status == 200) {
+                        return res.json()
+                    }
+                }).catch((res) => {
+                    this.disabled = false;
+                    console.error(res.statusText);
+                    return res;
+                })
+
+                console.log(rest);
+
+                if (rest == true) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Cerro correctamente la sesión',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then((result) => {
+                        if (result.dismiss == 'timer' && result.isDismissed) {
+                            location.href = 'loginTrabajador';
+                        }else{
+                            //location.href = location.href;
+                            alert('No selecciona ninguna op');
+                        }
+                    })
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error al cerrar caja',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then((result) => {
+                        console.log(result, result.isDismissed);
+                        if (result.dismiss == 'timer' && result.isDismissed) {
+                            location.href = location.href;
+                        }else{
+                            alert('No selecciona ninguna op');
+                        }
+                    })
+                }
+            }else{
+                location.href = redirec;
+            }
+        })
+    }, '')
+}
+
+document.querySelector('body').onload = (e) => {
+    (function () {
+        document.getElementById('sbTerminar').addEventListener('click', terminar);
+    })();
+}

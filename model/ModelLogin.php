@@ -57,10 +57,6 @@ class ModelLogin extends Model
                         'trabajadoId' => $trabajadoId,
                     );
 
-                    //mandar esto en una consulta
-                    $_SESSION['color'] = $color;
-                    $_SESSION['background'] = $background;//'#ff8d34';
-
                     $medio = (!empty($telefono)) ? $telefono : $correo;
                     $updateTrabajador = $this->actualizarCaja($idTrabajador, $medio);
                     //return $updateTrabajador;

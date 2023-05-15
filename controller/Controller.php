@@ -86,34 +86,6 @@ class Controller
 
 
 /*
-$queries = [
-    [
-        'sql' => 'INSERT INTO usuarios (nombre, email, contraseña) VALUES (?, ?, ?)',
-        'params' => ['Juan', 'juan@example.com', '123456'],
-    ],
-    [
-        'sql' => 'UPDATE usuarios SET email = ? WHERE id = ?',
-        'params' => ['juan_nuevo@example.com', 1],
-    ],
-    ];
-
-    if ($db->executeTransaction($queries)) {
-    echo "Transacción exitosa";
-    } else {
-    echo "Error en la transacción";
-    }
-
-    $data = ['nombre' => 'Juan', 'email' => 'juan@example.com', 'contraseña' => '123456'];
-    $db->create('usuarios', $data);
-
-    // Leer el registro con ID 1 de la tabla "usuarios"
-    $registro = $db->read('usuarios', 1);
-    echo $registro['nombre'];
-
-    // Actualizar el registro con ID 2 de la tabla "usuarios"
-    $data = ['nombre' => 'Pedro', 'email' => 'pedro@example.com'];
-    $db->update('usuarios', $data, 2);
-
     // Eliminar el registro con ID 3 de la tabla "usuarios"
     $db->delete('usuarios', 3);
 */

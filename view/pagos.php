@@ -93,7 +93,7 @@ class PaginaOnce extends Web implements PaginaX
         ?>
         <script src="resources/js/trabajadorGen.js"></script>
         <script src="resources/js/pagos.js"></script>
-<?php
+        <?php
     }
 }
 
