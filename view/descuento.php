@@ -12,9 +12,13 @@ require_once 'view.php';
 
 class PaginaOnce extends Web implements PaginaX
 {
+    private $color;
+    private $background;
     function __construct($title, $description, $keywords)
     {
         parent::__construct($title, $description, $keywords);
+        $this->color = $this->model('ModelAdmin', 'obtenerColorGim', $_SESSION['SesionTrabajador']['gimnasioId']);
+        $this->background = $this->model('ModelAdmin', 'obtenerBackgroundGim', $_SESSION['SesionTrabajador']['gimnasioId']);
     }
 
     public function content()
@@ -55,7 +59,7 @@ class PaginaOnce extends Web implements PaginaX
                 </div>
             </div>
         </div>
-    <?php
+        <?php
     }
 
     public function nav()
@@ -67,18 +71,18 @@ class PaginaOnce extends Web implements PaginaX
 
     public function footer()
     {
-    ?>
+        ?>
         <style>
             .navbar {
-                color: <?= $_SESSION['color']; ?> !important;
-                background: <?= $_SESSION['background']; ?> !important;
+                color: <?= $this->color; ?> !important;
+                background: <?= $this->background; ?> !important;
             }
             #sideBarrar {
-                color: <?= $_SESSION['color']; ?> !important;
-                background: <?= $_SESSION['background']; ?> !important;
+                color: <?= $this->color; ?> !important;
+                background: <?= $this->background; ?> !important;
             }
         </style>
-    <?php
+        <?php
     }
 
     public function libsJS()

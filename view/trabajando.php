@@ -12,86 +12,37 @@ require_once 'view.php';
 
 class PaginaOnce extends Web implements PaginaX
 {
+    private $color;
+    private $background;
     function __construct($title, $description, $keywords)
     {
         parent::__construct($title, $description, $keywords);
+        $this->color = $this->model('ModelAdmin', 'obtenerColorGim', $_SESSION['SesionTrabajador']['gimnasioId']);
+        $this->background = $this->model('ModelAdmin', 'obtenerBackgroundGim', $_SESSION['SesionTrabajador']['gimnasioId']);
     }
 
     public function content()
     {
-        
-        $ligaD = $this->model('ModelAdmin', 'obtenerLigaTrabaDebe', $_SESSION['SesionTrabajador']['trabajadoId']);
-        $ligaVE = $this->model('ModelAdmin', 'obtenerLigaTrabaPagoE', $_SESSION['SesionTrabajador']['trabajadoId']);
-        $ligaVD = $this->model('ModelAdmin', 'obtenerLigaTrabaPagoD', $_SESSION['SesionTrabajador']['trabajadoId']);
-        $ligaT = $this->model('ModelAdmin', 'obtenerLigaTraba', $_SESSION['SesionTrabajador']['trabajadoId']);
-        
-        $totalligas = 0;
-        foreach ($ligaT as $i => $value) {
-            $totalligas = $totalligas + ($value['total']);
-        }
-        $totalligasDebe = 0;
-        foreach ($ligaD as $i => $value) {
-            $totalligasDebe = $totalligasDebe + ($value['total']);
-        }
-        $totalligasPagoE = 0;
-        foreach ($ligaVE as $i => $value) {
-            $totalligasPagoE = $totalligasPagoE + ($value['total']);
-        }
-        $totalligasPagoD = 0;
-        foreach ($ligaVD as $i => $value) {
-            $totalligasPagoD = $totalligasPagoD + ($value['total']);
-        }
+        $totalligasDebe = $this->model('ModelAdmin', 'obtenerLigaTrabaDebeTotal', $_SESSION['SesionTrabajador']['trabajadoId']);
+        $totalligasPagoE = $this->model('ModelAdmin', 'obtenerLigaTrabaPagoETotal', $_SESSION['SesionTrabajador']['trabajadoId']);
+        $totalligasPagoD = $this->model('ModelAdmin', 'obtenerLigaTrabaPagoDTotal', $_SESSION['SesionTrabajador']['trabajadoId']);
+        $totalligas = $this->model('ModelAdmin', 'obtenerLigaTrabaTotal', $_SESSION['SesionTrabajador']['trabajadoId']);
 
-        $tiendaD = $this->model('ModelAdmin', 'obtenerTiendaTrabaDebe', $_SESSION['SesionTrabajador']['trabajadoId']);
-        $tiendaVE = $this->model('ModelAdmin', 'obtenerTiendaTrabaPagoE', $_SESSION['SesionTrabajador']['trabajadoId']);
-        $tiendaVD = $this->model('ModelAdmin', 'obtenerTiendaTrabaPagoD', $_SESSION['SesionTrabajador']['trabajadoId']);
-        $tiendaT = $this->model('ModelAdmin', 'obtenerTiendaTraba', $_SESSION['SesionTrabajador']['trabajadoId']);
+        $totalTiendaDebe = $this->model('ModelAdmin', 'obtenerTiendaTrabaDebeTotal', $_SESSION['SesionTrabajador']['trabajadoId']);
+        $totalTiendaPagoE = $this->model('ModelAdmin', 'obtenerTiendaTrabaPagoETotal', $_SESSION['SesionTrabajador']['trabajadoId']);
+        $totalTiendaPagoD = $this->model('ModelAdmin', 'obtenerTiendaTrabaPagoDTotal', $_SESSION['SesionTrabajador']['trabajadoId']);
+        $totalTienda = $this->model('ModelAdmin', 'obtenerTiendaTrabaTotal', $_SESSION['SesionTrabajador']['trabajadoId']);
 
-        $totalTienda = 0;
-        foreach ($tiendaT as $i => $value) {
-            $totalTienda = $totalTienda + ($value['total']);
-        }
-        $totalTiendaDebe = 0;
-        foreach ($tiendaD as $i => $value) {
-            $totalTiendaDebe = $totalTiendaDebe + ($value['total']);
-        }
-        $totalTiendaPagoE = 0;
-        foreach ($tiendaVE as $i => $value) {
-            $totalTiendaPagoE = $totalTiendaPagoE + ($value['total']);
-        }
-        $totalTiendaPagoD = 0;
-        foreach ($tiendaVD as $i => $value) {
-            $totalTiendaPagoD = $totalTiendaPagoD + ($value['total']);
-        }
-
-        $pagosVE = $this->model('ModelAdmin', 'obtenerPagosTrabaPagoE', $_SESSION['SesionTrabajador']['trabajadoId']);
-        $pagosVD = $this->model('ModelAdmin', 'obtenerPagosTrabaPagoD', $_SESSION['SesionTrabajador']['trabajadoId']);
-        $pagosT = $this->model('ModelAdmin', 'obtenerPagosTraba', $_SESSION['SesionTrabajador']['trabajadoId']);
-
-        $totalPagos = 0;
-        foreach ($pagosT as $i => $value) {
-            $totalPagos = $totalPagos + ($value['total']);
-        }
-        $totalPagosPagoE = 0;
-        foreach ($pagosVE as $i => $value) {
-            $totalPagosPagoE = $totalPagosPagoE + ($value['total']);
-        }
-        $totalPagosPagoD = 0;
-        foreach ($pagosVD as $i => $value) {
-            $totalPagosPagoD = $totalPagosPagoD + ($value['total']);
-        }
+        $totalPagosPagoE = $this->model('ModelAdmin', 'obtenerPagosTrabaPagoETotal', $_SESSION['SesionTrabajador']['trabajadoId']);
+        $totalPagosPagoD = $this->model('ModelAdmin', 'obtenerPagosTrabaPagoDTotal', $_SESSION['SesionTrabajador']['trabajadoId']);
+        $totalPagos = $this->model('ModelAdmin', 'obtenerPagosTrabaTotal', $_SESSION['SesionTrabajador']['trabajadoId']);
 
         $efectivo = $totalligasPagoE + $totalTiendaPagoE + $totalPagosPagoE;
         $digital = $totalligasPagoD + $totalTiendaPagoD + $totalPagosPagoD;
         $fiado = $totalligasDebe + $totalTiendaDebe;
         $total = $efectivo + $digital + $fiado;
 
-        $descuentos = $this->model('ModelAdmin', 'obtenerDescuentoTraba', $_SESSION['SesionTrabajador']['trabajadoId']);
-
-        $totalDescuento = 0;
-        foreach ($descuentos as $i => $value) {
-            $totalDescuento = $totalDescuento + ($value['total']);
-        }
+        $totalDescuento = $this->model('ModelAdmin', 'obtenerDescuentoTrabaTotal', $_SESSION['SesionTrabajador']['trabajadoId']);
 
         $caja = $this->model('ModelAdmin', 'obtenerCajaTraba', $_SESSION['SesionTrabajador']['trabajadoId']);
         if (empty($caja)) {
@@ -122,7 +73,6 @@ class PaginaOnce extends Web implements PaginaX
                             <hr>
                             <li>Pagos recibidos: <span><?= $totalPagos; ?></span></li>
                             <hr>
-                            <hr>
                             <li>Efectivo: <span><?= $efectivo; ?></span></li>
                             <li>Digital: <span><?= $digital; ?></span></li>
                             <li>fiado: <span><?= $fiado; ?></span></li>
@@ -132,9 +82,6 @@ class PaginaOnce extends Web implements PaginaX
                             <li>Total: <span><?= $total; ?></span></li>
                             <li>Total solo efectivo con caja: <span><?= ($caja + $efectivo) -$totalDescuento; ?></span></li>
                             <li>Total digita + efectivo con caja: <span><?= ($caja + $efectivo + $digital) -$totalDescuento; ?></span></li>
-                            <hr>
-                            <hr>
-                            <hr>
                             <hr>
                         </ul>
                     </div>
@@ -200,18 +147,18 @@ class PaginaOnce extends Web implements PaginaX
 
     public function footer()
     {
-    ?>
+        ?>
         <style>
             .navbar {
-                color: <?= $_SESSION['color']; ?> !important;
-                background: <?= $_SESSION['background']; ?> !important;
+                color: <?= $this->color; ?> !important;
+                background: <?= $this->background; ?> !important;
             }
             #sideBarrar {
-                color: <?= $_SESSION['color']; ?> !important;
-                background: <?= $_SESSION['background']; ?> !important;
+                color: <?= $this->color; ?> !important;
+                background: <?= $this->background; ?> !important;
             }
         </style>
-    <?php
+        <?php
     }
 
     public function libsJS()
