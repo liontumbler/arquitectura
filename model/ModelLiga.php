@@ -3,20 +3,37 @@ class ModelLiga extends Model
 {
     public function vender($data)
     {
-        $total = $this->obtenerLigasPrecio($data->selectHora);
-        if (empty($data->cliente)) {
-            $idCliente = $this->crearCliente($data, $_SESSION['SesionTrabajador']['gimnasioId']);
-        } else {
-            $idCliente = $data->cliente;
-        }
+        $yaInicioCaja = $this->obtenerCajaTrabajado($_SESSION['SesionTrabajador']['gimnasioId']);
+        if (!$yaInicioCaja || empty($yaInicioCaja)) {
+            //return 'sesion terminada';
+            ?>
+            <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Ya cerro caja de esta sesión',
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then((result) => {
+                    location.href = './index';
+                })
+            </script>
+            <?php
+        } else {//sesion ya iniciada
+            $total = $this->obtenerLigasPrecio($data->selectHora);
+            if (empty($data->cliente)) {
+                $idCliente = $this->crearCliente($data, $_SESSION['SesionTrabajador']['gimnasioId']);
+            } else {
+                $idCliente = $data->cliente;
+            }
 
-        if ($idCliente > 0) {
-            return $this->crearLigas($data, $idCliente, $total, $_SESSION['SesionTrabajador']['gimnasioId'], $_SESSION['SesionTrabajador']['trabajadoId'], $_SESSION['SesionTrabajador']['trabajadorId']);
-        } elseif ($idCliente == -1) {
-            return $idCliente;
-        }
+            if ($idCliente > 0) {
+                return $this->crearLigas($data, $idCliente, $total, $_SESSION['SesionTrabajador']['gimnasioId'], $_SESSION['SesionTrabajador']['trabajadoId'], $_SESSION['SesionTrabajador']['trabajadorId']);
+            } elseif ($idCliente == -1) {
+                return $idCliente;
+            }
 
-        return false;
+            return false;
+        }
     }
 
     public function horas()

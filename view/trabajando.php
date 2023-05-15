@@ -94,7 +94,9 @@ class PaginaOnce extends Web implements PaginaX
         }
 
         $caja = $this->model('ModelAdmin', 'obtenerCajaTraba', $_SESSION['SesionTrabajador']['trabajadoId']);
-
+        if (empty($caja)) {
+            $caja = 0;
+        }
         ?>
         <div class="d-flex">
             <?php require_once 'layout/sidebarTrabajador.php'; ?>
