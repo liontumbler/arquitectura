@@ -6,10 +6,9 @@ class ModelLiga extends Model
         $yaInicioCaja = $this->obtenerTrabajadoTrabajador($_SESSION['SesionTrabajador']['gimnasioId'], $_SESSION['SesionTrabajador']['trabajadorId']);
         if (!$yaInicioCaja || empty($yaInicioCaja)) {
             //return 'sesion terminada';
-            
             @\session_start();
             unset($_SESSION['SesionTrabajador']);
-            header('Location: ../index');
+            return 'T';
         } else {//sesion ya iniciada
             $total = $this->obtenerLigasPrecio($data->selectHora);
             if (empty($data->cliente)) {

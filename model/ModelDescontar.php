@@ -7,18 +7,9 @@ class ModelDescontar extends Model
         $yaInicioCaja = $this->obtenerTrabajadoTrabajador($_SESSION['SesionTrabajador']['gimnasioId'], $_SESSION['SesionTrabajador']['trabajadorId']);
         if (!$yaInicioCaja || empty($yaInicioCaja)) {
             //return 'sesion terminada';
-            ?>
-            <script>
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Ya cerro caja de esta sesión',
-                    showConfirmButton: false,
-                    timer: 1500
-                }).then((result) => {
-                    location.href = './index';
-                })
-            </script>
-            <?php
+            @\session_start();
+            unset($_SESSION['SesionTrabajador']);
+            return 'T';
         } else {//sesion ya iniciada
             return $this->crearDescuento($data, $_SESSION['SesionTrabajador']['gimnasioId'], $_SESSION['SesionTrabajador']['trabajadoId'], $_SESSION['SesionTrabajador']['trabajadorId']);
         }
