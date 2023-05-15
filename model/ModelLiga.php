@@ -5,7 +5,7 @@ class ModelLiga extends Model
     {
         $yaInicioCaja = $this->obtenerTrabajadoTrabajador($_SESSION['SesionTrabajador']['gimnasioId'], $_SESSION['SesionTrabajador']['trabajadorId']);
         if (!$yaInicioCaja || empty($yaInicioCaja)) {
-            return 'sesion terminada';
+            //return 'sesion terminada';
             ?>
             <script>
                 Swal.fire({
@@ -18,6 +18,7 @@ class ModelLiga extends Model
                 })
             </script>
             <?php
+            die;
         } else {//sesion ya iniciada
             $total = $this->obtenerLigasPrecio($data->selectHora);
             if (empty($data->cliente)) {
