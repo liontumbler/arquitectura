@@ -192,12 +192,14 @@ class ConsultasDB extends Database
 
     public function obtenerCajaTrabajado(string $trabajado)
     {
-        return $this->read(
+        $consulta = $this->read(
             'trabajado',
             ['id' => $trabajado],
             "`id`=:id",
             'iniciCaja'
-        )[0]['iniciCaja'];
+        );
+
+        return isset($consulta[0]['iniciCaja']) ? $consulta[0]['iniciCaja'] : null;
     }
 
     
