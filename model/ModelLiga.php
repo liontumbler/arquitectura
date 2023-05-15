@@ -3,7 +3,7 @@ class ModelLiga extends Model
 {
     public function vender($data)
     {
-        $yaInicioCaja = $this->obtenerCajaTrabajado($_SESSION['SesionTrabajador']['gimnasioId']);
+        $yaInicioCaja = $this->obtenerTrabajadoTrabajador($_SESSION['SesionTrabajador']['gimnasioId'], $_SESSION['SesionTrabajador']['trabajadorId']);
         if (!$yaInicioCaja || empty($yaInicioCaja)) {
             return 'sesion terminada';
             ?>

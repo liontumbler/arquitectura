@@ -41,7 +41,7 @@ class ModelQuienDebe extends Model
 
     public function pagar($dta)
     {
-        $yaInicioCaja = $this->obtenerCajaTrabajado($_SESSION['SesionTrabajador']['gimnasioId']);
+        $yaInicioCaja = $this->obtenerTrabajadoTrabajador($_SESSION['SesionTrabajador']['gimnasioId'], $_SESSION['SesionTrabajador']['trabajadorId']);
         if (!$yaInicioCaja || empty($yaInicioCaja)) {
             //return 'sesion terminada';
             ?>
