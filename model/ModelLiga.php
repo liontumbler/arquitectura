@@ -5,7 +5,7 @@ class ModelLiga extends Model
     {
         $yaInicioCaja = $this->obtenerCajaTrabajado($_SESSION['SesionTrabajador']['gimnasioId']);
         if (!$yaInicioCaja || empty($yaInicioCaja)) {
-            //return 'sesion terminada';
+            return 'sesion terminada';
             ?>
             <script>
                 Swal.fire({
