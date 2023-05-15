@@ -247,8 +247,6 @@ async function terminar(e) {
     }, '')
 }
 
-document.querySelector('body').onload = (e) => {
-    (function () {
-        document.getElementById('sbTerminar').addEventListener('click', terminar);
-    })();
-}
+(function () {
+    document.getElementById('sbTerminar').addEventListener('click', terminar);
+})();
