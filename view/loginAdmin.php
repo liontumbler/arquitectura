@@ -34,6 +34,10 @@ class PaginaOnce extends Web implements PaginaX
                                 <input type="password" class="form-control" id="clave" placeholder="Digite la clave del trabajador" required minlength="1" maxlength="50">
                             </div>
                             <div class="col-lg-12 mb-1">
+                                <script src="resources/libs/RecaptchaV2/recaptchaV2.js"></script>
+                                <div id="recaptcha"></div>
+                            </div>
+                            <div class="col-lg-12 mb-1">
                                 <div class="d-grid gap-2">
                                     <button id="entrar" class="btn btn-primary" type="button">Entrar</button>
                                 </div>

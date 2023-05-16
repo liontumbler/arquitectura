@@ -33,6 +33,7 @@ class PaginaOnce extends Web implements PaginaX
         ?>
         <div class="d-flex">
             <?php require_once 'layout/sidebarAdmin.php'; ?>
+            <?= input_csrf_token(); ?>
             <div id="contentConSidebar">
                 <div class="m-4">
                     <div class="container" style="width: 450px;">
@@ -47,42 +48,56 @@ class PaginaOnce extends Web implements PaginaX
                             </div>
                             <div class="col-lg-12 mb-1">
                                 <div class="d-grid gap-2">
-                                    <button id="tiendaAdmin" class="btn btn-light" type="button">
+                                    <button id="tiendaAdmin" class="btn btn-light" type="button" disabled>
                                         <i class="bi bi-shop"></i>&nbsp;Tienda
                                     </button>
                                 </div>
                             </div>
                             <div class="col-lg-12 mb-1">
                                 <div class="d-grid gap-2">
-                                    <button id="descuentoAdmin" class="btn btn-light" type="button">
+                                    <button id="descuentoAdmin" class="btn btn-light" type="button" disabled>
                                         <i class="bi bi-dash"></i>&nbsp;Descuento
                                     </button>
                                 </div>
                             </div>
                             <div class="col-lg-12 mb-1">
                                 <div class="d-grid gap-2">
-                                    <button id="pagosAdmin" class="btn btn-light" type="button">
-                                        <i class="bi bi-wallet"></i>&nbsp;Pagos
+                                    <button id="pagosAdmin" class="btn btn-light" type="button" disabled>
+                                        <i class="bi bi-dash"></i>&nbsp;Pagos
                                     </button>
                                 </div>
                             </div>
                             <div class="col-lg-12 mb-1">
                                 <div class="d-grid gap-2">
-                                    <button id="quienDebeAdmin" class="btn btn-light" type="button">
-                                        <i class="bi bi-patch-question"></i>&nbsp;Quien Debe
+                                    <button id="equiposAdmin" class="btn btn-light" type="button" disabled>
+                                        <i class="bi bi-dash"></i>&nbsp;Equipos
                                     </button>
                                 </div>
                             </div>
                             <div class="col-lg-12 mb-1">
                                 <div class="d-grid gap-2">
-                                    <button id="reportesAdmin" class="btn btn-light" type="button">
-                                        <i class="bi bi-bar-chart-line"></i>&nbsp;Reportes
+                                    <button id="productosAdmin" class="btn btn-light" type="button" disabled>
+                                        <i class="bi bi-dash"></i>&nbsp;Productos
                                     </button>
                                 </div>
                             </div>
                             <div class="col-lg-12 mb-1">
                                 <div class="d-grid gap-2">
-                                    <button id="configuracionAdmin" class="btn btn-light" type="button">
+                                    <button id="tarifasAdmin" class="btn btn-light" type="button" disabled>
+                                        <i class="bi bi-dash"></i>&nbsp;Tarifas liga
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 mb-1">
+                                <div class="d-grid gap-2">
+                                    <button id="tarifasAdmin" class="btn btn-light" type="button" disabled>
+                                        <i class="bi bi-dash"></i>&nbsp;Trabajador
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 mb-1">
+                                <div class="d-grid gap-2">
+                                    <button id="configuracionAdmin" class="btn btn-light" type="button" disabled>
                                         <i class="bi bi-gear"></i>&nbsp;Configuración
                                     </button>
                                 </div>
@@ -128,29 +143,22 @@ class PaginaOnce extends Web implements PaginaX
     public function libsJS()
     {
         ?>
-        <script src="resources/js/trabajadorGen.js"></script>
-        <!--script>
-            document.getElementById('ligas').addEventListener('click', function (e) {
-                location.href = 'ligas';
+        <script src="resources/js/adminGen.js"></script>
+        <script>
+            document.getElementById('ligasAdmin').addEventListener('click', function (e) {
+                location.href = 'ligasAdmin';
             })
-            document.getElementById('tienda').addEventListener('click', function (e) {
-                location.href = 'tienda';
+            document.getElementById('tiendaAdmin').addEventListener('click', function (e) {
+                location.href = 'tiendaAdmin';
             })
-            document.getElementById('descuento').addEventListener('click', function (e) {
-                location.href = 'descuento';
+            document.getElementById('descuentoAdmin').addEventListener('click', function (e) {
+                location.href = 'descuentoAdmin';
             })
-            document.getElementById('pagos').addEventListener('click', function (e) {
-                location.href = 'pagos';
+            document.getElementById('quienDebeAdmin').addEventListener('click', function (e) {
+                location.href = 'quienDebeAdmin';
             })
-            document.getElementById('quienDebe').addEventListener('click', function (e) {
-                location.href = 'quienDebe';
-            })
-            document.getElementById('terminar').addEventListener('click', function (e) {
-                location.href = 'index';
-                //terminar sesion hacer cuentas hacer insercion de la terminacion
-                //abre una modal donde hace las cuantas paracerrar caja
-            })
-        </script-->
+            document.getElementById('salirAdmin').addEventListener('click', salir)
+        </script>
         <?php
     }
 }

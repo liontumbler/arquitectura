@@ -145,7 +145,7 @@ class ConsultasDB extends Database
         return $this->read(
             'ligas',
             ['idTrabajado' => $trabajado],
-            '`idTrabajado`=:idTrabajado',
+            '`idTrabajado`=:idTrabajado ORDER BY `ligas`.`fechaInicio` DESC',
             'id, fechaInicio, total, idCliente, fechaFin, tipoPago'
         );
     }

@@ -136,6 +136,11 @@ class ModelAdmin extends Model
         return $this->obtenerBackgroundGimnasio($gimnasio);
     }
 
-    
+    public function salir()
+    {
+        @\session_start();
+        unset($_SESSION['SesionAdmin']);
+        return true;
+    }
 }
 ?>

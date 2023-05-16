@@ -218,7 +218,7 @@ document.querySelector('body').onload = (e) => {
                             cancelButtonText: 'Ir Home'
                         }).then((result) => {
                             if (result.isConfirmed) {
-                                location.href = location.href;
+                                location.reload();
                             }else{
                                 location.href = 'trabajando';
                             }

@@ -54,7 +54,7 @@ document.querySelector('body').onload = (e) => {
                                 if (result.dismiss == 'timer' && result.isDismissed) {
                                     validar.limpiar();
                                 }else{
-                                    //location.href = location.href;
+                                    //location.reload();
                                     alert('No selecciona ninguna op');
                                 }
                             })
@@ -69,7 +69,7 @@ document.querySelector('body').onload = (e) => {
                                 if (result.dismiss == 'timer' && result.isDismissed) {
                                     location.href = 'trabajando';
                                 }else{
-                                    //location.href = location.href;
+                                    //location.reload();
                                     alert('No selecciona ninguna op');
                                 }
                             })
@@ -96,7 +96,7 @@ document.querySelector('body').onload = (e) => {
                                         if (result.dismiss == 'timer' && result.isDismissed) {
                                             location.href = 'trabajando';
                                         }else{
-                                            //location.href = location.href;
+                                            //location.reload();
                                             alert('No selecciona ninguna op');
                                         }
                                     })
@@ -117,7 +117,7 @@ document.querySelector('body').onload = (e) => {
                                     //limpiar datos
                                     validar.limpiar();
                                 }else{
-                                    //location.href = location.href;
+                                    //location.reload();
                                     alert('No selecciona ninguna op');
                                 }
                             })

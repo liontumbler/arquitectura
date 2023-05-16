@@ -2,7 +2,7 @@
     <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" id="sideBarrar">
         <a href="index" class="fs-1 d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
             <i class="bi bi-clipboard-pulse"></i>&nbsp;
-            <span class="fs-4"><?= $_SESSION['SesionTrabajador']['gimnasio'] ?></span>
+            <span class="fs-4"><?= $_SESSION['SesionAdmin']['nombre'] ?></span>
         </a>
         <hr>
         <ul class="nav nav-pills flex-column mb-auto overflow-auto" id="sbUl">
@@ -25,15 +25,33 @@
                 </a>
             </li>
             <li>
-                <a href="pagosAdmin" class="nav-link text-white">
-                    <i class="bi bi-wallet"></i>&nbsp;
-                    Pagos
+                <a href="descuentoAdmin" class="nav-link text-white">
+                    <i class="bi bi-dash"></i>&nbsp;Pagos
                 </a>
             </li>
             <li>
-                <a href="quienDebeAdmin" class="nav-link text-white">
-                    <i class="bi bi-patch-question"></i></i>&nbsp;
-                    Quien Debe
+                <a href="descuentoAdmin" class="nav-link text-white">
+                    <i class="bi bi-dash"></i>&nbsp;Equipos
+                </a>
+            </li>
+            <li>
+                <a href="descuentoAdmin" class="nav-link text-white">
+                    <i class="bi bi-dash"></i>&nbsp;Productos
+                </a>
+            </li>
+            <li>
+                <a href="descuentoAdmin" class="nav-link text-white">
+                    <i class="bi bi-dash"></i>&nbsp;Tarifas liga
+                </a>
+            </li>
+            <li>
+                <a href="descuentoAdmin" class="nav-link text-white">
+                    <i class="bi bi-dash"></i>&nbsp;Trabajador
+                </a>
+            </li>
+            <li>
+                <a href="descuentoAdmin" class="nav-link text-white">
+                    <i class="bi bi-gear"></i>&nbsp;Configuración
                 </a>
             </li>
             <li>
@@ -47,7 +65,7 @@
         <div class="dropdown">
             <a href="" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                 <!--img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2"-->
-                <strong><?= $_SESSION['SesionTrabajador']['nickName'] ?></strong>
+                <strong><?= $_SESSION['SesionAdmin']['nickName'] ?></strong>
             </a>
             <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
                 <li><a class="dropdown-item" href="/index">inicio</a></li>
