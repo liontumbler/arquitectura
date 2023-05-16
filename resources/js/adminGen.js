@@ -1,5 +1,3 @@
-setInterval(mueveReloj, 1000);
-
 async function sal() {
     return await fetch('controller/ControllerAdmin.php', {
         method: 'POST',
@@ -68,23 +66,29 @@ function salir(e) {
     })
 }
 
-const min = 15;
-var fecha = new Date();
-fecha.setMinutes(fecha.getMinutes() + min);
-var interval = setInterval(function (e) {
-    console.log('cuento');
-    const fechaactual = new Date();
-    if (fechaactual.getHours() == fecha.getHours() && fechaactual.getMinutes() == fecha.getMinutes() && fechaactual.getSeconds() == fecha.getSeconds()) {
-        clearTimeout(interval);
-        sal().then(function (data) {
-            if (data == true) {
-                location.reload();
-            }
-        });
-    }
-}, 1000);
+(function () {
+    setInterval(mueveReloj, 1000);
 
-document.querySelector('body').addEventListener('click', function (e) {
-    fecha = new Date();
+    const min = 10;
+    var fecha = new Date();
     fecha.setMinutes(fecha.getMinutes() + min);
-})
+    var interval = setInterval(function (e) {
+        console.log('cuento');
+        const fechaactual = new Date();
+        if (fechaactual.getHours() == fecha.getHours() && fechaactual.getMinutes() == fecha.getMinutes() && fechaactual.getSeconds() == fecha.getSeconds()) {
+            clearTimeout(interval);
+            sal().then(function (data) {
+                if (data == true) {
+                    location.reload();
+                }
+            });
+        }
+    }, 1000);
+
+    document.querySelector('body').addEventListener('click', function (e) {
+        fecha = new Date();
+        fecha.setMinutes(fecha.getMinutes() + min);
+    });
+
+    document.getElementById('sbTerminar').addEventListener('click', salir);
+})();

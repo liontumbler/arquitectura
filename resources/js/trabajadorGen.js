@@ -1,6 +1,3 @@
-//sacar un archivo para trabajadores
-setInterval(mueveReloj, 1000);
-
 async function claveCaja(clave) {
     return await fetch('controller/ControllerLigas.php', {
         method: 'POST',
@@ -221,5 +218,7 @@ async function terminar(e) {
 }
 
 (function () {
+    setInterval(mueveReloj, 1000);
+    
     document.getElementById('sbTerminar').addEventListener('click', terminar);
 })();
