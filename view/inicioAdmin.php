@@ -154,9 +154,6 @@ class PaginaOnce extends Web implements PaginaX
             document.getElementById('descuentoAdmin').addEventListener('click', function (e) {
                 location.href = 'descuentoAdmin';
             })
-            document.getElementById('quienDebeAdmin').addEventListener('click', function (e) {
-                location.href = 'quienDebeAdmin';
-            })
             document.getElementById('salirAdmin').addEventListener('click', salir)
         </script>
         <?php
