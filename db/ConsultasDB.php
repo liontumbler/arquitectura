@@ -130,6 +130,62 @@ class ConsultasDB extends Database
         );
     }
 
+    public function obtenerLigas(object $dta)
+    {
+        $array = array();
+        $cadena = '';
+        if (!empty($dta->cliente)) {
+            $array['idCliente'] = $dta->cliente;
+            $cadena .= '`idCliente`=:idCliente ';
+        }
+
+        if (!empty($dta->Trabajador)) {
+            $array['idTrabajador'] = $dta->Trabajador;
+            if (empty($cadena)) {
+                $cadena = '`idTrabajador`=:idTrabajador ';
+            } else {
+                $cadena .= 'AND `idTrabajador`=:idTrabajador ';
+            }
+        }
+
+        if (!empty($dta->tipoPago)) {
+            $array['tipoPago'] = $dta->tipoPago;
+            if (empty($cadena)) {
+                $cadena = '`tipoPago`=:tipoPago ';
+            } else {
+                $cadena .= 'AND `tipoPago`=:tipoPago ';
+            }
+        }
+
+        if (!empty($dta->desde)) {
+            $array['fechaInicio'] = $dta->desde;
+            if (empty($cadena)) {
+                $cadena = '`fechaInicio`>=:fechaInicio ';
+            } else {
+                $cadena .= 'AND `fechaInicio`>=:fechaInicio ';
+            }
+        }
+
+        if (!empty($dta->hasta)) {
+            $array['fechaHasta'] = $dta->hasta;
+            if (empty($cadena)) {
+                $cadena = '`fechaInicio`<=:fechaHasta ';
+            } else {
+                $cadena .= 'AND `fechaInicio`<=:fechaHasta ';
+            }
+        }
+
+        //return $array;
+        //return $cadena;
+        
+        return $this->read(
+            'ligas',
+            $array,
+            $cadena,
+            'id, total, tipoPago, fechaInicio, fechaFin, idCliente, idTrabajador'
+        );
+    }
+
     public function obtenerLigaDefault(string $cliente)
     {
         return $this->read(

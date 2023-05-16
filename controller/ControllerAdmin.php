@@ -13,6 +13,22 @@ class ControllerAdmin extends Controller
         return $this->model('ModelAdmin')->salir();
     }
 
+    public function postBuscarLigas($dta)
+    {
+        $contadorVacios = 0;
+        foreach ($dta as $value) {
+            if (empty($value)) {
+                $contadorVacios++;
+            }
+        }
+
+        if ($contadorVacios >= count((array) $dta)) {
+            return false;
+        }
+
+        return $this->model('ModelAdmin')->buscarLigas($dta);
+    }
+
 
     
 

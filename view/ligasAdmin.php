@@ -39,16 +39,35 @@ class PaginaOnce extends Web implements PaginaX
                         <div class="tab-pane fade show active" id="ligas" role="tabpanel" aria-labelledby="ligas-tab">
                             <div class="row g-3 mt-3">
                                 <div class="col-lg-2 col-sm-4">
-                                    <label for="cliente" class="">Clientes</label>
+                                    <label for="cliente">Clientes</label>
                                     <select id="cliente" class="form-select">
                                         <option selected value="">Seleccione una opción</option>
                                     </select>
                                 </div>
                                 <div class="col-lg-2 col-sm-4">
-                                    <label for="Trabajador" class="">Trabajador</label>
+                                    <label for="Trabajador">Trabajador</label>
                                     <select id="Trabajador" class="form-select">
                                         <option selected value="">Seleccione una opción</option>
                                     </select>
+                                </div>
+                                <div class="col-lg-2 col-sm-4">
+                                    <label for="tipoPago">Tipo de Pago</label>
+                                    <select id="tipoPago" class="form-select">
+                                        <option selected value="">Seleccione una opción</option>
+                                        <option value="pazYsalvoEfectivo">debe pero pago Efectivo</option>
+                                        <option value="pazYsalvoDigital">debe pero pago Digital</option>
+                                        <option value="digital">digital</option>
+                                        <option value="efectivo">efectivo</option>
+                                        <option value="debe">debe</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-2 col-sm-4">
+                                    <label for="desde">Desde</label>
+                                    <input type="datetime-local" id="desde" class="form-control">
+                                </div>
+                                <div class="col-lg-2 col-sm-4">
+                                    <label for="hasta">Hasta</label>
+                                    <input type="datetime-local" id="hasta" class="form-control">
                                 </div>
                                 <div class="col-lg-2 col-sm-4 d-grid gap-2">
                                     <button type="button" class="btn btn-primary mt-4" id="buscar">Buscar</button>
@@ -59,7 +78,7 @@ class PaginaOnce extends Web implements PaginaX
                     </div>
 
                     <div>
-                        <canvas id="myChart"></canvas>
+                        <canvas id="myChart">Your browser does not support the canvas element.</canvas>
                     </div>
 
                 </div>
@@ -104,25 +123,58 @@ class PaginaOnce extends Web implements PaginaX
                 data: {
                     labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
                     datasets: [{
-                        label: '# of Votes',
+                        label: '# de votos por color',
                         data: [12, 19, 3, 5, 2, 3],
-                        borderWidth: 2
+                        borderWidth: 5
                     }]
                 },
                 options: {
+                    responsive: true,
+                    animation: false,
                     scales: {
                         y: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 2
+                            }
                         }
+                    },
+                    plugins: {
+                        customCanvasBackgroundColor: {
+                            color: '#f9f9f9',
+                        },
+                        legend: {
+                            labels: {
+                                font: {
+                                    size: 14
+                                }
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Titulo de la grafica'
+                        }
+                    },
+                    layout: {
+                        padding: 30
                     }
-                }
-            });*/
+                },
+                plugins: [{
+                    id: 'customCanvasBackgroundColor',
+                    beforeDraw: (chart, args, options) => {
+                        const {ctx} = chart;
+                        ctx.save();
+                        ctx.globalCompositeOperation = 'destination-over';
+                        ctx.fillStyle = options.color || '#99ffff';
+                        ctx.fillRect(0, 0, chart.width, chart.height);
+                        ctx.restore();
+                    }
+                }],
+            });
 
-            //color barras
-            Chart.defaults.backgroundColor = '#9BD0F5';
-            //color barras bordes
-            Chart.defaults.borderColor = '#36A2EB';
-            Chart.defaults.color = '#000';
+            Chart.defaults.backgroundColor = '#9BD0F5';//color barras
+            Chart.defaults.borderColor = '#36A2EB';//color barras bordes
+            Chart.defaults.color = '#000';*/
 
             function exportarCanvasComoImagen(canvas, nombreArchivo, escala = 1) {
                 // Crear un canvas temporal escalado
@@ -156,7 +208,24 @@ class PaginaOnce extends Web implements PaginaX
         </script>
         <script src="resources/js/adminGen.js"></script>
         <script src="resources/js/ligasAdmin.js"></script>
-<?php
+    <?php
+    /*
+    guardar imagen en servidor
+    if (isset($_POST['imageData'])) {
+
+        $img = str_replace('data:image/jpeg;base64,', '', $_POST['imageData']);
+        $img = str_replace(' ', '+', $img);
+
+        $data = base64_decode($img);
+        $file = $_POST['nombre'].'.jpg';
+        if (file_put_contents($file, $data)) {
+            echo true;
+        }else{
+            if(is_file($file))
+                unlink($file); //elimino el fichero
+        }
+    }
+    */
     }
 }
 

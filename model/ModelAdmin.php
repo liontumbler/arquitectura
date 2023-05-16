@@ -142,5 +142,12 @@ class ModelAdmin extends Model
         unset($_SESSION['SesionAdmin']);
         return true;
     }
+
+    public function buscarLigas($gimnasio)
+    {
+        return $this->obtenerLigas($gimnasio);
+    }
+
+    
 }
 ?>
