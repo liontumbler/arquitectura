@@ -42,6 +42,8 @@ document.querySelector('body').onload = (e) => {
             })
         })
 
+        let myChart;
+        let myChart2;
         document.getElementById('buscar').addEventListener('click', async function(e) {
             let valid = validarForm.validarCampos();
             console.log(valid);
@@ -80,6 +82,14 @@ document.querySelector('body').onload = (e) => {
 
                 console.log(rdta, 'ligas');
 
+                if (myChart) {
+                    myChart.destroy();
+                }
+
+                if (myChart2) {
+                    myChart2.destroy();
+                }
+
                 /**graficar  sacar un metodo que pinte las graficas*/
                 const ctxBarras = document.getElementById('ligasGraficaBarras');
                 const ctxLineas = document.getElementById('ligasGraficaLineas');
@@ -88,8 +98,8 @@ document.querySelector('body').onload = (e) => {
                 let pazYsalvoEfectivo = rdta.filter(liga => liga.tipoPago == 'pazYsalvoEfectivo');
                 let pazYsalvoDigital = rdta.filter(liga => liga.tipoPago == 'pazYsalvoDigital');
                 let debe = rdta.filter(liga => liga.tipoPago == 'debe');
-
-                const myChart = new Chart(ctxBarras, {
+                
+                myChart = new Chart(ctxBarras, {
                     type: 'bar',
                     data: {
                         labels: ['digital', 'efectivo', 'pazYsalvoEfectivo', 'pazYsalvoDigital', 'debe'],
@@ -144,7 +154,7 @@ document.querySelector('body').onload = (e) => {
                 });
 
                 //arreglar
-                const myChart2 = new Chart(ctxLineas, {
+                myChart2 = new Chart(ctxLineas, {
                     //fechas vesus totales
                     type: 'line',
                     data: {
@@ -226,9 +236,8 @@ document.querySelector('body').onload = (e) => {
                         }
                     }],
                 });
-    
+
                 Chart.defaults.backgroundColor = '#9BD0F5';//color barras
-                Chart.defaults.borderColor = '#36A2EB';//color barras bordes
                 Chart.defaults.color = '#000';
                 /**graficar */
 
