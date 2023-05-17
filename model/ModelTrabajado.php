@@ -20,6 +20,11 @@ class ModelTrabajado extends Model
         }
     }
 
+    public function cargarNombreTrabajadorPorId($id)
+    {
+        return $this->obtenerNombreTrabajadorPorId($id);
+    }
+
     
 
     

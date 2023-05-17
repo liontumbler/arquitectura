@@ -29,6 +29,20 @@ class ControllerAdmin extends Controller
         return $this->model('ModelAdmin')->buscarLigas($dta);
     }
 
+    public function postCargarTrabajadores()
+    {
+        return $this->model('ModelAdmin')->cargarTrabajadores();
+    }
+
+    public function postCargarNombreCliente($dta)
+    {
+        return $this->model('ModelCliente')->cargarNombreClientePorId($dta->id);
+    }
+
+    public function postCargarNombreTrabajador($dta)
+    {
+        return $this->model('ModelTrabajado')->cargarNombreTrabajadorPorId($dta->id);
+    }
 
     
 

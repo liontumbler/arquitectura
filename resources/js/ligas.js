@@ -26,7 +26,6 @@ document.querySelector('body').onload = (e) => {
             for (let i = 0; i < horas.length; i++) {
                 //console.log(horas[i], 'hora', horas[i].nombre);
                 let op = new Option(horas[i].nombre, horas[i].id);
-                op.setAttribute('horas', horas[i].horas);
                 op.setAttribute('precio', horas[i].precio);
                 select.append(op);
             }
@@ -68,8 +67,6 @@ document.querySelector('body').onload = (e) => {
         let validarForm6;
         let validarForm7;
         let validarForm8;
-
-        let horDemas = 0;
 
         let resCli = cargarClientes();
         let resHra = cargarHoras();
@@ -133,7 +130,6 @@ document.querySelector('body').onload = (e) => {
 
         document.getElementById('selectHora').addEventListener('change', function(e) {
             if (document.querySelector("#selectHora option[value='"+ this.value +"']").getAttribute('precio')){
-                horDemas = document.querySelector("#selectHora option[value='"+ this.value +"']").getAttribute('horas')
                 document.getElementById('total').textContent = document.querySelector("#selectHora option[value='"+ this.value +"']").getAttribute('precio');
             } else
                 document.getElementById('total').textContent = '';
@@ -174,15 +170,12 @@ document.querySelector('body').onload = (e) => {
                 msgClave(async function () {
                     this.disabled = true;
                     let edta = form.crearObjetoJson();
-                    //console.log(horDemas, minDemas);
-                    if (fechaDefault.checked) {
-                        edta['fechaInicio'] = form.obtenerFechaHoraServer((new Date().getTime()), minDemas);
-                        edta['fechaFin'] = form.obtenerFechaHoraServer((new Date().getTime()), minDemas, horDemas);
-                    } else {
+                    //console.log(minDemas);
+                    if (!fechaDefault.checked) {
                         edta['fechaInicio'] = form.obtenerFechaHoraServer(fechaInicio.value, minDemas);
-                        edta['fechaFin'] = form.obtenerFechaHoraServer(fechaInicio.value, minDemas, horDemas);
                     }
-                    //console.log(edta);
+
+                    console.log(edta);
 
                     let rdta = await fetch('controller/ControllerLigas.php', {
                         method: 'POST',

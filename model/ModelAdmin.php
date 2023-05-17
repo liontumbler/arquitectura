@@ -143,10 +143,17 @@ class ModelAdmin extends Model
         return true;
     }
 
-    public function buscarLigas($gimnasio)
+    public function buscarLigas($dto)
     {
-        return $this->obtenerLigas($gimnasio);
+        return $this->obtenerLigas($dto);
     }
+
+    public function cargarTrabajadores()
+    {
+        return $this->obtenerTrabajadorNombrePorId();
+    }
+
+    
 
     
 }

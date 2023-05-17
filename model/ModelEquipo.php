@@ -3,7 +3,7 @@ class ModelEquipo extends Model
 {
     public function equipos()
     {
-        return $this->obtenerEquiposPorId();
+        return $this->obtenerEquiposNombrePorId();
     }
 }
 ?>

@@ -3,7 +3,7 @@ class ModelProducto extends Model
 {
     public function productos()
     {
-        return $this->obtenerProductoPorId();
+        return $this->obtenerProductoNombrePorId();
     }
 
     public function cargarNombreProductoPorId($id)

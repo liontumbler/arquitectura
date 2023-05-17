@@ -93,30 +93,64 @@ document.querySelector('body').onload = (e) => {
         cargarLigasCaja().then(async (dta) => {
             let limite = dta.length-1;
             let i = 0;
+            let array1 = []
             for (const dt of dta) {
-                let id = dt.idCliente;
-                let nombreCliente = await fetch('controller/ControllerPagos.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        accion: 'CargarNombreCliente',
-                        data:{id},
-                        csrf_token: document.getElementById('csrf_token').value
-                    })
-                }).then((res) => {
-                    this.disabled = false;
-                    if (res.status == 200) {
-                        return res.json()
-                    }
-                }).catch((res) => {
-                    this.disabled = false;
-                    console.error(res.statusText);
-                    return res;
-                });
+                if(0 == i) {
+                    let id = dt.idCliente;
+                    let nombreCliente = await fetch('controller/ControllerPagos.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            accion: 'CargarNombreCliente',
+                            data:{id},
+                            csrf_token: document.getElementById('csrf_token').value
+                        })
+                    }).then((res) => {
+                        this.disabled = false;
+                        if (res.status == 200) {
+                            return res.json()
+                        }
+                    }).catch((res) => {
+                        this.disabled = false;
+                        console.error(res.statusText);
+                        return res;
+                    });
 
-                dt.idCliente = nombreCliente;
+                    array1[dt.idCliente] = nombreCliente
+                    dt.idCliente = nombreCliente;
+                    
+                }else{
+                    if (array1[dt.idCliente]) {
+                        dt.idCliente = array1[dt.idCliente];
+                    } else {
+                        let id = dt.idCliente;
+                        let nombreCliente = await fetch('controller/ControllerPagos.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                accion: 'CargarNombreCliente',
+                                data:{id},
+                                csrf_token: document.getElementById('csrf_token').value
+                            })
+                        }).then((res) => {
+                            this.disabled = false;
+                            if (res.status == 200) {
+                                return res.json()
+                            }
+                        }).catch((res) => {
+                            this.disabled = false;
+                            console.error(res.statusText);
+                            return res;
+                        });
+
+                        array1[dt.idCliente] = nombreCliente
+                        dt.idCliente = nombreCliente;
+                    }
+                }
 
                 if (limite == i) {
                     data = dta;
@@ -224,53 +258,116 @@ document.querySelector('body').onload = (e) => {
 
             let limite = dta.length-1;
             let i = 0;
+            let array1 = []
+            let array2 = []
             for (const dt of dta) {
-                let id = dt.idCliente;
-                let idPro = dt.idProducto;
-                let nombreCliente = await fetch('controller/ControllerPagos.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        accion: 'CargarNombreCliente',
-                        data:{id},
-                        csrf_token: document.getElementById('csrf_token').value
-                    })
-                }).then((res) => {
-                    this.disabled = false;
-                    if (res.status == 200) {
-                        return res.json()
-                    }
-                }).catch((res) => {
-                    this.disabled = false;
-                    console.error(res.statusText);
-                    return res;
-                });
+                if(0 == i) {
+                    let id = dt.idCliente;
+                    let idPro = dt.idProducto;
+                    let nombreCliente = await fetch('controller/ControllerPagos.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            accion: 'CargarNombreCliente',
+                            data:{id},
+                            csrf_token: document.getElementById('csrf_token').value
+                        })
+                    }).then((res) => {
+                        this.disabled = false;
+                        if (res.status == 200) {
+                            return res.json()
+                        }
+                    }).catch((res) => {
+                        this.disabled = false;
+                        console.error(res.statusText);
+                        return res;
+                    });
 
-                let nombreProducto = await fetch('controller/ControllerPagos.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        accion: 'CargarNombreProducto',
-                        data:{id: idPro},
-                        csrf_token: document.getElementById('csrf_token').value
-                    })
-                }).then((res) => {
-                    this.disabled = false;
-                    if (res.status == 200) {
-                        return res.json()
-                    }
-                }).catch((res) => {
-                    this.disabled = false;
-                    console.error(res.statusText);
-                    return res;
-                });
+                    let nombreProducto = await fetch('controller/ControllerPagos.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            accion: 'CargarNombreProducto',
+                            data:{id: idPro},
+                            csrf_token: document.getElementById('csrf_token').value
+                        })
+                    }).then((res) => {
+                        this.disabled = false;
+                        if (res.status == 200) {
+                            return res.json()
+                        }
+                    }).catch((res) => {
+                        this.disabled = false;
+                        console.error(res.statusText);
+                        return res;
+                    });
 
-                dt.idCliente = nombreCliente;
-                dt.idProducto = nombreProducto;
+                    array1[dt.idCliente] = nombreCliente
+                    array2[dt.idProducto] = nombreProducto;
+
+                    dt.idCliente = nombreCliente;
+                    dt.idProducto = nombreProducto;
+                } else {
+                    if (array1[dt.idCliente] && array2[dt.idProducto]) {
+                        dt.idCliente = array1[dt.idCliente];
+                        dt.idProducto = array2[dt.idProducto];
+                    } else {
+                        let id = dt.idCliente;
+                        let idPro = dt.idProducto;
+                        let nombreCliente = await fetch('controller/ControllerPagos.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                accion: 'CargarNombreCliente',
+                                data:{id},
+                                csrf_token: document.getElementById('csrf_token').value
+                            })
+                        }).then((res) => {
+                            this.disabled = false;
+                            if (res.status == 200) {
+                                return res.json()
+                            }
+                        }).catch((res) => {
+                            this.disabled = false;
+                            console.error(res.statusText);
+                            return res;
+                        });
+
+                        let nombreProducto = await fetch('controller/ControllerPagos.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                accion: 'CargarNombreProducto',
+                                data:{id: idPro},
+                                csrf_token: document.getElementById('csrf_token').value
+                            })
+                        }).then((res) => {
+                            this.disabled = false;
+                            if (res.status == 200) {
+                                return res.json()
+                            }
+                        }).catch((res) => {
+                            this.disabled = false;
+                            console.error(res.statusText);
+                            return res;
+                        });
+
+                        array1[dt.idCliente] = nombreCliente
+                        array2[dt.idProducto] = nombreProducto;
+
+                        dt.idCliente = nombreCliente;
+                        dt.idProducto = nombreProducto;
+                    }
+                }
+                
                 if (limite == i) {
                     data1 = dta;
 
@@ -378,31 +475,64 @@ document.querySelector('body').onload = (e) => {
 
             let limite = dta.length-1;
             let i = 0;
+            let array1 = []
             for (const dt of dta) {
-                let id = dt.idCliente;
-                let idPro = dt.idProducto;
-                let nombreCliente = await fetch('controller/ControllerPagos.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        accion: 'CargarNombreCliente',
-                        data:{id},
-                        csrf_token: document.getElementById('csrf_token').value
-                    })
-                }).then((res) => {
-                    this.disabled = false;
-                    if (res.status == 200) {
-                        return res.json()
-                    }
-                }).catch((res) => {
-                    this.disabled = false;
-                    console.error(res.statusText);
-                    return res;
-                });
+                if(0 == i) {
+                    let id = dt.idCliente;
+                    let nombreCliente = await fetch('controller/ControllerPagos.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            accion: 'CargarNombreCliente',
+                            data:{id},
+                            csrf_token: document.getElementById('csrf_token').value
+                        })
+                    }).then((res) => {
+                        this.disabled = false;
+                        if (res.status == 200) {
+                            return res.json()
+                        }
+                    }).catch((res) => {
+                        this.disabled = false;
+                        console.error(res.statusText);
+                        return res;
+                    });
 
-                dt.idCliente = nombreCliente;
+                    array1[dt.idCliente] = nombreCliente
+                    dt.idCliente = nombreCliente;
+                    
+                }else{
+                    if (array1[dt.idCliente]) {
+                        dt.idCliente = array1[dt.idCliente];
+                    } else {
+                        let id = dt.idCliente;
+                        let nombreCliente = await fetch('controller/ControllerPagos.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                accion: 'CargarNombreCliente',
+                                data:{id},
+                                csrf_token: document.getElementById('csrf_token').value
+                            })
+                        }).then((res) => {
+                            this.disabled = false;
+                            if (res.status == 200) {
+                                return res.json()
+                            }
+                        }).catch((res) => {
+                            this.disabled = false;
+                            console.error(res.statusText);
+                            return res;
+                        });
+
+                        array1[dt.idCliente] = nombreCliente
+                        dt.idCliente = nombreCliente;
+                    }
+                }
 
                 if (limite == i) {
                     data2 = dta;
@@ -520,29 +650,63 @@ document.querySelector('body').onload = (e) => {
                                         });
 
                                         let cadena = '';
+                                        let array1 = []
                                         tienda.forEach(async (ti, i) => {
-                                            let nombreProducto = await fetch('controller/ControllerPagos.php', {
-                                                method: 'POST',
-                                                headers: {
-                                                    'Content-Type': 'application/json'
-                                                },
-                                                body: JSON.stringify({
-                                                    accion: 'CargarNombreProducto',
-                                                    data:{id: ti.idProducto},
-                                                    csrf_token: document.getElementById('csrf_token').value
-                                                })
-                                            }).then((res) => {
-                                                this.disabled = false;
-                                                if (res.status == 200) {
-                                                    return res.json()
+                                            if (array1.length == 0) {
+                                                let nombreProducto = await fetch('controller/ControllerPagos.php', {
+                                                    method: 'POST',
+                                                    headers: {
+                                                        'Content-Type': 'application/json'
+                                                    },
+                                                    body: JSON.stringify({
+                                                        accion: 'CargarNombreProducto',
+                                                        data:{id: ti.idProducto},
+                                                        csrf_token: document.getElementById('csrf_token').value
+                                                    })
+                                                }).then((res) => {
+                                                    this.disabled = false;
+                                                    if (res.status == 200) {
+                                                        return res.json()
+                                                    }
+                                                }).catch((res) => {
+                                                    this.disabled = false;
+                                                    console.error(res.statusText);
+                                                    return res;
+                                                });
+                                                
+                                                array1[ti.idProducto] = nombreProducto;
+                                                cadena += 'idProducto: '+nombreProducto+' cantidad: '+ti.cantidad+'  fecha: '+ti.fecha+'  tipoPago: '+ti.tipoPago+'  Total: '+ti.total+'<br>';
+                                                
+                                            }else{
+                                                if (array1[ti.idProducto]) {
+                                                    cadena += 'idProducto: '+array1[ti.idProducto]+' cantidad: '+ti.cantidad+'  fecha: '+ti.fecha+'  tipoPago: '+ti.tipoPago+'  Total: '+ti.total+'<br>';;
+                                                } else {
+                                                    let nombreProducto = await fetch('controller/ControllerPagos.php', {
+                                                        method: 'POST',
+                                                        headers: {
+                                                            'Content-Type': 'application/json'
+                                                        },
+                                                        body: JSON.stringify({
+                                                            accion: 'CargarNombreProducto',
+                                                            data:{id: ti.idProducto},
+                                                            csrf_token: document.getElementById('csrf_token').value
+                                                        })
+                                                    }).then((res) => {
+                                                        this.disabled = false;
+                                                        if (res.status == 200) {
+                                                            return res.json()
+                                                        }
+                                                    }).catch((res) => {
+                                                        this.disabled = false;
+                                                        console.error(res.statusText);
+                                                        return res;
+                                                    });
+                                                    
+                                                    array1[ti.idProducto] = nombreProducto;
+                                                    cadena += 'idProducto: '+nombreProducto+' cantidad: '+ti.cantidad+'  fecha: '+ti.fecha+'  tipoPago: '+ti.tipoPago+'  Total: '+ti.total+'<br>';
                                                 }
-                                            }).catch((res) => {
-                                                this.disabled = false;
-                                                console.error(res.statusText);
-                                                return res;
-                                            });
+                                            }
 
-                                            cadena += 'idProducto: '+nombreProducto+' cantidad: '+ti.cantidad+'  fecha: '+ti.fecha+'  tipoPago: '+ti.tipoPago+'  Total: '+ti.total+'<br>';
                                             if(tienda.length - 1 == i){
                                                 listaP.innerHTML = listaP.innerHTML + cadena;
                                             }

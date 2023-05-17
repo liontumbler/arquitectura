@@ -10,15 +10,33 @@ class ModelLiga extends Model
             unset($_SESSION['SesionTrabajador']);
             return 'T';
         } else {//sesion ya iniciada
-            $total = $this->obtenerLigasPrecio($data->selectHora);
+            $hl = $this->obtenerHorasLigasPorId($data->selectHora);
             if (empty($data->cliente)) {
                 $idCliente = $this->crearCliente($data, $_SESSION['SesionTrabajador']['gimnasioId']);
             } else {
                 $idCliente = $data->cliente;
             }
 
+            $horas = $hl['horas'];
+            $minutos = $this->minDemas()['minDeMasLiga'];
+            if (strpos($horas, '.') !== false) {
+                $partes = explode('.', $horas);
+                $horas = $partes[0];
+                $minutos += $partes[1] * 60 / pow(10, strlen($partes[1]));
+            }
+
+            if (empty($data->fechaInicio)) {
+                $fechaInicio = date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . ' +' . $minutos . ' minutes'));
+                $fechaFin = date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . ' +' . $horas . ' hours +' . $minutos . ' minutes'));
+                $data->fechaInicio = $fechaInicio;
+                $data->fechaFin = $fechaFin;
+            } else {
+                $fechaFin = date('Y-m-d H:i:s', strtotime($data->fechaInicio . ' +' . $horas . ' hours'));
+                $data->fechaFin = $fechaFin;
+            }
+
             if ($idCliente > 0) {
-                return $this->crearLigas($data, $idCliente, $total, $_SESSION['SesionTrabajador']['gimnasioId'], $_SESSION['SesionTrabajador']['trabajadoId'], $_SESSION['SesionTrabajador']['trabajadorId']);
+                return $this->crearLigas($data, $idCliente, $hl['precio'], $_SESSION['SesionTrabajador']['gimnasioId'], $_SESSION['SesionTrabajador']['trabajadoId'], $_SESSION['SesionTrabajador']['trabajadorId']);
             } elseif ($idCliente == -1) {
                 return $idCliente;
             }
@@ -29,7 +47,7 @@ class ModelLiga extends Model
 
     public function horas()
     {
-        return $this->obtenerHoraligaPorId();
+        return $this->obtenerHoraligaNombrePorId();
     }
 
     public function minDemas()

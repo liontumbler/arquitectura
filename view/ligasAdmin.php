@@ -23,7 +23,7 @@ class PaginaOnce extends Web implements PaginaX
 
     public function content()
     {
-?>
+    ?>
         <div class="d-flex">
             <?php require_once 'layout/sidebarAdmin.php'; ?>
             <div id="contentConSidebar">
@@ -73,13 +73,21 @@ class PaginaOnce extends Web implements PaginaX
                                     <button type="button" class="btn btn-primary mt-4" id="buscar">Buscar</button>
                                 </div>
                             </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <canvas id="ligasGraficaBarras">Your browser does not support the canvas element.</canvas>
+                                </div>
+                                <div class="col-md-6">
+                                    <canvas id="ligasGraficaLineas">Your browser does not support the canvas element.</canvas>
+                                </div>
+                            </div>
+
                             <table id="ligasTable"></table>
                         </div>
                     </div>
 
-                    <div>
-                        <canvas id="myChart">Your browser does not support the canvas element.</canvas>
-                    </div>
+                    
 
                 </div>
             </div>
@@ -116,65 +124,9 @@ class PaginaOnce extends Web implements PaginaX
     ?>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
-            const ctx = document.getElementById('myChart');
+            
 
-            /*const myChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                    datasets: [{
-                        label: '# de votos por color',
-                        data: [12, 19, 3, 5, 2, 3],
-                        borderWidth: 5
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    animation: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                stepSize: 2
-                            }
-                        }
-                    },
-                    plugins: {
-                        customCanvasBackgroundColor: {
-                            color: '#f9f9f9',
-                        },
-                        legend: {
-                            labels: {
-                                font: {
-                                    size: 14
-                                }
-                            }
-                        },
-                        title: {
-                            display: true,
-                            text: 'Titulo de la grafica'
-                        }
-                    },
-                    layout: {
-                        padding: 30
-                    }
-                },
-                plugins: [{
-                    id: 'customCanvasBackgroundColor',
-                    beforeDraw: (chart, args, options) => {
-                        const {ctx} = chart;
-                        ctx.save();
-                        ctx.globalCompositeOperation = 'destination-over';
-                        ctx.fillStyle = options.color || '#99ffff';
-                        ctx.fillRect(0, 0, chart.width, chart.height);
-                        ctx.restore();
-                    }
-                }],
-            });
-
-            Chart.defaults.backgroundColor = '#9BD0F5';//color barras
-            Chart.defaults.borderColor = '#36A2EB';//color barras bordes
-            Chart.defaults.color = '#000';*/
+            /**/
 
             function exportarCanvasComoImagen(canvas, nombreArchivo, escala = 1) {
                 // Crear un canvas temporal escalado

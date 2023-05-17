@@ -10,11 +10,11 @@ class ConsultasDB extends Database
         parent::__construct(HOST, USER, PASS, DB);
     }
 
-    public function obtenerLigasPrecio(string $id)
+    public function obtenerHorasLigasPorId(string $id)
     {
-        $horaliga = $this->read('horaliga', ['id' => $id], $this->ID, 'precio');
+        $horaliga = $this->read('horaliga', ['id' => $id], $this->ID, 'precio, horas');
         if (!empty($horaliga)) {
-            return $horaliga[0]['precio'];
+            return $horaliga[0];
         } else {
             return '';
         }
@@ -47,11 +47,25 @@ class ConsultasDB extends Database
         return $this->read('horaliga', $array, $consulta, 'id, nombre, horas, precio, fecha');
     }
 
+    public function obtenerHoraligaNombrePorId(string $id = null)
+    {
+        $array = empty($id) ? [] : ['id' => $id];
+        $consulta = empty($id) ? '' : $this->ID;
+        return $this->read('horaliga', $array, $consulta, 'id, nombre, precio');
+    }
+
     public function obtenerProductoPorId(string $id = null)
     {
         $array = empty($id) ? [] : ['id' => $id];
         $consulta = empty($id) ? '' : $this->ID;
         return $this->read('producto', $array, $consulta, 'id, nombre, precio, fecha');
+    }
+
+    public function obtenerProductoNombrePorId(string $id = null)
+    {
+        $array = empty($id) ? [] : ['id' => $id];
+        $consulta = empty($id) ? '' : $this->ID;
+        return $this->read('producto', $array, $consulta, 'id, nombre, precio');
     }
 
     public function obtenerClaveCajaPorId(string $id = null)
@@ -89,18 +103,26 @@ class ConsultasDB extends Database
         return $this->read('cliente', $array, $consulta, 'id, nombresYapellidos, documento');
     }
 
-    public function obtenerNombreClientePorId(string $id = null)
+    public function obtenerClienteNombrePorId(string $id = null)
     {
         $array = empty($id) ? [] : ['id' => $id];
         $consulta = empty($id) ? '' : $this->ID;
-        return $this->read('cliente', $array, $consulta, 'nombresYapellidos')[0]['nombresYapellidos'];
+        return $this->read('cliente', $array, $consulta, 'id, nombresYapellidos');
     }
 
-    public function obtenerNombreProductoPorId(string $id = null)
+    public function obtenerNombreClientePorId(string $id)
     {
-        $array = empty($id) ? [] : ['id' => $id];
-        $consulta = empty($id) ? '' : $this->ID;
-        return $this->read('producto', $array, $consulta, 'nombre')[0]['nombre'];
+        return $this->read('cliente', ['id' => $id], $this->ID, 'nombresYapellidos')[0]['nombresYapellidos'];
+    }
+
+    public function obtenerNombreProductoPorId(string $id)
+    {
+        return $this->read('producto', ['id' => $id], $this->ID, 'nombre')[0]['nombre'];
+    }
+
+    public function obtenerNombreTrabajadorPorId(string $id)
+    {
+        return $this->read('trabajador', ['id' => $id], $this->ID, 'nombresYapellidos')[0]['nombresYapellidos'];
     }
 
     public function obtenerEquiposPorId(string $id = null)
@@ -108,6 +130,13 @@ class ConsultasDB extends Database
         $array = empty($id) ? [] : ['id' => $id];
         $consulta = empty($id) ? '' : $this->ID;
         return $this->read('equipo', $array, $consulta);
+    }
+
+    public function obtenerEquiposNombrePorId(string $id = null)
+    {
+        $array = empty($id) ? [] : ['id' => $id];
+        $consulta = empty($id) ? '' : $this->ID;
+        return $this->read('equipo', $array, $consulta, 'id, nombre');
     }
 
     public function minDeMasLiga(string $gimnasio)
@@ -431,6 +460,13 @@ class ConsultasDB extends Database
         );
     }
 
+    public function obtenerTrabajadorNombrePorId(string $id = null)
+    {
+        $array = empty($id) ? [] : ['id' => $id];
+        $consulta = empty($id) ? '' : $this->ID;
+        return $this->read('trabajador', $array, $consulta, 'id, nombresYapellidos');
+    }
+
     public function obtenerAdminNickname(string $gimnasio)
     {
         return $this->read(
@@ -453,7 +489,7 @@ class ConsultasDB extends Database
         );
     }
 
-    public function obtenerLigaHoy(string $trabajador)
+    public function obtenerLigaHoy(string $trabajador)///
     {
         return $this->read(
             'ligas',
@@ -463,7 +499,7 @@ class ConsultasDB extends Database
         );
     }
 
-    public function obtenerTiendaHoy(string $trabajador)
+    public function obtenerTiendaHoy(string $trabajador)///
     {
         return $this->read(
             'tienda',

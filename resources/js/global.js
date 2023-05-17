@@ -65,6 +65,35 @@ function endCargando() {
     }
 }
 
+async function cargarClientes() {
+    let clientes = await fetch('controller/ControllerTienda.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            accion: 'CargarClientes',
+            csrf_token: document.getElementById('csrf_token').value
+        })
+    }).then((res) => {
+        this.disabled = false;
+        if (res.status == 200) {
+            return res.json()
+        }
+    }).catch((res) => {
+        this.disabled = false;
+        //console.error(res.statusText);
+        return res;
+    })
+
+    let select = document.getElementById('cliente');
+    for (let i = 0; i < clientes.length; i++) {
+        //console.log(clientes[i], 'llena');
+        let op = new Option(clientes[i].nombresYapellidos, clientes[i].id)
+        select.append(op);
+    }
+}
+
 class Voice {
     #time = null;
     #voice = null;
