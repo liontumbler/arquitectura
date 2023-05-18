@@ -19,9 +19,8 @@ class PaginaOnce extends Web implements PaginaX
         ?>
         <div class="d-flex">
             <div id="contentConSidebar">
-                <div class="m-4">
-                    
-                    <div class="container" style="width: 450px;">
+                <div>
+                    <div class="container" style="width: 450px; background: #f5f2f2; padding: 25px;">
                         <div class="row">
                             <?= input_csrf_token(); ?>
                             <div class="col-lg-12 mb-1">
