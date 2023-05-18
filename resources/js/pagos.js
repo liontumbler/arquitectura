@@ -735,9 +735,10 @@ document.querySelector('body').onload = (e) => {
                             title: 'Fehca'
                         },{
                             field: 'descripcion',
-                            title: 'Descripcion',
+                            title: 'Descripción',
+                            width: '250',
                             formatter: function(value, row, index) {
-                                return '<div style="width: inherit; overflow:hidden; white-space:nowrap; text-overflow: ellipsis;">' +
+                                return '<div style="width: 250px; overflow:hidden; white-space:nowrap; text-overflow: ellipsis;">' +
                                     row.descripcion +
                                 '</div>';
                             },
@@ -828,8 +829,14 @@ document.querySelector('body').onload = (e) => {
                     title: 'Titulo'
                 }, {
                     field: 'descripcion',
-                    title: 'Descripción'
-                },{
+                    title: 'Descripción',
+                    width: '250',
+                    formatter: function(value, row, index) {
+                        return '<div style="width: 250px; overflow:hidden; white-space:nowrap; text-overflow: ellipsis;">' +
+                            row.descripcion +
+                        '</div>';
+                    },
+                }, {
                     field: 'fecha',
                     title: 'Fecha'
                 }, {
