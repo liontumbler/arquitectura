@@ -48,7 +48,7 @@ class PaginaOnce extends Web implements PaginaX
                             </div>
                             <div class="col-lg-12 mb-1">
                                 <div class="d-grid gap-2">
-                                    <button id="tiendaAdmin" class="btn btn-light" type="button" disabled>
+                                    <button id="tiendaAdmin" class="btn btn-light" type="button">
                                         <i class="bi bi-shop"></i>&nbsp;Tienda
                                     </button>
                                 </div>

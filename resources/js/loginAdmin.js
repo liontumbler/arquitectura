@@ -5,21 +5,14 @@ document.querySelector('body').onload = (e) => {
         let validar = new Validardor(['nickname', 'clave']);
 
         document.getElementById('entrar').addEventListener('click', async function(e) {
-            recapchav2.validarRV2S(async function (valid) {
-                console.log(valid, ':)');
+            this.disabled = true;
+            recapchav2.validarRV2S(async (valid) => {
                 if (valid) {
                     let valid = validar.validarCampos()
-
-                    console.log(valid, valid.validationMessage);
-
-                    
                     if(valid && !valid.validationMessage){
-                        this.disabled = true;
 
                         let edta = validar.crearObjetoJson();
-                        console.log(edta);
                         let csrf_token = document.getElementById('csrf_token').value;
-
                         let rdta = await fetch('controller/ControllerLogin.php', {
                             method: 'POST',
                             headers: {
@@ -31,17 +24,16 @@ document.querySelector('body').onload = (e) => {
                                 csrf_token
                             })
                         }).then((res) => {
-                            this.disabled = false;
                             if (res.status == 200) {
                                 return res.json()
                             }
                         }).catch((res) => {
-                            this.disabled = false;
                             console.error(res.statusText);
                             return res;
                         })
+                        this.disabled = false;
+                        grecaptcha.reset();
 
-                        console.log(rdta, 'loginAdmin');
                         if (rdta.length == 0) {
                             Swal.fire({
                                 icon: 'error',
@@ -92,8 +84,12 @@ document.querySelector('body').onload = (e) => {
                                 }
                             })
                         }
+                    }else{
+                        this.disabled = false;
+                        grecaptcha.reset();
                     }
                 }else{
+                    this.disabled = false;
                     Swal.fire({
                         icon: 'error',
                         title: 'Validar reCAPTCHA',

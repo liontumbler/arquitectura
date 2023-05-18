@@ -66,6 +66,37 @@ function salir(e) {
     })
 }
 
+async function cargarTrabajadores() {
+    let trabajadores = await fetch('controller/ControllerAdmin.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            accion: 'CargarTrabajadores',
+            csrf_token: document.getElementById('csrf_token').value
+        })
+    }).then((res) => {
+        this.disabled = false;
+        if (res.status == 200) {
+            return res.json()
+        }
+    }).catch((res) => {
+        this.disabled = false;
+        //console.error(res.statusText);
+        return res;
+    })
+
+    //console.log(trabajadores);
+    
+    let select = document.getElementById('trabajador');
+    for (let i = 0; i < trabajadores.length; i++) {
+        //console.log(trabajadores[i], 'llena');
+        let op = new Option(trabajadores[i].id + ' - ' + trabajadores[i].nombresYapellidos, trabajadores[i].id)
+        select.append(op);
+    }
+}
+
 (function () {
     setInterval(mueveReloj, 1000);
 

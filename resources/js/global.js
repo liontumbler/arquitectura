@@ -65,6 +65,36 @@ function endCargando() {
     }
 }
 
+async function cargarProductos() {
+    let productos = await fetch('controller/ControllerTienda.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            accion: 'CargarProductos',
+            csrf_token: document.getElementById('csrf_token').value
+        })
+    }).then((res) => {
+        this.disabled = false;
+        if (res.status == 200) {
+            return res.json()
+        }
+    }).catch((res) => {
+        this.disabled = false;
+        console.error(res.statusText);
+        return res;
+    })
+
+    let select = document.getElementById('producto');
+    productos.forEach(producto => {
+        //console.log(producto, 'llena');
+        let op = new Option(producto.id + ' - ' +producto.nombre, producto.id);
+        op.setAttribute('precio', producto.precio);
+        select.append(op);
+    });
+}
+
 async function cargarClientes() {
     let clientes = await fetch('controller/ControllerTienda.php', {
         method: 'POST',
@@ -89,7 +119,7 @@ async function cargarClientes() {
     let select = document.getElementById('cliente');
     for (let i = 0; i < clientes.length; i++) {
         //console.log(clientes[i], 'llena');
-        let op = new Option(clientes[i].nombresYapellidos, clientes[i].id)
+        let op = new Option(clientes[i].id + ' - ' +clientes[i].nombresYapellidos, clientes[i].id)
         select.append(op);
     }
 }

@@ -159,6 +159,71 @@ class ConsultasDB extends Database
         );
     }
 
+    public function obtenerTiendas(object $dta)
+    {
+        $array = array();
+        $cadena = '';
+        if (!empty($dta->cliente)) {
+            $array['idCliente'] = $dta->cliente;
+            $cadena .= '`idCliente`=:idCliente ';
+        }
+
+        if (!empty($dta->Trabajador)) {
+            $array['idTrabajador'] = $dta->Trabajador;
+            if (empty($cadena)) {
+                $cadena = '`idTrabajador`=:idTrabajador ';
+            } else {
+                $cadena .= 'AND `idTrabajador`=:idTrabajador ';
+            }
+        }
+
+        if (!empty($dta->Producto)) {
+            $array['idProducto'] = $dta->Producto;
+            if (empty($cadena)) {
+                $cadena = '`idProducto`=:idProducto ';
+            } else {
+                $cadena .= 'AND `idProducto`=:idProducto ';
+            }
+        }
+
+        if (!empty($dta->tipoPago)) {
+            $array['tipoPago'] = $dta->tipoPago;
+            if (empty($cadena)) {
+                $cadena = '`tipoPago`=:tipoPago ';
+            } else {
+                $cadena .= 'AND `tipoPago`=:tipoPago ';
+            }
+        }
+
+        if (!empty($dta->desde)) {
+            $array['fecha'] = $dta->desde;
+            if (empty($cadena)) {
+                $cadena = '`fecha`>=:fecha ';
+            } else {
+                $cadena .= 'AND `fecha`>=:fecha ';
+            }
+        }
+
+        if (!empty($dta->hasta)) {
+            $array['fechah'] = $dta->hasta;
+            if (empty($cadena)) {
+                $cadena = '`fecha`<=:fechah ';
+            } else {
+                $cadena .= 'AND `fecha`<=:fechah ';
+            }
+        }
+
+        //return $array;
+        //return $cadena;
+        
+        return $this->read(
+            'tienda',
+            $array,
+            $cadena,
+            'id, cantidad, total, tipoPago, fecha, idProducto, idCliente, idTrabajador'
+        );
+    }
+
     public function obtenerLigas(object $dta)
     {
         $array = array();

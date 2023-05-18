@@ -148,6 +148,11 @@ class ModelAdmin extends Model
         return $this->obtenerLigas($dto);
     }
 
+    public function buscarTiendas($dto)
+    {
+        return $this->obtenerTiendas($dto);
+    }
+
     public function cargarTrabajadores()
     {
         return $this->obtenerTrabajadorNombrePorId();

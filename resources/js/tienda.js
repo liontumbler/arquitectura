@@ -1,36 +1,6 @@
 document.querySelector('body').onload = (e) => {
     (function () {
 
-        async function cargarProductos() {
-            let productos = await fetch('controller/ControllerTienda.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    accion: 'CargarProductos',
-                    csrf_token: document.getElementById('csrf_token').value
-                })
-            }).then((res) => {
-                this.disabled = false;
-                if (res.status == 200) {
-                    return res.json()
-                }
-            }).catch((res) => {
-                this.disabled = false;
-                console.error(res.statusText);
-                return res;
-            })
-
-            let select = document.getElementById('producto');
-            productos.forEach(producto => {
-                //console.log(producto, 'llena');
-                let op = new Option(producto.nombre, producto.id);
-                op.setAttribute('precio', producto.precio);
-                select.append(op);
-            });
-        }
-
         let validarForm1;
         let validarForm2;
         let validarForm3;

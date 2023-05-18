@@ -2,48 +2,373 @@ document.querySelector('body').onload = (e) => {
     (function () {
         let validarForm;
 
-        async function cargarTrabajadores() {
-            let trabajadores = await fetch('controller/ControllerAdmin.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    accion: 'CargarTrabajadores',
-                    csrf_token: document.getElementById('csrf_token').value
-                })
-            }).then((res) => {
-                this.disabled = false;
-                if (res.status == 200) {
-                    return res.json()
-                }
-            }).catch((res) => {
-                this.disabled = false;
-                //console.error(res.statusText);
-                return res;
-            })
-
-            //console.log(trabajadores);
-            
-            let select = document.getElementById('Trabajador');
-            for (let i = 0; i < trabajadores.length; i++) {
-                //console.log(trabajadores[i], 'llena');
-                let op = new Option(trabajadores[i].nombresYapellidos, trabajadores[i].id)
-                select.append(op);
-            }
-        }
         let $table2;
         let resCli = cargarClientes();
         let resTra = cargarTrabajadores();
         resCli.then(function () {
             resTra.then(function () {
-                validarForm = new Validardor(['cliente', 'Trabajador', 'tipoPago', 'desde', 'hasta']);
+                validarForm = new Validardor(['cliente', 'trabajador', 'tipoPago', 'desde', 'hasta']);
                 $table2 = $('#ligasTable');
             })
         })
 
+        function total(arr) {
+            let total = 0;
+            for (const t in arr) {
+                total += arr[t].total;
+            }
+
+            return total;
+        }
+
         let myChart;
         let myChart2;
+        let myChart3;
+        let myChart4;
+        function graficar(rdta) {
+            if (myChart) 
+                myChart.destroy();
+            
+            if (myChart2) 
+                myChart2.destroy();
+
+            if (myChart3) 
+                myChart3.destroy();
+
+            if (myChart4) 
+                myChart4.destroy();
+            
+            const ctxBarras = document.getElementById('ligasGraficaBarras');
+            const ctxLineas = document.getElementById('ligasGraficaLineas');
+            const ctxPolarArea = document.getElementById('ligasGraficaPolarArea');
+            const ctxPie = document.getElementById('ligasGraficaPie');
+            
+            let digital = rdta.filter(liga => liga.tipoPago == 'digital');
+            let efectivo = rdta.filter(liga => liga.tipoPago == 'efectivo');
+            let pazYsalvoEfectivo = rdta.filter(liga => liga.tipoPago == 'pazYsalvoEfectivo');
+            let pazYsalvoDigital = rdta.filter(liga => liga.tipoPago == 'pazYsalvoDigital');
+            let debe = rdta.filter(liga => liga.tipoPago == 'debe');
+            
+            myChart = new Chart(ctxBarras, {
+                type: 'bar',
+                data: {
+                    labels: ['digital', 'efectivo', 'pazYsalvoEfectivo', 'pazYsalvoDigital', 'debe'],
+                    datasets: [{
+                        label: 'Tipos de pagos',
+                        data: [digital.length, efectivo.length, pazYsalvoEfectivo.length, pazYsalvoDigital.length, debe.length],
+                        borderWidth: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    animation: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 2
+                            }
+                        }
+                    },
+                    plugins: {
+                        customCanvasBackgroundColor: {
+                            color: '#f9f9f9',
+                        },
+                        legend: {
+                            labels: {
+                                font: {
+                                    size: 14
+                                }
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'ventas por tipo de pago'
+                        }
+                    },
+                    layout: {
+                        padding: 30
+                    }
+                },
+                plugins: [{
+                    id: 'customCanvasBackgroundColor',
+                    beforeDraw: (chart, args, options) => {
+                        const {ctx} = chart;
+                        ctx.save();
+                        ctx.globalCompositeOperation = 'destination-over';
+                        ctx.fillStyle = options.color || '#99ffff';
+                        ctx.fillRect(0, 0, chart.width, chart.height);
+                        ctx.restore();
+                    }
+                }],
+            });
+
+            let labelsFecha = [];
+            let labelsTrabajador = [];
+            let labelsCliente = [];
+            for (const i in rdta) {
+                let fecha = rdta[i]['fechaInicio'].split(' ')[0]
+                if (i == 0) {
+                    labelsFecha.push(fecha)
+                }else{
+                    let diferente = 0;
+                    for (const j in labelsFecha) {
+                        if (labelsFecha[j] != fecha) {
+                            diferente++;
+                        }
+                    }
+
+                    if (diferente >= labelsFecha.length) {
+                        labelsFecha.push(fecha)
+                    }
+                }
+
+                let trabajador = rdta[i]['idTrabajador']
+                if (i == 0) {
+                    labelsTrabajador.push(trabajador)
+                }else{
+                    let diferente = 0;
+                    for (const j in labelsTrabajador) {
+                        if (labelsTrabajador[j] != trabajador) {
+                            diferente++;
+                        }
+                    }
+
+                    if (diferente >= labelsTrabajador.length) {
+                        labelsTrabajador.push(trabajador)
+                    }
+                }
+
+                let cliente = rdta[i]['idCliente']
+                if (i == 0) {
+                    labelsCliente.push(cliente)
+                }else{
+                    let diferente = 0;
+                    for (const j in labelsCliente) {
+                        if (labelsCliente[j] != cliente) {
+                            diferente++;
+                        }
+                    }
+
+                    if (diferente >= labelsCliente.length) {
+                        labelsCliente.push(cliente)
+                    }
+                }
+            }
+
+            let arraydebe = []
+            let arraydigital = []
+            let arrayefectivo = []
+            let arraypazYsalvoEfectivo = []
+            let arraypazYsalvoDigital = []
+            for (const f in labelsFecha) {
+                let deb = rdta.filter(liga => liga.fechaInicio.indexOf(labelsFecha[f]) >= 0 && liga.tipoPago == 'debe');
+                arraydebe[f] = total(deb)
+                let dig = rdta.filter(liga => liga.fechaInicio.indexOf(labelsFecha[f]) >= 0 && liga.tipoPago == 'digital');
+                arraydigital[f] = total(dig);
+                let efe = rdta.filter(liga => liga.fechaInicio.indexOf(labelsFecha[f]) >= 0 && liga.tipoPago == 'efectivo');
+                arrayefectivo[f] = total(efe);
+                let pazEfe = rdta.filter(liga => liga.fechaInicio.indexOf(labelsFecha[f]) >= 0 && liga.tipoPago == 'pazYsalvoEfectivo');
+                arraypazYsalvoEfectivo[f] = total(pazEfe);
+                let pazDig = rdta.filter(liga => liga.fechaInicio.indexOf(labelsFecha[f]) >= 0 && liga.tipoPago == 'pazYsalvoDigital');
+                arraypazYsalvoDigital[f] = total(pazDig);
+            }
+
+            myChart2 = new Chart(ctxLineas, {
+                type: 'line',
+                data: {
+                    labels: labelsFecha,
+                    datasets: [
+                        {
+                            label: 'Debe',
+                            data: arraydebe,
+                            borderColor: '#ff0000',
+                            backgroundColor: '#ff00007a',
+                        },
+                        {
+                            label: 'Digital',
+                            data: arraydigital,
+                            borderColor: '#0000ff',
+                            backgroundColor: '#0000ff7a',
+                        },
+                        {
+                            label: 'Efectivo',
+                            data: arrayefectivo,
+                            borderColor: '#00ff00',
+                            backgroundColor: '#00ff007a',
+                        },
+                        {
+                            label: 'pazYsalvoEfectivo',
+                            data: arraypazYsalvoEfectivo,
+                            borderColor: '#a6f7de',
+                            backgroundColor: '#a6f7de7a',
+                        },
+                        {
+                            label: 'pazYsalvoDigital',
+                            data: arraypazYsalvoDigital,
+                            borderColor: '#000000',
+                            backgroundColor: '#0000007a',
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    animation: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 2
+                            },
+                            //max: 1000000,
+                        }
+                    },
+                    plugins: {
+                        customCanvasBackgroundColor: {
+                            color: '#f9f9f9',
+                        },
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                font: {
+                                    size: 14
+                                }
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'totales por fecha'
+                        }
+                    },
+                    layout: {
+                        padding: 30
+                    }
+                },
+                plugins: [{
+                    id: 'customCanvasBackgroundColor',
+                    beforeDraw: (chart, args, options) => {
+                        const {ctx} = chart;
+                        ctx.save();
+                        ctx.globalCompositeOperation = 'destination-over';
+                        ctx.fillStyle = options.color || '#99ffff';
+                        ctx.fillRect(0, 0, chart.width, chart.height);
+                        ctx.restore();
+                    }
+                }],
+            });
+
+            let arrayidTrabajador = []
+            for (const f in labelsTrabajador) {
+                let paztra = rdta.filter(liga => liga.idTrabajador == labelsTrabajador[f]);
+                arrayidTrabajador[f] = total(paztra);
+            }
+
+            myChart3 = new Chart(ctxPolarArea, {
+                type: 'polarArea',
+                data: {
+                    labels: labelsTrabajador,
+                    datasets: [
+                        {
+                            label: 'Trabajadores',
+                            data: arrayidTrabajador,
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    animation: false,
+                    plugins: {
+                        customCanvasBackgroundColor: {
+                            color: '#f9f9f9',
+                        },
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                font: {
+                                    size: 14
+                                }
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'totales Trabajadores'
+                        }
+                    },
+                    layout: {
+                        padding: 30
+                    }
+                },
+                plugins: [{
+                    id: 'customCanvasBackgroundColor',
+                    beforeDraw: (chart, args, options) => {
+                        const {ctx} = chart;
+                        ctx.save();
+                        ctx.globalCompositeOperation = 'destination-over';
+                        ctx.fillStyle = options.color || '#99ffff';
+                        ctx.fillRect(0, 0, chart.width, chart.height);
+                        ctx.restore();
+                    }
+                }],
+            });
+
+            let arrayidCliente = []
+            for (const f in labelsCliente) {
+                let paztra = rdta.filter(liga => liga.idCliente == labelsCliente[f]);
+                arrayidCliente[f] = total(paztra);
+            }
+
+            myChart4 = new Chart(ctxPie, {
+                type: 'pie',
+                data: {
+                    labels: labelsCliente,
+                    datasets: [
+                        {
+                            label: 'Clientes',
+                            data: arrayidCliente,
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    animation: false,
+                    plugins: {
+                        customCanvasBackgroundColor: {
+                            color: '#f9f9f9',
+                        },
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                font: {
+                                    size: 14
+                                }
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'totales Clientes'
+                        }
+                    },
+                    layout: {
+                        padding: 30
+                    }
+                },
+                plugins: [{
+                    id: 'customCanvasBackgroundColor',
+                    beforeDraw: (chart, args, options) => {
+                        const {ctx} = chart;
+                        ctx.save();
+                        ctx.globalCompositeOperation = 'destination-over';
+                        ctx.fillStyle = options.color || '#99ffff';
+                        ctx.fillRect(0, 0, chart.width, chart.height);
+                        ctx.restore();
+                    }
+                }],
+            });
+
+            Chart.defaults.backgroundColor = '#9BD0F5';//color barras
+            Chart.defaults.color = '#000';
+        }
+
         document.getElementById('buscar').addEventListener('click', async function(e) {
             let valid = validarForm.validarCampos();
             console.log(valid);
@@ -82,164 +407,7 @@ document.querySelector('body').onload = (e) => {
 
                 console.log(rdta, 'ligas');
 
-                if (myChart) {
-                    myChart.destroy();
-                }
-
-                if (myChart2) {
-                    myChart2.destroy();
-                }
-
-                /**graficar  sacar un metodo que pinte las graficas*/
-                const ctxBarras = document.getElementById('ligasGraficaBarras');
-                const ctxLineas = document.getElementById('ligasGraficaLineas');
-                let digital = rdta.filter(liga => liga.tipoPago == 'digital');
-                let efectivo = rdta.filter(liga => liga.tipoPago == 'efectivo');
-                let pazYsalvoEfectivo = rdta.filter(liga => liga.tipoPago == 'pazYsalvoEfectivo');
-                let pazYsalvoDigital = rdta.filter(liga => liga.tipoPago == 'pazYsalvoDigital');
-                let debe = rdta.filter(liga => liga.tipoPago == 'debe');
-                
-                myChart = new Chart(ctxBarras, {
-                    type: 'bar',
-                    data: {
-                        labels: ['digital', 'efectivo', 'pazYsalvoEfectivo', 'pazYsalvoDigital', 'debe'],
-                        datasets: [{
-                            label: 'Tipos de pagos',
-                            data: [digital.length, efectivo.length, pazYsalvoEfectivo.length, pazYsalvoDigital.length, debe.length],
-                            borderWidth: 5
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        animation: false,
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                ticks: {
-                                    stepSize: 2
-                                }
-                            }
-                        },
-                        plugins: {
-                            customCanvasBackgroundColor: {
-                                color: '#f9f9f9',
-                            },
-                            legend: {
-                                labels: {
-                                    font: {
-                                        size: 14
-                                    }
-                                }
-                            },
-                            title: {
-                                display: true,
-                                text: 'El tipo de pago que más se ha hecho'
-                            }
-                        },
-                        layout: {
-                            padding: 30
-                        }
-                    },
-                    plugins: [{
-                        id: 'customCanvasBackgroundColor',
-                        beforeDraw: (chart, args, options) => {
-                            const {ctx} = chart;
-                            ctx.save();
-                            ctx.globalCompositeOperation = 'destination-over';
-                            ctx.fillStyle = options.color || '#99ffff';
-                            ctx.fillRect(0, 0, chart.width, chart.height);
-                            ctx.restore();
-                        }
-                    }],
-                });
-
-                //arreglar
-                myChart2 = new Chart(ctxLineas, {
-                    //fechas vesus totales
-                    type: 'line',
-                    data: {
-                        labels: ['fecha', 'fecha', 'fecha'],
-                        datasets: [
-                            {
-                                label: 'Debe',
-                                data: [1,2,3,4],
-                                borderColor: '#ff0000',
-                                backgroundColor: '#ff00007a',
-                            },
-                            {
-                                label: 'Digital',
-                                data: [6,7,8,9,10],
-                                borderColor: '#0000ff',
-                                backgroundColor: '#0000ff7a',
-                            },
-                            {
-                                label: 'Efectivo',
-                                data: [6,7,8,9,10],
-                                borderColor: '#00ff00',
-                                backgroundColor: '#00ff007a',
-                            },
-                            {
-                                label: 'pazYsalvoEfectivo',
-                                data: [6,7,8,9,10],
-                                borderColor: '#f0f0f0',
-                                backgroundColor: '#f0f0f07a',
-                            },
-                            {
-                                label: 'pazYsalvoDigital',
-                                data: [6,7,8,9,10],
-                                borderColor: '#0f0f0f',
-                                backgroundColor: '#0f0f0f7a',
-                            }
-                        ]
-                    },
-                    options: {
-                        responsive: true,
-                        animation: false,
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                ticks: {
-                                    stepSize: 2
-                                }
-                            }
-                        },
-                        plugins: {
-                            customCanvasBackgroundColor: {
-                                color: '#f9f9f9',
-                            },
-                            legend: {
-                                position: 'top',
-                                labels: {
-                                    font: {
-                                        size: 14
-                                    }
-                                }
-                            },
-                            title: {
-                                display: true,
-                                text: 'lineas :)'
-                            }
-                        },
-                        layout: {
-                            padding: 30
-                        }
-                    },
-                    plugins: [{
-                        id: 'customCanvasBackgroundColor',
-                        beforeDraw: (chart, args, options) => {
-                            const {ctx} = chart;
-                            ctx.save();
-                            ctx.globalCompositeOperation = 'destination-over';
-                            ctx.fillStyle = options.color || '#99ffff';
-                            ctx.fillRect(0, 0, chart.width, chart.height);
-                            ctx.restore();
-                        }
-                    }],
-                });
-
-                Chart.defaults.backgroundColor = '#9BD0F5';//color barras
-                Chart.defaults.color = '#000';
-                /**graficar */
+                graficar(rdta);
 
                 let limite = rdta.length-1;
                 let i = 0;

@@ -5,21 +5,14 @@ document.querySelector('body').onload = (e) => {
         let validar = new Validardor(['nickname', 'clave' ,'caja']);
 
         document.getElementById('trabajar').addEventListener('click', function(e) {
-
+            this.disabled = true;
             recapchav2.validarRV2S(async function (valid) {
-                console.log(valid, ':)');
                 if (valid) {
                     let valid = validar.validarCampos()
-                    console.log(valid, valid.validationMessage);
-
                     if(valid && !valid.validationMessage){
-                        this.disabled = true;
-                        //console.log(validar.crearFormData());
-                        //console.log(validar.crearObjetoJson());
 
                         let edta = validar.crearObjetoJson();
                         let csrf_token = document.getElementById('csrf_token').value;
-
                         let rdta = await fetch('controller/ControllerLogin.php', {
                             method: 'POST',
                             headers: {
@@ -31,18 +24,16 @@ document.querySelector('body').onload = (e) => {
                                 csrf_token
                             })
                         }).then((res) => {
-                            this.disabled = false;
                             if (res.status == 200) {
                                 return res.json()
                             }
                         }).catch((res) => {
-                            this.disabled = false;
                             console.error(res.statusText);
                             return res;
                         })
-
-                        console.log(rdta, 'login');
+                        this.disabled = false;
                         grecaptcha.reset();
+
                         if (rdta.length == 0) {
                             Swal.fire({
                                 icon: 'error',
@@ -96,8 +87,7 @@ document.querySelector('body').onload = (e) => {
                                         if (result.dismiss == 'timer' && result.isDismissed) {
                                             location.href = 'trabajando';
                                         }else{
-                                            //location.reload();
-                                            alert('No selecciona ninguna op');
+                                            location.href = 'trabajando';
                                         }
                                     })
                                 }
@@ -122,8 +112,12 @@ document.querySelector('body').onload = (e) => {
                                 }
                             })
                         }
+                    }else{
+                        this.disabled = false;
+                        grecaptcha.reset();
                     }
                 }else{
+                    this.disabled = false;
                     Swal.fire({
                         icon: 'error',
                         title: 'Validar reCAPTCHA',

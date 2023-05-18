@@ -45,8 +45,8 @@ class PaginaOnce extends Web implements PaginaX
                                     </select>
                                 </div>
                                 <div class="col-lg-2 col-sm-4">
-                                    <label for="Trabajador">Trabajador</label>
-                                    <select id="Trabajador" class="form-select">
+                                    <label for="trabajador">Trabajador</label>
+                                    <select id="trabajador" class="form-select">
                                         <option selected value="">Seleccione una opción</option>
                                     </select>
                                 </div>
@@ -80,6 +80,12 @@ class PaginaOnce extends Web implements PaginaX
                                 </div>
                                 <div class="col-md-6">
                                     <canvas id="ligasGraficaLineas">Your browser does not support the canvas element.</canvas>
+                                </div>
+                                <div class="col-md-6">
+                                    <canvas id="ligasGraficaPolarArea">Your browser does not support the canvas element.</canvas>
+                                </div>
+                                <div class="col-md-6">
+                                    <canvas id="ligasGraficaPie">Your browser does not support the canvas element.</canvas>
                                 </div>
                             </div>
 
