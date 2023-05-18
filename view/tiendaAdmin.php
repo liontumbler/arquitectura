@@ -6,8 +6,6 @@ if (!$rutasLegitima) {
     header('Location: ./index');
 }
 
-//echo $_SESSION['SesionAdmin'];
-
 require_once 'view.php';
 
 class PaginaOnce extends Web implements PaginaX
@@ -139,5 +137,4 @@ class PaginaOnce extends Web implements PaginaX
 
 $index = new PaginaOnce('Tienda Administrador', '', '');
 echo $index->crearHtml();
-
 ?>

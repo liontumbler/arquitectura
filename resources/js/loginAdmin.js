@@ -60,8 +60,7 @@ document.querySelector('body').onload = (e) => {
                                 if (result.dismiss == 'timer' && result.isDismissed) {
                                     location.href = 'inicioAdmin';
                                 }else{
-                                    //location.reload();
-                                    alert('No selecciona ninguna op');
+                                    location.href = 'inicioAdmin';
                                 }
                             })
                         }else if(rdta == 800){
@@ -100,7 +99,6 @@ document.querySelector('body').onload = (e) => {
                     })
                 }
             }, 'resources/libs/RecaptchaV2/scaptcha.php');
-            
         });
     })();
 }

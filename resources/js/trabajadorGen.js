@@ -190,6 +190,19 @@ async function terminar(e) {
 
 (function () {
     setInterval(mueveReloj, 1000);
+
+    if (document.getElementById('sideBar')) {
+        document.getElementById('sideBar').style.display = 'none';
+    }
+    
+    if (document.getElementById('btnSidebar')) {
+        document.getElementById('btnSidebar').addEventListener('click', function (e) {
+            if(document.getElementById('sideBar').style.display == 'block')
+                document.getElementById('sideBar').style.display = 'none';
+            else
+                document.getElementById('sideBar').style.display = 'block';
+        });
+    }
     
     document.getElementById('sbTerminar').addEventListener('click', terminar);
 })();

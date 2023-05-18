@@ -16,7 +16,7 @@ class PaginaOnce extends Web implements PaginaX
     {
         ?>
         <div class="d-flex">
-            <?php require_once 'layout/sidebar.php'; ?>
+            
             <div id="contentConSidebar">
                 <div class="m-4">
                     contenido

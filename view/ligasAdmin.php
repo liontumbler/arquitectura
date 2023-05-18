@@ -6,8 +6,6 @@ if (!$rutasLegitima) {
     header('Location: ./index');
 }
 
-//echo $_SESSION['SesionAdmin'];
-
 require_once 'view.php';
 
 class PaginaOnce extends Web implements PaginaX
@@ -92,9 +90,6 @@ class PaginaOnce extends Web implements PaginaX
                             <table id="ligasTable"></table>
                         </div>
                     </div>
-
-                    
-
                 </div>
             </div>
         </div>
@@ -130,10 +125,6 @@ class PaginaOnce extends Web implements PaginaX
     ?>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
-            
-
-            /**/
-
             function exportarCanvasComoImagen(canvas, nombreArchivo, escala = 1) {
                 // Crear un canvas temporal escalado
                 const canvasEscalado = document.createElement('canvas');
@@ -160,8 +151,6 @@ class PaginaOnce extends Web implements PaginaX
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);*/
-
-                
             }
         </script>
         <script src="resources/js/adminGen.js"></script>
@@ -189,5 +178,4 @@ class PaginaOnce extends Web implements PaginaX
 
 $index = new PaginaOnce('Ligas Administrador', '', '');
 echo $index->crearHtml();
-
 ?>

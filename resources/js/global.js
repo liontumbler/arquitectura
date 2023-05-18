@@ -1,17 +1,3 @@
-if (document.getElementById('sideBar')) {
-    document.getElementById('sideBar').style.display = 'none';
-    //document.getElementById('sideBar').style.display = 'block';
-}
-
-if (document.getElementById('btnSidebar')) {
-    document.getElementById('btnSidebar').addEventListener('click', function (e) {
-        if(document.getElementById('sideBar').style.display == 'block')
-            document.getElementById('sideBar').style.display = 'none';
-        else
-            document.getElementById('sideBar').style.display = 'block';
-    });
-}
-
 //document.querySelector('.table .table-striped')
 //$('.table.table-striped').css('width', '100%');
 

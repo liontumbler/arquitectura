@@ -6,7 +6,7 @@ document.querySelector('body').onload = (e) => {
 
         document.getElementById('trabajar').addEventListener('click', function(e) {
             this.disabled = true;
-            recapchav2.validarRV2S(async function (valid) {
+            recapchav2.validarRV2S(async (valid) => {
                 if (valid) {
                     let valid = validar.validarCampos()
                     if(valid && !valid.validationMessage){
@@ -90,6 +90,8 @@ document.querySelector('body').onload = (e) => {
                                             location.href = 'trabajando';
                                         }
                                     })
+                                }else{
+                                    location.href = 'trabajando';
                                 }
                             })
                         }else if(rdta == 800){
@@ -128,9 +130,6 @@ document.querySelector('body').onload = (e) => {
                     })
                 }
             }, 'resources/libs/RecaptchaV2/scaptcha.php');
-
-
-            
         });
     })();
 }

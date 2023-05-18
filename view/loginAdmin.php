@@ -18,18 +18,20 @@ class PaginaOnce extends Web implements PaginaX
     {
         ?>
         <div class="d-flex">
-            <?php require_once 'layout/sidebar.php'; ?>
+            
             <div id="contentConSidebar">
                 <div class="m-4">
-                    
                     <div class="container" style="width: 450px;">
                         <div class="row">
                             <?= input_csrf_token(); ?>
                             <div class="col-lg-12 mb-1">
+                                <img src="resources/img/adminLig.svg" alt="Nocarga" style="width: 190px; display: block; margin: auto;">
+                            </div>
+                            <div class="col-lg-12 mb-1">
                                 <label for="nickname" class="form-label">Nickname *</label>
                                 <input type="text" class="form-control" id="nickname" placeholder="Digite la nickname del trabajador" required minlength="1" maxlength="50" textarroba>
                             </div>
-                            <div class="col-lg-12 mb-1">
+                            <div class="col-lg-12 mb-2">
                                 <label for="clave" class="form-label">Clave *</label>
                                 <input type="password" class="form-control" id="clave" placeholder="Digite la clave del trabajador" required minlength="1" maxlength="50">
                             </div>
