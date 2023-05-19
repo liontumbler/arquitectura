@@ -76,7 +76,7 @@ class PaginaOnce extends Web implements PaginaX
                             </div>
                             <div class="col-lg-12 mb-1">
                                 <div class="d-grid gap-2">
-                                    <button id="productosAdmin" class="btn btn-light" type="button" disabled>
+                                    <button id="productosAdmin" class="btn btn-light" type="button">
                                         <i class="bi bi-basket"></i>&nbsp;Productos
                                     </button>
                                 </div>
@@ -151,8 +151,8 @@ class PaginaOnce extends Web implements PaginaX
             document.getElementById('tiendaAdmin').addEventListener('click', function (e) {
                 location.href = 'tiendaAdmin';
             })
-            document.getElementById('descuentoAdmin').addEventListener('click', function (e) {
-                location.href = 'descuentoAdmin';
+            document.getElementById('productosAdmin').addEventListener('click', function (e) {
+                location.href = 'productosAdmin';
             })
             document.getElementById('salirAdmin').addEventListener('click', salir)
         </script>

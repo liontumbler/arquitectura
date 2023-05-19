@@ -58,7 +58,7 @@ class ConsultasDB extends Database
     {
         $array = empty($id) ? [] : ['id' => $id];
         $consulta = empty($id) ? '' : $this->ID;
-        return $this->read('producto', $array, $consulta, 'id, nombre, precio, fecha');
+        return $this->read('producto', $array, $consulta, 'id, nombre, precio, fecha, descripcion');
     }
 
     public function obtenerProductoNombrePorId(string $id = null)

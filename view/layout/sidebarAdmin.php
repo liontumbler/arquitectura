@@ -26,27 +26,27 @@
             </li>
             <li>
                 <a href="descuentoAdmin" class="nav-link text-white">
-                    <i class="bi bi-dash"></i>&nbsp;Pagos
+                    <i class="bi bi-currency-dollar"></i>&nbsp;Pagos
                 </a>
             </li>
             <li>
                 <a href="descuentoAdmin" class="nav-link text-white">
-                    <i class="bi bi-dash"></i>&nbsp;Equipos
+                    <i class="bi bi-people"></i>&nbsp;Equipos
                 </a>
             </li>
             <li>
                 <a href="descuentoAdmin" class="nav-link text-white">
-                    <i class="bi bi-dash"></i>&nbsp;Productos
+                    <i class="bi bi-basket"></i>&nbsp;Productos
                 </a>
             </li>
             <li>
                 <a href="descuentoAdmin" class="nav-link text-white">
-                    <i class="bi bi-dash"></i>&nbsp;Tarifas liga
+                    <i class="bi bi-clock-history"></i>&nbsp;Tarifas liga
                 </a>
             </li>
             <li>
                 <a href="descuentoAdmin" class="nav-link text-white">
-                    <i class="bi bi-dash"></i>&nbsp;Trabajador
+                    <i class="bi bi-file-earmark-person"></i>&nbsp;Trabajador
                 </a>
             </li>
             <li>
@@ -75,7 +75,7 @@
                 </li>
                 <li>
                     <a class="dropdown-item" href="javascript:" id="sbTerminar">
-                        <i class="bi bi-power"></i>&nbsp;Terminar
+                        <i class="bi bi-door-open-fill"></i>&nbsp;Salir
                     </a>
                 </li>
             </ul>
