@@ -1,7 +1,6 @@
 document.querySelector('body').onload = (e) => {
     (function () {
         let validarForm;
-
         let $table2;
         let resCli = cargarClientes();
         let resTra = cargarTrabajadores();
@@ -13,7 +12,6 @@ document.querySelector('body').onload = (e) => {
         resCli.then(function () {
             resTra.then(function () {
                 resPro.then(function () {
-                    
                 })
             })
         })
@@ -374,14 +372,11 @@ document.querySelector('body').onload = (e) => {
 
         
         document.getElementById('buscar').addEventListener('click', async function(e) {
-            
+            this.disabled = true;
             let valid = validarForm.validarCampos();
             console.log(valid);
             if(valid && !valid.validationMessage){
-                this.disabled = true;
-
                 let edta = validarForm.crearObjetoJson()
-                console.log(edta);
 
                 if (edta.desde) 
                     edta.desde = validarForm.obtenerFechaHoraServer(edta.desde)
@@ -400,17 +395,27 @@ document.querySelector('body').onload = (e) => {
                         csrf_token: document.getElementById('csrf_token').value
                     })
                 }).then((res) => {
-                    this.disabled = false;
                     if (res.status == 200) {
                         return res.json()
                     }
                 }).catch((res) => {
-                    this.disabled = false;
                     console.error(res.statusText);
                     return res;
                 })
 
                 console.log(rdta, 'tienda');
+
+                if (!rdta){
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'En la consulta',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then((result) => {
+                        this.disabled = false;
+                    })
+                    return;
+                }
 
                 graficar(rdta);
 
@@ -433,12 +438,10 @@ document.querySelector('body').onload = (e) => {
                                 csrf_token: document.getElementById('csrf_token').value
                             })
                         }).then((res) => {
-                            this.disabled = false;
                             if (res.status == 200) {
                                 return res.json()
                             }
                         }).catch((res) => {
-                            this.disabled = false;
                             console.error(res.statusText);
                             return res;
                         });
@@ -454,12 +457,10 @@ document.querySelector('body').onload = (e) => {
                                 csrf_token: document.getElementById('csrf_token').value
                             })
                         }).then((res) => {
-                            this.disabled = false;
                             if (res.status == 200) {
                                 return res.json()
                             }
                         }).catch((res) => {
-                            this.disabled = false;
                             console.error(res.statusText);
                             return res;
                         });
@@ -487,12 +488,10 @@ document.querySelector('body').onload = (e) => {
                                     csrf_token: document.getElementById('csrf_token').value
                                 })
                             }).then((res) => {
-                                this.disabled = false;
                                 if (res.status == 200) {
                                     return res.json()
                                 }
                             }).catch((res) => {
-                                this.disabled = false;
                                 console.error(res.statusText);
                                 return res;
                             });
@@ -508,12 +507,10 @@ document.querySelector('body').onload = (e) => {
                                     csrf_token: document.getElementById('csrf_token').value
                                 })
                             }).then((res) => {
-                                this.disabled = false;
                                 if (res.status == 200) {
                                     return res.json()
                                 }
                             }).catch((res) => {
-                                this.disabled = false;
                                 console.error(res.statusText);
                                 return res;
                             });
@@ -527,6 +524,7 @@ document.querySelector('body').onload = (e) => {
                     }
 
                     if (limite == i) {
+                        this.disabled = false;
                         $table2.bootstrapTable('destroy')
                         $table2.bootstrapTable({
                             cache: false,
@@ -627,6 +625,8 @@ document.querySelector('body').onload = (e) => {
                     }
                     i++;
                 }
+            }else{
+                this.disabled = false;
             }
         });
     })();

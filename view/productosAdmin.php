@@ -2,11 +2,11 @@
 @\session_start();
 if (!$rutasLegitima) {
     header('Location: ../index');
-} elseif (empty($_SESSION['SesionTrabajador']) || !$_SESSION['SesionTrabajador']){
+} elseif (empty($_SESSION['SesionAdmin']) || !$_SESSION['SesionAdmin']){
     header('Location: ./index');
 }
 
-//echo $_SESSION['SesionTrabajador'];
+//echo $_SESSION['SesionAdmin'];
 
 require_once 'view.php';
 
@@ -17,15 +17,15 @@ class PaginaOnce extends Web implements PaginaX
     function __construct($title, $description, $keywords)
     {
         parent::__construct($title, $description, $keywords);
-        $this->color = $this->model('ModelAdmin', 'obtenerColorGim', $_SESSION['SesionTrabajador']['gimnasioId']);
-        $this->background = $this->model('ModelAdmin', 'obtenerBackgroundGim', $_SESSION['SesionTrabajador']['gimnasioId']);
+        $this->color = $this->model('ModelAdmin', 'obtenerColorGim', $_SESSION['SesionAdmin']['gimnasioId']);
+        $this->background = $this->model('ModelAdmin', 'obtenerBackgroundGim', $_SESSION['SesionAdmin']['gimnasioId']);
     }
 
     public function content()
     {
         ?>
         <div class="d-flex">
-            <?php require_once 'layout/sidebarTrabajador.php'; ?>
+            <?php require_once 'layout/sidebarAdmin.php'; ?>
             <div id="contentConSidebar">
                 <div class="m-4">
 
@@ -33,29 +33,28 @@ class PaginaOnce extends Web implements PaginaX
                         <div class="row">
                             <?= input_csrf_token(); ?>
                             <div class="col-lg-12 mb-1">
-                                <label for="titulo" class="form-label">Titulo *</label>
-                                <input type="text" class="form-control" id="titulo" placeholder="Titulo" title="Titulo" required minlength="1" maxlength="50">
+                                <label for="nombre" class="form-label">Nombre *</label>
+                                <input type="text" class="form-control" id="nombre" placeholder="Nombre del Producto" title="Nombre del Producto" required minlength="1" maxlength="100">
                             </div>
-
                             <div class="col-lg-12 mb-1">
                                 <label for="descripcion" class="form-label">Descripción</label>
                                 <textarea class="form-control" id="descripcion" rows="3" minlength="1" maxlength="150"></textarea>
                             </div>
-                            
                             <div class="col-lg-12 mb-1">
-                                <label for="total" class="form-label">Total *</label>
-                                <input type="number" class="form-control" id="total" placeholder="Total" title="Total" required min="1" max="1000000">
+                                <label for="precio" class="form-label">Precio *</label>
+                                <input type="number" class="form-control" id="precio" placeholder="Precio del Producto" title="Precio del Producto" min="1" max="999999999999">
                             </div>
-
-                            <div class="col-lg-12 mb-1">
+                            <div class="col-lg-12 mb-3">
                                 <div class="d-grid gap-2">
-                                    <button id="agregarDescuento" class="btn btn-primary" type="button">
-                                        <i class="bi bi-dash"></i>&nbsp;Agregar Descuento
+                                    <button id="agregarProducto" class="btn btn-primary" type="button">
+                                        <i class="bi bi-box"></i>&nbsp;Agregar Producto
                                     </button>
                                 </div>
                             </div>
                         </div>
+
                     </div>
+                    <table id="productosTable"></table>
                 </div>
             </div>
         </div>
@@ -64,9 +63,9 @@ class PaginaOnce extends Web implements PaginaX
 
     public function nav()
     {
-    ?>
+        ?>
         <?php require_once 'layout/navTrabajador.php'; ?>
-    <?php
+        <?php
     }
 
     public function footer()
@@ -88,13 +87,13 @@ class PaginaOnce extends Web implements PaginaX
     public function libsJS()
     {
         ?>
-        <script src="resources/js/trabajadorGen.js"></script>
-        <script src="resources/js/descuento.js"></script>
+        <script src="resources/js/adminGen.js"></script>
+        <script src="resources/js/productos.js"></script>
         <?php
     }
 }
 
-$index = new PaginaOnce('Descuentos', '', '');
+$index = new PaginaOnce('Ligas', '', '');
 echo $index->crearHtml();
 
 ?>

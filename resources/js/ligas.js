@@ -68,6 +68,15 @@ document.querySelector('body').onload = (e) => {
         let validarForm7;
         let validarForm8;
 
+        validarForm1 = new Validardor(['cliente', 'selectHora']);
+        validarForm2 = new Validardor(['cliente', 'selectHora', 'tipoPago']);
+        validarForm3 = new Validardor(['cliente', 'selectHora', 'fechaInicio']);
+        validarForm4 = new Validardor(['cliente', 'selectHora', 'tipoPago', 'fechaInicio']);
+        validarForm5 = new Validardor(['nombreYapellido', 'documento', 'equipo', 'selectHora']);
+        validarForm6 = new Validardor(['nombreYapellido', 'documento', 'equipo', 'selectHora', 'tipoPago']);
+        validarForm7 = new Validardor(['nombreYapellido', 'documento', 'equipo', 'selectHora', 'fechaInicio']);
+        validarForm8 = new Validardor(['nombreYapellido', 'documento', 'equipo', 'selectHora', 'tipoPago', 'fechaInicio']);
+
         let resCli = cargarClientes();
         let resHra = cargarHoras();
         let resEqui = cargarEquipos();
@@ -76,14 +85,6 @@ document.querySelector('body').onload = (e) => {
         resCli.then(function () {
             resHra.then(function () {
                 resEqui.then(function () {
-                    validarForm1 = new Validardor(['cliente', 'selectHora']);
-                    validarForm2 = new Validardor(['cliente', 'selectHora', 'tipoPago']);
-                    validarForm3 = new Validardor(['cliente', 'selectHora', 'fechaInicio']);
-                    validarForm4 = new Validardor(['cliente', 'selectHora', 'tipoPago', 'fechaInicio']);
-                    validarForm5 = new Validardor(['nombreYapellido', 'documento', 'equipo', 'selectHora']);
-                    validarForm6 = new Validardor(['nombreYapellido', 'documento', 'equipo', 'selectHora', 'tipoPago']);
-                    validarForm7 = new Validardor(['nombreYapellido', 'documento', 'equipo', 'selectHora', 'fechaInicio']);
-                    validarForm8 = new Validardor(['nombreYapellido', 'documento', 'equipo', 'selectHora', 'tipoPago', 'fechaInicio']);
                     //voz = new Voice().hoverTitle();
                     //audi = new PlaySound('resources/audio/iphone-notificacion.mp3');
                 })
@@ -136,7 +137,7 @@ document.querySelector('body').onload = (e) => {
         });
 
         document.getElementById('agregarLiga').addEventListener('click', async function(e) {
-            
+            this.disabled = true;
             //audi.reproducirAudio();
             //si es mas de las 11 no vender ligas
 
@@ -168,7 +169,6 @@ document.querySelector('body').onload = (e) => {
             
             if(valid && !valid.validationMessage){
                 msgClave(async function () {
-                    this.disabled = true;
                     let edta = form.crearObjetoJson();
                     //console.log(minDemas);
                     if (!fechaDefault.checked) {
@@ -188,15 +188,14 @@ document.querySelector('body').onload = (e) => {
                             csrf_token: document.getElementById('csrf_token').value
                         })
                     }).then((res) => {
-                        this.disabled = false;
                         if (res.status == 200) {
                             return res.json()
                         }
                     }).catch((res) => {
-                        this.disabled = false;
                         //console.error(res.statusText);
                         return res;
                     })
+                    this.disabled = false;
 
                     //console.log(rdta);
                     if (rdta == true) {
@@ -240,6 +239,8 @@ document.querySelector('body').onload = (e) => {
                         }
                     }
                 }, location.href)
+            }else{
+                this.disabled = false;
             }
         });
     })();

@@ -36,7 +36,7 @@ class PaginaOnce extends Web implements PaginaX
             <?= input_csrf_token(); ?>
             <div id="contentConSidebar">
                 <div class="m-4">
-                    <div class="container" style="width: 450px;">
+                    <div class="container anchoStandar">
                         
                         <div class="row">
                             <div class="col-lg-12 mb-1">
@@ -63,35 +63,35 @@ class PaginaOnce extends Web implements PaginaX
                             <div class="col-lg-12 mb-1">
                                 <div class="d-grid gap-2">
                                     <button id="pagosAdmin" class="btn btn-light" type="button" disabled>
-                                        <i class="bi bi-dash"></i>&nbsp;Pagos
+                                        <i class="bi bi-currency-dollar"></i>&nbsp;Pagos
                                     </button>
                                 </div>
                             </div>
                             <div class="col-lg-12 mb-1">
                                 <div class="d-grid gap-2">
                                     <button id="equiposAdmin" class="btn btn-light" type="button" disabled>
-                                        <i class="bi bi-dash"></i>&nbsp;Equipos
+                                        <i class="bi bi-people"></i>&nbsp;Equipos
                                     </button>
                                 </div>
                             </div>
                             <div class="col-lg-12 mb-1">
                                 <div class="d-grid gap-2">
                                     <button id="productosAdmin" class="btn btn-light" type="button" disabled>
-                                        <i class="bi bi-dash"></i>&nbsp;Productos
+                                        <i class="bi bi-basket"></i>&nbsp;Productos
                                     </button>
                                 </div>
                             </div>
                             <div class="col-lg-12 mb-1">
                                 <div class="d-grid gap-2">
                                     <button id="tarifasAdmin" class="btn btn-light" type="button" disabled>
-                                        <i class="bi bi-dash"></i>&nbsp;Tarifas liga
+                                        <i class="bi bi-clock-history"></i>&nbsp;Tarifas liga
                                     </button>
                                 </div>
                             </div>
                             <div class="col-lg-12 mb-1">
                                 <div class="d-grid gap-2">
                                     <button id="tarifasAdmin" class="btn btn-light" type="button" disabled>
-                                        <i class="bi bi-dash"></i>&nbsp;Trabajador
+                                        <i class="bi bi-file-earmark-person"></i>&nbsp;Trabajador
                                     </button>
                                 </div>
                             </div>
@@ -105,7 +105,7 @@ class PaginaOnce extends Web implements PaginaX
                             <div class="col-lg-12 mb-1">
                                 <div class="d-grid gap-2">
                                     <button id="salirAdmin" class="btn btn-danger" type="button">
-                                        <i class="bi bi-power"></i>&nbsp;Salir
+                                        <i class="bi bi-door-open-fill"></i>&nbsp;Salir
                                     </button>
                                 </div>
                             </div>

@@ -738,7 +738,7 @@ document.querySelector('body').onload = (e) => {
                             title: 'Descripción',
                             width: '250',
                             formatter: function(value, row, index) {
-                                return '<div style="width: 250px; overflow:hidden; white-space:nowrap; text-overflow: ellipsis;">' +
+                                return '<div class="textoLargoTabla">' +
                                     row.descripcion +
                                 '</div>';
                             },
@@ -832,7 +832,7 @@ document.querySelector('body').onload = (e) => {
                     title: 'Descripción',
                     width: '250',
                     formatter: function(value, row, index) {
-                        return '<div style="width: 250px; overflow:hidden; white-space:nowrap; text-overflow: ellipsis;">' +
+                        return '<div class="textoLargoTabla">' +
                             row.descripcion +
                         '</div>';
                     },

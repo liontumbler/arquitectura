@@ -21,11 +21,11 @@ class PaginaOnce extends Web implements PaginaX
             
             <div id="contentConSidebar">
                 <div class="m-4">
-                    <div class="container" style="width: 450px;">
+                    <div class="container shadow carLoguin">
                         <div class="row">
                             <?= input_csrf_token(); ?>
                             <div class="col-lg-12 mb-1">
-                                <img src="resources/img/adminLig.svg" alt="Nocarga" style="width: 190px; display: block; margin: auto;">
+                                <img src="resources/img/adminLig.svg" alt="Nocarga" class="imgLoguin">
                             </div>
                             <div class="col-lg-12 mb-1">
                                 <label for="nickname" class="form-label">Nickname *</label>

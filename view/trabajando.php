@@ -54,39 +54,67 @@ class PaginaOnce extends Web implements PaginaX
             <?= input_csrf_token(); ?>
             <div id="contentConSidebar">
                 <div class="m-4">
-                    <div style="width: 400px; margin: auto;">
-                        <ul>
-                            <li>fiado de Ligas: <span><?= $totalligasDebe; ?></span></li>
-                            <li>vendido de Ligas E: <span><?= $totalligasPagoE; ?></span></li>
-                            <li>vendido de Ligas D: <span><?= $totalligasPagoD; ?></span></li>
-                            <hr>
-                            <li>Ligas Vendidas: <span><?= $totalligas; ?></span></li>
-                            <hr>
-                            <li>fiado de Tienda: <span><?= $totalTiendaDebe; ?></span></li>
-                            <li>vendido de Tienda E: <span><?= $totalTiendaPagoE; ?></span></li>
-                            <li>vendido de Tienda D: <span><?= $totalTiendaPagoD; ?></span></li>
-                            <hr>
-                            <li>Tienda Vendida: <span><?= $totalTienda; ?></span></li>
-                            <hr>
-                            <li>vendido de Pagos E: <span><?= $totalPagosPagoE; ?></span></li>
-                            <li>vendido de Pagos D: <span><?= $totalPagosPagoD; ?></span></li>
-                            <hr>
-                            <li>Pagos recibidos: <span><?= $totalPagos; ?></span></li>
-                            <hr>
-                            <li>Efectivo: <span><?= $efectivo; ?></span></li>
-                            <li>Digital: <span><?= $digital; ?></span></li>
-                            <li>fiado: <span><?= $fiado; ?></span></li>
-                            <li>Caja: <span><?= $caja; ?></span></li>
-                            <li>Descuentos: <span>-<?= $totalDescuento; ?></span></li>
-                            <hr>
-                            <li>Total: <span><?= $total; ?></span></li>
-                            <li>Total solo efectivo con caja: <span><?= ($caja + $efectivo) -$totalDescuento; ?></span></li>
-                            <li>Total digita + efectivo con caja: <span><?= ($caja + $efectivo + $digital) -$totalDescuento; ?></span></li>
-                            <hr>
-                        </ul>
+                    <div class="row container-md centerRow">
+                        <div class="col-md-4">
+                            <div class="carBoard mb-2">
+                                <span>Fiado de Ligas: <strong><?= $totalligasDebe; ?></strong></span>
+                                <br>
+                                <span>Vendido de ligas Efectivo: <strong><?= $totalligasPagoE; ?></strong></span>
+                                <br>
+                                <span>Vendido de ligas Digital: <strong><?= $totalligasPagoD; ?></strong></span>
+                                <hr>
+                                <strong>Ligas Vendidas: <strong><?= $totalligas; ?></strong></strong>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="carBoard mb-2">
+                                <span>Fiado de Tienda: <strong><?= $totalTiendaDebe; ?></strong></span>
+                                <br>
+                                <span>Vendido de tienda Efectivo: <strong><?= $totalTiendaPagoE; ?></strong></span>
+                                <br>
+                                <span>Vendido de tienda Digital: <strong><?= $totalTiendaPagoD; ?></strong></span>
+                                <hr>
+                                <strong>Tienda Vendida: <span><?= $totalTienda; ?></span></strong>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="carBoard mb-2">
+                                <span>Pagos recibidos en Efectivo: <strong><?= $totalPagosPagoE; ?></strong></span>
+                                <br>
+                                <span>Pagos recibidos en Digital: <strong><?= $totalPagosPagoD; ?></strong></span>
+                                <br>
+                                <br>
+                                <hr>
+                                <strong>Pagos totales: <span><?= $totalPagos; ?></span></strong>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="carBoard mb-2">
+                                <span>Efectivo: <strong><?= $efectivo; ?></strong></span>
+                                <br>
+                                <span>Digital: <strong><?= $digital; ?></strong></span>
+                                <br>
+                                <span>Fiado: <strong><?= $fiado; ?></strong></span>
+                                <br>
+                                <span>Caja: <strong><?= $caja; ?></strong></span>
+                                <br>
+                                <span>Descuentos: <strong>-<?= $totalDescuento; ?></strong></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="carBoard mb-2">
+                                <br>
+                                <br>
+                                <span>Total: <strong><?= $total; ?></strong></span>
+                                <br>
+                                <span>Total solo efectivo con caja: <strong><?= ($caja + $efectivo) -$totalDescuento; ?></strong></span>
+                                <br>
+                                <span>Total digita + efectivo con caja: <strong><?= ($caja + $efectivo + $digital) -$totalDescuento; ?></strong></span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="container" style="width: 450px;">
-                        
+                    
+                    <div class="container anchoStandar">
                         <div class="row">
                             <div class="col-lg-12 mb-1">
                                 <div class="d-grid gap-2">

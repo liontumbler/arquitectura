@@ -102,7 +102,7 @@ document.querySelector('body').onload = (e) => {
                     align: 'center',
                     width: '250',
                     formatter: function(value, row, index) {
-                        return '<div style="width: 250px; overflow:hidden; white-space:nowrap; text-overflow: ellipsis; display: block; margin: auto;"">' +
+                        return '<div class="textoLargoTabla">' +
                             row.tipoDeuda +
                         '</div>';
                     },

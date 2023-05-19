@@ -29,7 +29,7 @@ class PaginaOnce extends Web implements PaginaX
             <div id="contentConSidebar">
                 <div class="m-4">
                     
-                    <div class="container" style="width: 450px;">
+                    <div class="container anchoStandar">
                         <div class="row">
                             <?= input_csrf_token(); ?>
                             <div class="col-lg-12 mb-1">
@@ -74,7 +74,7 @@ class PaginaOnce extends Web implements PaginaX
                                     Pago?
                                 </label>
                             </div>
-                            <div class="col-lg-12 mb-1" style="margin-left: 13px;" id="divpago">
+                            <div class="col-lg-12 mb-1 ms-3" id="divpago">
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="tipoPago" id="efectivo" value="efectivo" checked>
                                     <label class="form-check-label" for="efectivo">

@@ -21,3 +21,54 @@
     display: block;
     margin: auto;
 }
+
+.carLoguin{
+    width: 450px;
+    background: #f5f2f2;
+    padding: 25px;
+    border-radius: 6px;
+}
+
+.imgLoguin{
+    width: 159px;
+    display: block;
+    margin: auto;
+}
+
+.textoLargoTabla {
+    width: 250px;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow: ellipsis;
+}
+
+.anchoStandar{
+    width: 450px;
+}
+
+.imgIco {
+    width: 50px;
+}
+
+.carBoard{
+    background: #f0f0f0;
+    padding: 18px;
+    border-radius: 5px;
+    display: block;
+    margin: auto;
+}
+
+.center {
+    display: block;
+    margin: auto;
+}
+
+.centerRow {
+    margin: auto;
+}
+
+.carIndex {
+    width: 22rem;
+    display: block;
+    margin: auto;
+}
