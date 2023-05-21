@@ -68,15 +68,6 @@ document.querySelector('body').onload = (e) => {
         let validarForm7;
         let validarForm8;
 
-        validarForm1 = new Validardor(['cliente', 'selectHora']);
-        validarForm2 = new Validardor(['cliente', 'selectHora', 'tipoPago']);
-        validarForm3 = new Validardor(['cliente', 'selectHora', 'fechaInicio']);
-        validarForm4 = new Validardor(['cliente', 'selectHora', 'tipoPago', 'fechaInicio']);
-        validarForm5 = new Validardor(['nombreYapellido', 'documento', 'equipo', 'selectHora']);
-        validarForm6 = new Validardor(['nombreYapellido', 'documento', 'equipo', 'selectHora', 'tipoPago']);
-        validarForm7 = new Validardor(['nombreYapellido', 'documento', 'equipo', 'selectHora', 'fechaInicio']);
-        validarForm8 = new Validardor(['nombreYapellido', 'documento', 'equipo', 'selectHora', 'tipoPago', 'fechaInicio']);
-
         let resCli = cargarClientes();
         let resHra = cargarHoras();
         let resEqui = cargarEquipos();
@@ -87,6 +78,15 @@ document.querySelector('body').onload = (e) => {
                 resEqui.then(function () {
                     //voz = new Voice().hoverTitle();
                     //audi = new PlaySound('resources/audio/iphone-notificacion.mp3');
+
+                    validarForm1 = new Validardor(['cliente', 'selectHora']);
+                    validarForm2 = new Validardor(['cliente', 'selectHora', 'tipoPago']);
+                    validarForm3 = new Validardor(['cliente', 'selectHora', 'fechaInicio']);
+                    validarForm4 = new Validardor(['cliente', 'selectHora', 'tipoPago', 'fechaInicio']);
+                    validarForm5 = new Validardor(['nombreYapellido', 'documento', 'equipo', 'selectHora']);
+                    validarForm6 = new Validardor(['nombreYapellido', 'documento', 'equipo', 'selectHora', 'tipoPago']);
+                    validarForm7 = new Validardor(['nombreYapellido', 'documento', 'equipo', 'selectHora', 'fechaInicio']);
+                    validarForm8 = new Validardor(['nombreYapellido', 'documento', 'equipo', 'selectHora', 'tipoPago', 'fechaInicio']);
                 })
             })
         })
@@ -165,7 +165,7 @@ document.querySelector('body').onload = (e) => {
             }
 
             let valid = form.validarCampos();
-            //console.log(valid);
+            console.log(valid);
             
             if(valid && !valid.validationMessage){
                 msgClave(async function () {

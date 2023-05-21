@@ -3,122 +3,62 @@ class ModelAdmin extends Model
 {
     public function obtenerLigaTrabaTotal($trabajado)
     {
-        $liga = $this->obtenerLigaTrabajadoTotal($trabajado);
-        $totalligas = 0;
-        foreach ($liga as $i => $value) {
-            $totalligas = $totalligas + ($value['total']);
-        }
-        return $totalligas;
+        return $this->obtenerLigaTrabajadoTotal($trabajado);
     }
 
     public function obtenerLigaTrabaDebeTotal($trabajado)
     {
-        $liga = $this->obtenerLigaTrabajadoDebeTotal($trabajado);
-        $totalligas = 0;
-        foreach ($liga as $i => $value) {
-            $totalligas = $totalligas + ($value['total']);
-        }
-        return $totalligas;
+        return $this->obtenerLigaTrabajadoDebeTotal($trabajado);
     }
 
     public function obtenerLigaTrabaPagoETotal($trabajado)
     {
-        $liga = $this->obtenerLigaTrabajadoPagoETotal($trabajado);
-        $totalligas = 0;
-        foreach ($liga as $i => $value) {
-            $totalligas = $totalligas + ($value['total']);
-        }
-        return $totalligas;
+        return $this->obtenerLigaTrabajadoPagoETotal($trabajado);
     }
 
     public function obtenerLigaTrabaPagoDTotal($trabajado)
     {
-        $liga = $this->obtenerLigaTrabajadoPagoDTotal($trabajado);
-        $totalligas = 0;
-        foreach ($liga as $i => $value) {
-            $totalligas = $totalligas + ($value['total']);
-        }
-        return $totalligas;
+        return $this->obtenerLigaTrabajadoPagoDTotal($trabajado);
     }
 
     public function obtenerTiendaTrabaTotal($trabajado)
     {
-        $tienda = $this->obtenerTiendaTrabajadoTotal($trabajado);
-        $totaltiendas = 0;
-        foreach ($tienda as $i => $value) {
-            $totaltiendas = $totaltiendas + ($value['total']);
-        }
-        return $totaltiendas;
+        return $this->obtenerTiendaTrabajadoTotal($trabajado);
     }
 
     public function obtenerTiendaTrabaDebeTotal($trabajado)
     {
-        $tienda = $this->obtenerTiendaTrabajadoDebeTotal($trabajado);
-        $totaltiendas = 0;
-        foreach ($tienda as $i => $value) {
-            $totaltiendas = $totaltiendas + ($value['total']);
-        }
-        return $totaltiendas;
+        return $this->obtenerTiendaTrabajadoDebeTotal($trabajado);
     }
 
     public function obtenerTiendaTrabaPagoETotal($trabajado)
     {
-        $tienda = $this->obtenerTiendaTrabajadoPagoETotal($trabajado);
-        $totaltiendas = 0;
-        foreach ($tienda as $i => $value) {
-            $totaltiendas = $totaltiendas + ($value['total']);
-        }
-        return $totaltiendas;
+        return $this->obtenerTiendaTrabajadoPagoETotal($trabajado);
     }
 
     public function obtenerTiendaTrabaPagoDTotal($trabajado)
     {
-        $tienda = $this->obtenerTiendaTrabajadoPagoDTotal($trabajado);
-        $totaltiendas = 0;
-        foreach ($tienda as $i => $value) {
-            $totaltiendas = $totaltiendas + ($value['total']);
-        }
-        return $totaltiendas;
+        return $this->obtenerTiendaTrabajadoPagoDTotal($trabajado);
     }
 
     public function obtenerPagosTrabaTotal($trabajado)
     {
-        $pago = $this->obtenerPagosTrabajadoTotal($trabajado);
-        $totalpagos = 0;
-        foreach ($pago as $i => $value) {
-            $totalpagos = $totalpagos + ($value['total']);
-        }
-        return $totalpagos;
+        return $this->obtenerPagosTrabajadoTotal($trabajado);
     }
 
     public function obtenerPagosTrabaPagoETotal($trabajado)
     {
-        $pago = $this->obtenerPagosTrabajadoPagoETotal($trabajado);
-        $totalpagos = 0;
-        foreach ($pago as $i => $value) {
-            $totalpagos = $totalpagos + ($value['total']);
-        }
-        return $totalpagos;
+        return $this->obtenerPagosTrabajadoPagoETotal($trabajado);
     }
 
     public function obtenerPagosTrabaPagoDTotal($trabajado)
     {
-        $pago = $this->obtenerPagosTrabajadoPagoDTotal($trabajado);
-        $totalpagos = 0;
-        foreach ($pago as $i => $value) {
-            $totalpagos = $totalpagos + ($value['total']);
-        }
-        return $totalpagos;
+        return $this->obtenerPagosTrabajadoPagoDTotal($trabajado);
     }
 
     public function obtenerDescuentoTrabaTotal($trabajado)
     {
-        $descuento = $this->obtenerDescuentoTrabajadoTotal($trabajado);
-        $totaldescuentos = 0;
-        foreach ($descuento as $i => $value) {
-            $totaldescuentos = $totaldescuentos + ($value['total']);
-        }
-        return $totaldescuentos;
+        return $this->obtenerDescuentoTrabajadoTotal($trabajado);
     }
 
     public function obtenerCajaTraba($trabajado)

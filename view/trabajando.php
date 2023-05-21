@@ -43,6 +43,9 @@ class PaginaOnce extends Web implements PaginaX
         $total = $efectivo + $digital + $fiado;
 
         $totalDescuento = $this->model('ModelAdmin', 'obtenerDescuentoTrabaTotal', $_SESSION['SesionTrabajador']['trabajadoId']);
+        if (empty($totalDescuento)) {
+            $totalDescuento = 0;
+        }
 
         $caja = $this->model('ModelAdmin', 'obtenerCajaTraba', $_SESSION['SesionTrabajador']['trabajadoId']);
         if (empty($caja)) {

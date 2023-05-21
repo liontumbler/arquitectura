@@ -306,8 +306,8 @@ class ConsultasDB extends Database
             'ligas',
             ['idTrabajado' => $trabajado],
             '`idTrabajado`=:idTrabajado',
-            'total'
-        );
+            'SUM(total) AS Total'
+        )[0]['Total'];
     }
 
     public function obtenerLigaTrabajadoDebeTotal(string $trabajado)
@@ -316,8 +316,8 @@ class ConsultasDB extends Database
             'ligas',
             ['idTrabajado' => $trabajado],
             '`idTrabajado`=:idTrabajado AND tipoPago = "debe"',
-            'total'
-        );
+            'SUM(total) AS Total'
+        )[0]['Total'];
     }
 
     public function obtenerLigaTrabajadoPagoETotal(string $trabajado)
@@ -326,8 +326,8 @@ class ConsultasDB extends Database
             'ligas',
             ['idTrabajado' => $trabajado],
             '`idTrabajado`=:idTrabajado AND tipoPago = "efectivo"',
-            'total'
-        );
+            'SUM(total) AS Total'
+        )[0]['Total'];
     }
 
     public function obtenerLigaTrabajadoPagoDTotal(string $trabajado)
@@ -336,8 +336,88 @@ class ConsultasDB extends Database
             'ligas',
             ['idTrabajado' => $trabajado],
             '`idTrabajado`=:idTrabajado AND tipoPago = "digital"',
-            'total'
-        );
+            'SUM(total) AS Total'
+        )[0]['Total'];
+    }
+
+    public function obtenerTiendaTrabajadoTotal(string $trabajado)
+    {
+        return $this->read(
+            'tienda',
+            ['idTrabajado' => $trabajado],
+            '`idTrabajado`=:idTrabajado',
+            'SUM(total) AS Total'
+        )[0]['Total'];
+    }
+
+    public function obtenerTiendaTrabajadoDebeTotal(string $trabajado)
+    {
+        return $this->read(
+            'tienda',
+            ['idTrabajado' => $trabajado],
+            '`idTrabajado`=:idTrabajado AND tipoPago = "debe"',
+            'SUM(total) AS Total'
+        )[0]['Total'];
+    }
+
+    public function obtenerTiendaTrabajadoPagoETotal(string $trabajado)
+    {
+        return $this->read(
+            'tienda',
+            ['idTrabajado' => $trabajado],
+            '`idTrabajado`=:idTrabajado AND tipoPago = "efectivo"',
+            'SUM(total) AS Total'
+        )[0]['Total'];
+    }
+
+    public function obtenerTiendaTrabajadoPagoDTotal(string $trabajado)
+    {
+        return $this->read(
+            'tienda',
+            ['idTrabajado' => $trabajado],
+            '`idTrabajado`=:idTrabajado AND tipoPago = "digital"',
+            'SUM(total) AS Total'
+        )[0]['Total'];
+    }
+
+    public function obtenerPagosTrabajadoTotal(string $trabajado)
+    {
+        return $this->read(
+            'pagos',
+            ['idTrabajado' => $trabajado],
+            '`idTrabajado`=:idTrabajado',
+            'SUM(total) AS Total'
+        )[0]['Total'];
+    }
+
+    public function obtenerPagosTrabajadoPagoETotal(string $trabajado)
+    {
+        return $this->read(
+            'pagos',
+            ['idTrabajado' => $trabajado],
+            '`idTrabajado`=:idTrabajado AND tipoPago = "efectivo"',
+            'SUM(total) AS Total'
+        )[0]['Total'];
+    }
+
+    public function obtenerPagosTrabajadoPagoDTotal(string $trabajado)
+    {
+        return $this->read(
+            'pagos',
+            ['idTrabajado' => $trabajado],
+            '`idTrabajado`=:idTrabajado AND tipoPago = "digital"',
+            'SUM(total) AS Total'
+        )[0]['Total'];
+    }
+
+    public function obtenerDescuentoTrabajadoTotal(string $trabajado)
+    {
+        return $this->read(
+            'descuento',
+            ['idTrabajado' => $trabajado],
+            '`idTrabajado`=:idTrabajado',
+            'SUM(total) AS Total'
+        )[0]['Total'];
     }
 
     public function obtenerDescuentoTrabajado(string $trabajado)
@@ -347,16 +427,6 @@ class ConsultasDB extends Database
             ['idTrabajado' => $trabajado],
             '`idTrabajado`=:idTrabajado',
             'id, titulo, descripcion, total, fecha'
-        );
-    }
-
-    public function obtenerDescuentoTrabajadoTotal(string $trabajado)
-    {
-        return $this->read(
-            'descuento',
-            ['idTrabajado' => $trabajado],
-            '`idTrabajado`=:idTrabajado',
-            'total'
         );
     }
 
@@ -402,36 +472,6 @@ class ConsultasDB extends Database
         );
     }
 
-    public function obtenerPagosTrabajadoTotal(string $trabajado)
-    {
-        return $this->read(
-            'pagos',
-            ['idTrabajado' => $trabajado],
-            '`idTrabajado`=:idTrabajado',
-            'total'
-        );
-    }
-
-    public function obtenerPagosTrabajadoPagoETotal(string $trabajado)
-    {
-        return $this->read(
-            'pagos',
-            ['idTrabajado' => $trabajado],
-            '`idTrabajado`=:idTrabajado AND tipoPago = "efectivo"',
-            'total'
-        );
-    }
-
-    public function obtenerPagosTrabajadoPagoDTotal(string $trabajado)
-    {
-        return $this->read(
-            'pagos',
-            ['idTrabajado' => $trabajado],
-            '`idTrabajado`=:idTrabajado AND tipoPago = "digital"',
-            'total'
-        );
-    }
-
     public function obtenerLigaPorId(string $id)
     {
         return $this->read(
@@ -459,46 +499,6 @@ class ConsultasDB extends Database
             ['idTrabajado' => $trabajado],
             '`idTrabajado`=:idTrabajado',
             'id, cantidad, total, tipoPago, idProducto, idCliente, fecha'
-        );
-    }
-
-    public function obtenerTiendaTrabajadoTotal(string $trabajado)
-    {
-        return $this->read(
-            'tienda',
-            ['idTrabajado' => $trabajado],
-            '`idTrabajado`=:idTrabajado',
-            'total'
-        );
-    }
-
-    public function obtenerTiendaTrabajadoPagoETotal(string $trabajado)
-    {
-        return $this->read(
-            'tienda',
-            ['idTrabajado' => $trabajado],
-            '`idTrabajado`=:idTrabajado AND tipoPago = "efectivo"',
-            'total'
-        );
-    }
-
-    public function obtenerTiendaTrabajadoPagoDTotal(string $trabajado)
-    {
-        return $this->read(
-            'tienda',
-            ['idTrabajado' => $trabajado],
-            '`idTrabajado`=:idTrabajado AND tipoPago = "digital"',
-            'total'
-        );
-    }
-
-    public function obtenerTiendaTrabajadoDebeTotal(string $trabajado)
-    {
-        return $this->read(
-            'tienda',
-            ['idTrabajado' => $trabajado],
-            '`idTrabajado`=:idTrabajado AND tipoPago = "debe"',
-            'total'
         );
     }
 

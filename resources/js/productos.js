@@ -1,10 +1,7 @@
 document.querySelector('body').onload = (e) => {
     (async function () {
-        let validarForm;
-        let $table2;
-
-        validarForm = new Validardor(['nombre', 'precio']);
-        $table2 = $('#productosTable');
+        let validarForm = new Validardor(['nombre', 'precio']);
+        let $table2 = $('#productosTable');
 
         let rdta = await fetch('controller/ControllerProductos.php', {
             method: 'POST',

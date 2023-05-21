@@ -5,13 +5,12 @@ document.querySelector('body').onload = (e) => {
         let resCli = cargarClientes();
         let resTra = cargarTrabajadores();
         let resPro = cargarProductos();
-
-        validarForm = new Validardor(['cliente', 'trabajador', 'producto', 'tipoPago', 'desde', 'hasta']);
-        $table2 = $('#tiendaTable');
-
+        
         resCli.then(function () {
             resTra.then(function () {
                 resPro.then(function () {
+                    validarForm = new Validardor(['cliente', 'trabajador', 'producto', 'tipoPago', 'desde', 'hasta']);
+                    $table2 = $('#tiendaTable');
                 })
             })
         })
