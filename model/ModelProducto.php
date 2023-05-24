@@ -16,5 +16,15 @@ class ModelProducto extends Model
         return $this->obtenerProductoPorId();
     }
 
+    public function agregarProducto($dta)
+    {
+        $producto = $this->crearProducto($dta, $_SESSION['SesionAdmin']['gimnasioId']);
+        if ($producto > 0) {
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 }
 ?>

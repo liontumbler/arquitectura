@@ -632,6 +632,7 @@ class ConsultasDB extends Database
     {
         $producto = [
             'nombre' => $data->nombre,
+            'descripcion' => $data->descripcion,
             'precio' => $data->precio,
             'idGimnasio' => $gimnasio
         ];

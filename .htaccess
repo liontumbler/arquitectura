@@ -9,13 +9,10 @@ RewriteRule ^([A-za-z0-9_-]{1,100})/([0-9]{1,100})$ index.php?view=$1&id=$2
 #redirecciones
 RedirectMatch "^/arquitectura/$" "/arquitectura/index"
 RedirectMatch "^/arquitectura/backup/" "/arquitectura/index"
-#RedirectMatch "^/arquitectura/controller/" "/arquitectura/index"
 RedirectMatch "^/arquitectura/db/" "/arquitectura/index"
 RedirectMatch "^/arquitectura/logs/" "/arquitectura/index"
 RedirectMatch "^/arquitectura/model/" "/arquitectura/index"
-#RedirectMatch "^/arquitectura/resources/js/" "/arquitectura/index"
 RedirectMatch "^/arquitectura/unitTest/" "/arquitectura/index"
-#RedirectMatch "^/arquitectura/view/" "/arquitectura/index"
 
 #limite de megas de imagen mx 1 MB
 LimitRequestBody 1000000

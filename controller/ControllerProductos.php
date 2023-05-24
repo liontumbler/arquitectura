@@ -13,6 +13,11 @@ class ControllerProductos extends Controller
         return $this->model('ModelProducto')->cargarProdutos();
     }
 
+    public function postAgregarProducto($dta)
+    {
+        return $this->model('ModelProducto')->agregarProducto($dta);
+    }
+
 
     
 

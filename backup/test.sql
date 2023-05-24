@@ -1,5 +1,10 @@
 INSERT INTO `plan` (`id`, `nombre`, `descripcion`, `trabajadores`, `numCampHora`, `ligas`, `tienda`, `pagos`, `productos`, `graficas`) 
-VALUES (NULL, 'gratis', 'gratis', '4', '10', '500', '500', '500', '50', '0');
+VALUES 
+(NULL, 'Gratis', 'Gratis', '4', '10', '40', '40', '40', '50', '0'),
+(NULL, 'Standar', 'Standar', '10', '10', '95', '95', '95', '150', '0'),
+(NULL, 'Mega', 'Mega', '20', '20', '190', '190', '190', '300', '0'),
+(NULL, 'Iper', 'Iper', '20', '20', '380', '380', '380', '300', '0'),
+(NULL, 'Master', 'Master', '40', '40', '570', '570', '570', '400', '0');
 
 INSERT INTO `gimnasio` (`id`, `correo`, `nickname`, `nombre`, `clave`, `color`, `background`, `direccion`, `telefono`, `descripcion`, `habilitado`, `minDeMasLiga`, `idPlan`)
 VALUES (NULL, 'lion_3214@hotmail.com', 'admin@admin', 'Liga Gim', '$2y$11$mjwkbMoRVY/tlZ9ttblRzOomcrFL2JhbGJRz1bpEPcrr9Pn/NtYHy', '#fff', '#000', NULL, '3102742576', NULL, '1', '5', '1');

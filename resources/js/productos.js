@@ -1,6 +1,6 @@
 document.querySelector('body').onload = (e) => {
     (async function () {
-        let validarForm = new Validardor(['nombre', 'precio']);
+        let validarForm = new Validardor(['nombre', 'precio', 'descripcion']);
         let $table2 = $('#productosTable');
 
         let rdta = await fetch('controller/ControllerProductos.php', {
@@ -89,6 +89,9 @@ document.querySelector('body').onload = (e) => {
             let valid = validarForm.validarCampos();
             console.log(valid);
             if(valid && !valid.validationMessage){
+                let edta = validarForm.crearObjetoJson()
+                console.log(edta);
+
                 let rdta = await fetch('controller/ControllerProductos.php', {
                     method: 'POST',
                     headers: {
@@ -108,6 +111,36 @@ document.querySelector('body').onload = (e) => {
                     return res;
                 })
                 this.disabled = false;
+
+                console.log(rdta);
+                //console.log(rdta);
+                if (rdta == true) {
+                    Swal.fire({
+                        title: '¡Producto Ingresado!',
+                        text: "Quieres mantenerte en la página o ir al home",
+                        icon: 'success',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Mantenerme',
+                        cancelButtonText: 'Ir Home'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload();
+                        }else{
+                            location.href = 'inicioAdmin';
+                        }
+                    })
+                }else{
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'No se agregó el producto',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then((result) => {
+                        location.href = './index';
+                    })
+                }
             }else{
                 this.disabled = false;
             }
