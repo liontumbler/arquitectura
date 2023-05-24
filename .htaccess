@@ -6,17 +6,26 @@ RewriteRule ^([A-za-z0-9_-]{1,100})$ index.php?view=$1
 RewriteRule ^([A-za-z0-9_-]{1,100})/([0-9]{1,100})$ index.php?view=$1&id=$2
 #RewriteRule ^([A-za-z0-9_-]{1,100})/([0-9]{1,100})/([A-za-z0-9_-]{1,100})$ index.php?view=$1&id=$2&accion=$3
 
+#redirecciones
 RedirectMatch "^/arquitectura/$" "/arquitectura/index"
+RedirectMatch "^/arquitectura/backup/" "/arquitectura/index"
+#RedirectMatch "^/arquitectura/controller/" "/arquitectura/index"
+RedirectMatch "^/arquitectura/db/" "/arquitectura/index"
+RedirectMatch "^/arquitectura/logs/" "/arquitectura/index"
+RedirectMatch "^/arquitectura/model/" "/arquitectura/index"
+#RedirectMatch "^/arquitectura/resources/js/" "/arquitectura/index"
+RedirectMatch "^/arquitectura/unitTest/" "/arquitectura/index"
+#RedirectMatch "^/arquitectura/view/" "/arquitectura/index"
 
-#limite de megas de imagen mx 10 MB
-LimitRequestBody 10000000
+#limite de megas de imagen mx 1 MB
+LimitRequestBody 1000000
 
 <Files .htaccess>
     order allow,deny
     deny from all
 </Files>
 
-<FilesMatch "\.(htaccess|htpasswd|ini|phps|fla|psd|log|sh)$">
+<FilesMatch "\.(gitignore|htaccess|htpasswd|ini|phps|fla|psd|log|sh)$">
     Order Allow,Deny
     Deny from all
 </FilesMatch>
@@ -31,6 +40,7 @@ LimitRequestBody 10000000
 
 #Deny from 99.88.77.66
 
+#denegar entrada de robot en espesifico a mi pagina
 RewriteEngine On
 RewriteCond %{HTTP_USER_AGENT} ^BlackWidow [OR]
 RewriteCond %{HTTP_USER_AGENT} ^Zeus

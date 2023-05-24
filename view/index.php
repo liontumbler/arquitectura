@@ -110,7 +110,7 @@ class PaginaOnce extends Web implements PaginaX
         ?>
         <script>
             //poner solo lo que se use de puro javascript con php
-            document.getElementById('submit').addEventListener('click', async function(e) {
+            /*document.getElementById('submit').addEventListener('click', async function(e) {
                 let res = await fetch('controller/ControllerTest.php', {
                     method: 'POST', // *GET, POST, PUT, DELETE, etc.
                     //mode: 'cors', // no-cors, *cors, same-origin
@@ -132,7 +132,7 @@ class PaginaOnce extends Web implements PaginaX
                 //accion: 'Index', csrf_token:'<//?= csrf_token(); ?>'
 
                 console.log(res);
-                /*.then(data => {
+                .then(data => {
                         console.log(data);
 
                         if(data.status == 404)
@@ -143,14 +143,14 @@ class PaginaOnce extends Web implements PaginaX
                     }).catch(error => {
                         //console.error('error traerInformacion', error);
                         resolve(false)
-                    });*/
-            })
+                    });
+            })*/
         </script>
         <?php
     }
 }
 
-$index = new PaginaOnce('Inicio', 'La mejor plataforma para administrar tu liga, y lo mejor de todo es gratis', 'administracion de ligas, administrador de ligas, administrador de gimnasios de gimnasia');
+$index = new PaginaOnce('Home', 'La mejor plataforma para administrar tu liga, y lo mejor de todo es gratis', 'administracion de ligas, administrador de ligas, administrador tu liga, administrador de gimnasios de gimnasia');
 echo $index->crearHtml();
 
 ?>

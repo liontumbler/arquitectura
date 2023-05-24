@@ -4,7 +4,7 @@ $vars = json_decode($variablesPeticion);
 $valores = count((array)$vars);
 //print_r($valores);
 if ($valores == 0) {
-    //header('Location: ../index');
+    header('Location: ../index');
 }
 
 function redirec($redirec)

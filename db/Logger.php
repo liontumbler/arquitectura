@@ -67,6 +67,7 @@ class ServerResponse {
             header("HTTP/1.1 $statusCode $statusMessage");
         } else {
             header("HTTP/1.1 500 Internal Server Error");
+            header("HTTP/1.1 500 Internal Server Error");
         }
     }
 }
