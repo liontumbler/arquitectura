@@ -370,7 +370,8 @@ class Validardor {
                     formData.append(input.id + '[]', input.files[i]);
                 }
             }else if(inputMask.type == 'number'){
-                formData.append(campo, parseInt(input.value));
+                const numerovalue = input.value.indexOf(',') >= 0 ? parseInt(input.value) : parseFloat(input.value);
+                formData.append(campo, numerovalue);
             }else{
                 formData.append(campo, input.value);
             }
@@ -394,7 +395,8 @@ class Validardor {
             }else if(inputMask.type == 'file' && inputMask.files.length > 0){
                 data['files'] = input.files;
             }else if(inputMask.type == 'number'){
-                data[campo] = parseInt(input.value);
+                const numerovalue = input.value.indexOf(',') >= 0 ? parseInt(input.value) : parseFloat(input.value);
+                data[campo] = numerovalue;
             }else{
                 data[campo] = input.value;
             }
@@ -481,15 +483,18 @@ class Validardor {
             }
 
             if(inputMask.type == 'number'){
+                const numeroMax = inputMask.max.indexOf(',') >= 0 ? parseInt(inputMask.max) : parseFloat(inputMask.max);
+                const numeroMin = inputMask.max.indexOf(',') >= 0 ? parseInt(inputMask.max) : parseFloat(inputMask.max);
+                const numerovalue = inputMask.value.indexOf(',') >= 0 ? parseInt(inputMask.value) : parseFloat(inputMask.value);
                 //console.log(inputMask.max, inputMask.min, inputMask.value);
-                if(inputMask.max && parseInt(inputMask.value) > parseInt(inputMask.max)){
+                if(inputMask.max && numerovalue > numeroMax){
                     input.setCustomValidity(inputMask.validationMessage);
                     input.focus();
                     if (input.select) 
                         input.select();
 
                     return input;
-                }else if(inputMask.min && parseInt(inputMask.value) < parseInt(inputMask.min)){
+                }else if(inputMask.min && numerovalue < numeroMin){
                     input.setCustomValidity(inputMask.validationMessage);
                     input.focus();
                     if (input.select)

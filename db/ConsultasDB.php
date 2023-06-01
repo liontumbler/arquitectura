@@ -20,6 +20,11 @@ class ConsultasDB extends Database
         }
     }
 
+    public function obtenerHorasLigasPorGimnasio(string $idGimnasio)
+    {
+        return $this->read('horaliga', ['idGimnasio' => $idGimnasio], 'idGimnasio=:idGimnasio', 'id, nombre, precio, horas, fecha');
+    }
+
     public function obtenerProductoPrecio(string $producto)
     {
         $producto = $this->read('producto', ['id' => $producto], $this->ID, 'precio');
@@ -673,9 +678,10 @@ class ConsultasDB extends Database
     public function crearHoraliga(object $data, string $gimnasio)
     {
         $horaliga = [];
-        $horaliga['titulo'] = $data->titulo;
-        $horaliga['descripcion'] = $data->descripcion;
-        $horaliga['total'] = $data->total;
+        $horaliga['nombre'] = $data->nombre;
+        $horaliga['precio'] = $data->precio;
+        $horaliga['horas'] = $data->horas;
+        $horaliga['fecha'] = date('Y-m-d H:i:s');
         $horaliga['idGimnasio'] = $gimnasio;
 
         return $this->create('horaliga', $horaliga);
