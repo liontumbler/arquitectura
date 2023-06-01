@@ -26,6 +26,7 @@ class ModelLogin extends Model
             $habilitado = $gimnasio[0]['habilitado'];
             $nombreGim = $gimnasio[0]['nombre'];
             $gimnasioId = $gimnasio[0]['id'];
+            $idPlan = $gimnasio[0]['idPlan'];
             
             if ($habilitado) {
                 if ($clave != '' && password_verify(sha1($clave), $claveDb)) {
@@ -54,6 +55,7 @@ class ModelLogin extends Model
                         'nickName' => $nickname,
                         'gimnasio' => $nombreGim,
                         'gimnasioId' => $gimnasioId,
+                        'plan' => $idPlan,
                         'trabajadoId' => $trabajadoId,
                     );
 

@@ -87,11 +87,149 @@ class ConsultasDB extends Database
         return $this->read('plan', $array, $consulta);
     }
 
+    public function planTrabajadores(string $plan, string $gimnasio)
+    {
+        $countTrabajadores = $this->read(
+            'trabajador',
+            ['idGimnasio' => $gimnasio],
+            '`idGimnasio`=:idGimnasio',
+            'COUNT(idGimnasio) AS Total'
+        )[0]['Total'];
+
+        $countPlanTrabajadores = $this->read(
+            'plan',
+            ['id' => $plan],
+            '`id`=:id',
+            'trabajadores'
+        )[0]['trabajadores'];
+
+        if ($countTrabajadores <= $countPlanTrabajadores) {
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function planHoraLiga(string $plan, string $gimnasio)
+    {
+        $countHoraliga = $this->read(
+            'horaliga',
+            ['idGimnasio' => $gimnasio],
+            '`idGimnasio`=:idGimnasio',
+            'COUNT(idGimnasio) AS Total'
+        )[0]['Total'];
+
+        $countPlanHoraliga = $this->read(
+            'plan',
+            ['id' => $plan],
+            '`id`=:id',
+            'numCampHora'
+        )[0]['numCampHora'];
+
+        if ($countHoraliga <= $countPlanHoraliga) {
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function planLiga(string $plan, string $gimnasio)
+    {
+        $countliga = $this->read(
+            'ligas',
+            ['idGimnasio' => $gimnasio],
+            '`idGimnasio`=:idGimnasio',
+            'COUNT(idGimnasio) AS Total'
+        )[0]['Total'];
+
+        $countPlanliga = $this->read(
+            'plan',
+            ['id' => $plan],
+            '`id`=:id',
+            'ligas'
+        )[0]['ligas'];
+
+        if ($countliga <= $countPlanliga) {
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function planTienda(string $plan, string $gimnasio)
+    {
+        $countTienda = $this->read(
+            'tienda',
+            ['idGimnasio' => $gimnasio],
+            '`idGimnasio`=:idGimnasio',
+            'COUNT(idGimnasio) AS Total'
+        )[0]['Total'];
+
+        $countPlanTienda = $this->read(
+            'plan',
+            ['id' => $plan],
+            '`id`=:id',
+            'tienda'
+        )[0]['tienda'];
+
+        if ($countTienda <= $countPlanTienda) {
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function planPagos(string $plan, string $gimnasio)
+    {
+        $countPagos = $this->read(
+            'pagos',
+            ['idGimnasio' => $gimnasio],
+            '`idGimnasio`=:idGimnasio',
+            'COUNT(idGimnasio) AS Total'
+        )[0]['Total'];
+
+        $countPlanPagos = $this->read(
+            'plan',
+            ['id' => $plan],
+            '`id`=:id',
+            'pagos'
+        )[0]['pagos'];
+
+        if ($countPagos <= $countPlanPagos) {
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function planProducto(string $plan, string $gimnasio)
+    {
+        $countProductos = $this->read(
+            'producto',
+            ['idGimnasio' => $gimnasio],
+            '`idGimnasio`=:idGimnasio',
+            'COUNT(idGimnasio) AS Total'
+        )[0]['Total'];
+
+        $countPlanProductos = $this->read(
+            'plan',
+            ['id' => $plan],
+            '`id`=:id',
+            'productos'
+        )[0]['productos'];
+
+        if ($countProductos <= $countPlanProductos) {
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     public function obtenerGimnasioPorId(string $id = null)
     {
         $array = empty($id) ? [] : ['id' => $id];
         $consulta = empty($id) ? '' : $this->ID;
-        return $this->read('gimnasio', $array, $consulta, 'color, background, habilitado, nombre, id');
+        return $this->read('gimnasio', $array, $consulta, 'color, background, habilitado, nombre, id, idPlan');
     }
 
     public function obtenerTrabajadoPorId(string $id = null)
