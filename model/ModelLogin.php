@@ -18,11 +18,9 @@ class ModelLogin extends Model
             $correo = $res[0]['correo'];
             $telefono = $res[0]['telefono'];
             
-            $gimnasio = $this->obtenerGimnasioPorId($idGimnasio);
+            $gimnasio = $this->obtenerGimnasioPorIdBasic($idGimnasio);
             //return $gimnasio;
 
-            $color = $gimnasio[0]['color'];
-            $background = $gimnasio[0]['background'];
             $habilitado = $gimnasio[0]['habilitado'];
             $nombreGim = $gimnasio[0]['nombre'];
             $gimnasioId = $gimnasio[0]['id'];
@@ -94,7 +92,7 @@ class ModelLogin extends Model
             $correo = $res[0]['correo'];
             $telefono = $res[0]['telefono'];
             $habilitado = $res[0]['habilitado'];
-            $idPlan = $gimnasio[0]['idPlan'];
+            $idPlan = $res[0]['idPlan'];
             
             if ($habilitado) {
                 if ($clave != '' && password_verify(sha1($clave), $claveDb)) {

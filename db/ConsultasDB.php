@@ -248,11 +248,16 @@ class ConsultasDB extends Database
         }
     }
     
-    public function obtenerGimnasioPorId(string $id = null)
+    public function obtenerGimnasioPorIdBasic(string $id = null)
     {
         $array = empty($id) ? [] : ['id' => $id];
         $consulta = empty($id) ? '' : $this->ID;
-        return $this->read('gimnasio', $array, $consulta, 'color, background, habilitado, nombre, id, idPlan');
+        return $this->read('gimnasio', $array, $consulta, 'habilitado, nombre, id, idPlan');
+    }
+
+    public function obtenerGimnasioPorId(string $id)
+    {
+        return $this->read('gimnasio', ['id' => $id], '`id`=:id', 'id, correo, nickname, nombre, color, background, direccion, telefono, descripcion, habilitado, minDeMasLiga, idPlan');
     }
 
     public function obtenerTrabajadoPorId(string $id = null)
@@ -704,7 +709,7 @@ class ConsultasDB extends Database
             'gimnasio',
             ['nickname' => $gimnasio],
             'nickname=:nickname',
-            'clave, id, nombre, nickname, correo, telefono, habilitado'
+            'clave, id, nombre, nickname, correo, telefono, habilitado, idPlan'
         );
     }
 

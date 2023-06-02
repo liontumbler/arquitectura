@@ -60,6 +60,13 @@ class ControllerAdmin extends Controller
         return $this->model('ModelTrabajado')->cargarNombreTrabajadorPorId($dta->id);
     }
 
+    public function postCargarConfiguracion()
+    {
+        return $this->model('ModelGimnasio')->cargarConfiguracion();
+    }
+
+    
+
     
 
     
