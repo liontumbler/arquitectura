@@ -83,7 +83,7 @@ class PaginaOnce extends Web implements PaginaX
                             </div>
                             <div class="col-lg-12 mb-1">
                                 <div class="d-grid gap-2">
-                                    <button id="tarifasAdmin" class="btn btn-light" type="button" disabled>
+                                    <button id="tarifasAdmin" class="btn btn-light" type="button">
                                         <i class="bi bi-clock-history"></i>&nbsp;Tarifas liga
                                     </button>
                                 </div>
@@ -153,6 +153,9 @@ class PaginaOnce extends Web implements PaginaX
             })
             document.getElementById('productosAdmin').addEventListener('click', function (e) {
                 location.href = 'productosAdmin';
+            })
+            document.getElementById('tarifasAdmin').addEventListener('click', function (e) {
+                location.href = 'horaLigaAdmin';
             })
             document.getElementById('salirAdmin').addEventListener('click', salir)
         </script>

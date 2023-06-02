@@ -40,7 +40,7 @@
                 </a>
             </li>
             <li>
-                <a href="descuentoAdmin" class="nav-link text-white">
+                <a href="horaLigaAdmin" class="nav-link text-white">
                     <i class="bi bi-clock-history"></i>&nbsp;Tarifas liga
                 </a>
             </li>

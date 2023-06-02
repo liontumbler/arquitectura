@@ -140,6 +140,26 @@ document.querySelector('body').onload = (e) => {
                             }).then((result) => {
                                 location.href = './index';
                             })
+                        }else{
+                            if(rdta == 601){
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Tu plan se excedió, contáctate con nosotros para cambiar el plan o adquirir uno personalizado',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                }).then((result) => {
+                                    location.href = location.reload();
+                                })
+                            }else{
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'No se agregó la venta',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                }).then((result) => {
+                                    location.href = './index';
+                                })
+                            }
                         }
                     }
                 }, location.href)

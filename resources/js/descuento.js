@@ -64,7 +64,25 @@ document.querySelector('body').onload = (e) => {
                             location.href = './index';
                         })
                     }else{
-                        console.log('mal', rdta);
+                        if(rdta == 601){
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Tu plan se excedió, contáctate con nosotros para cambiar el plan o adquirir uno personalizado',
+                                showConfirmButton: false,
+                                timer: 1500
+                            }).then((result) => {
+                                location.href = location.reload();
+                            })
+                        }else{
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'No se agregó el descuento',
+                                showConfirmButton: false,
+                                timer: 1500
+                            }).then((result) => {
+                                location.href = './index';
+                            })
+                        }
                     }
                 }, location.href)
             }

@@ -18,11 +18,11 @@ class ModelProducto extends Model
 
     public function agregarProducto($dta)
     {
-        $producto = $this->crearProducto($dta, $_SESSION['SesionAdmin']['gimnasioId']);
-        if ($producto > 0) {
-            return true;
-        }else{
-            return false;
+        $vencimiento = $this->planProducto($_SESSION['SesionAdmin']['plan'], $_SESSION['SesionAdmin']['gimnasioId']);
+        if ($vencimiento) {
+            return $this->crearProducto($dta, $_SESSION['SesionAdmin']['gimnasioId']);
+        } else {
+            return 601;
         }
     }
 

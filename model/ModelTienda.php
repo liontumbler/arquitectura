@@ -22,9 +22,7 @@ class ModelTienda extends Model
             //return $resCliente;
 
             if ($idCliente > 0) {
-                $resTienda = $this->crearTienda($data, $idCliente, $total, $_SESSION['SesionTrabajador']['gimnasioId'], $_SESSION['SesionTrabajador']['trabajadoId'], $_SESSION['SesionTrabajador']['trabajadorId']);
-
-                return ($resTienda > 0);
+                return $this->crearTienda($data, $idCliente, $total, $_SESSION['SesionTrabajador']['gimnasioId'], $_SESSION['SesionTrabajador']['trabajadoId'], $_SESSION['SesionTrabajador']['trabajadorId']);
             }
 
             return false;

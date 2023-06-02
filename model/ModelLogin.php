@@ -94,12 +94,14 @@ class ModelLogin extends Model
             $correo = $res[0]['correo'];
             $telefono = $res[0]['telefono'];
             $habilitado = $res[0]['habilitado'];
+            $idPlan = $gimnasio[0]['idPlan'];
             
             if ($habilitado) {
                 if ($clave != '' && password_verify(sha1($clave), $claveDb)) {
     
                     $_SESSION['SesionAdmin'] = array(
                         'gimnasioId' => $adminId,
+                        'plan' => $idPlan,
                         'nombre' => $nombre,
                         'correo' => $correo,
                         'telefono' => $telefono,
