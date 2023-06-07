@@ -13,7 +13,7 @@ document.querySelector('body').onload = (e) => {
 
             let valid = validarForm1.validarCampos();
             console.log(valid);
-            if(valid && !valid.validationMessage){
+            if(valid == true && !valid.validationMessage){
                 this.disabled = true;
 
                 let edta = validarForm1.crearObjetoJson()

@@ -11,7 +11,7 @@ class ModelDescontar extends Model
                 unset($_SESSION['SesionTrabajador']);
                 return 'T';
             } else {//sesion ya iniciada
-                $vencimiento = $this->planDescuento($_SESSION['SesionAdmin']['plan'], $_SESSION['SesionAdmin']['gimnasioId']);
+                $vencimiento = $this->planDescuento($_SESSION['SesionTrabajador']['plan'], $_SESSION['SesionTrabajador']['gimnasioId']);
                 if ($vencimiento) {
                     return $this->crearDescuento($data, $_SESSION['SesionTrabajador']['gimnasioId'], $_SESSION['SesionTrabajador']['trabajadoId'], $_SESSION['SesionTrabajador']['trabajadorId']);
                 } else {

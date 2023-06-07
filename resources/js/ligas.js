@@ -167,7 +167,7 @@ document.querySelector('body').onload = (e) => {
             let valid = form.validarCampos();
             console.log(valid);
             
-            if(valid && !valid.validationMessage){
+            if(valid == true && !valid.validationMessage){
                 msgClave(async function () {
                     let edta = form.crearObjetoJson();
                     //console.log(minDemas);

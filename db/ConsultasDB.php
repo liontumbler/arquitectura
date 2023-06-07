@@ -909,9 +909,18 @@ class ConsultasDB extends Database
         $trabajador['telefono'] = $data->telefono;
         $trabajador['documento'] = $data->documento;
         $trabajador['clave'] = $data->clave;
+        $trabajador['claveCaja'] = empty($data->claveCaja)? null : $data->claveCaja;
         $trabajador['idGimnasio'] = $gimnasio;
         $trabaj = $this->create('trabajador', $trabajador);
-        return ($trabaj > 0);
+
+        $respuesta = false;
+        if (($trabaj > 0)) {
+            return true;
+        }elseif (($trabaj == -1) || ($trabaj == -2)) {
+            return $trabaj;
+        }
+
+        return $respuesta;
     }
 
     public function actualizarCaja(string $trabajador, string $medio)

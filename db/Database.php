@@ -73,6 +73,8 @@ class Database {
         } catch (PDOException $e) {
             if (strpos($e->getMessage(), '1062') !== false) {//datos duplicados
                 return -1;
+            } else if (strpos($e->getMessage(), '1451') !== false) {//se esta usando en otra tabla
+                return -2;
             } else {
                 $this->logger->log('Error: '."Failed to create a record in $table: " . $e->getMessage());
                 ServerResponse::getResponse(500);

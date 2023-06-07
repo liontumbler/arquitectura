@@ -79,7 +79,7 @@ document.querySelector('body').onload = (e) => {
             }
 
             let valid = form.validarCampos();
-            if(valid && !valid.validationMessage){
+            if(valid == true && !valid.validationMessage){
                 msgClave(async function () {
                     this.disabled = true;
                     //console.log(form.crearObjetoJson());

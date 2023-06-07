@@ -1,15 +1,15 @@
 document.querySelector('body').onload = (e) => {
     (async function () {
-        let validarForm = new Validardor(['nombre', 'precio', 'horas']);
-        let $table2 = $('#horaLigaTable');
+        let validarForm = new Validardor(['nombresYapellidos', 'nickname', 'correo', 'telefono', 'documento', 'claveCaja']);
+        let $table2 = $('#trabajadoresTable');
 
-        let rdta = await fetch('controller/ControllerHoraLiga.php', {
+        /*let rdta = await fetch('controller/ControllerAdmin.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                accion: 'CargarHoraLigas',
+                accion: 'CargarProdutos',
                 csrf_token: document.getElementById('csrf_token').value
             })
         }).then((res) => {
@@ -70,36 +70,54 @@ document.querySelector('body').onload = (e) => {
                 title: 'Precio',
                 halign: 'center',
                 align: 'center',
-            }, {
-                field: 'horas',
-                title: 'Horas',
-                halign: 'center',
-                align: 'center',
-            }, {
-                field: 'fecha',
-                title: 'Fecha',
-                halign: 'center',
-                align: 'center',
+            },{
+                field: 'descripcion',
+                title: 'Descripción',
+                width: '250',
+                formatter: function(value, row, index) {
+                    return '<div class="textoLargoTabla">' +
+                        row.descripcion +
+                    '</div>';
+                },
             }],
 
             data: rdta
+        })*/
+
+        document.getElementById('clave').textContent = generarAlfanumerico();
+
+        document.getElementById('btnClave').addEventListener('click', async function (e) {
+            document.getElementById('clave').textContent = generarAlfanumerico();
         })
 
-        document.getElementById('agregarHoraLiga').addEventListener('click', async function(e) {
-            this.disabled = true;
-            let valid = validarForm.validarCampos();
-            console.log(valid);
-            if(valid == true && !valid.validationMessage){
-                let edta = validarForm.crearObjetoJson()
-                console.log(edta);
+        function generarAlfanumerico() {
+            var caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            var longitud = 8;
+            var alfanumerico = '';
 
-                let rdta = await fetch('controller/ControllerHoraLiga.php', {
+            for (var i = 0; i < longitud; i++) {
+                var indice = Math.floor(Math.random() * caracteres.length);
+                alfanumerico += caracteres.charAt(indice);
+            }
+
+            return alfanumerico;
+        }
+
+        document.getElementById('guardar').addEventListener('click', async function (e) {
+            //this.disabled = true;
+            let valid = validarForm.validarCampos();
+            if (valid == true && !valid.validationMessage) {
+                let edta = validarForm.crearObjetoJson()
+                edta.clave = document.getElementById('clave').textContent
+                console.log(edta);
+                
+                let rdta = await fetch('controller/ControllerAdmin.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        accion: 'AgregarHoraLiga',
+                        accion: 'AgregarTrabajador',
                         data: edta,
                         csrf_token: document.getElementById('csrf_token').value
                     })
@@ -112,12 +130,12 @@ document.querySelector('body').onload = (e) => {
                     return res;
                 })
                 this.disabled = false;
-
+                /*
                 console.log(rdta);
                 //console.log(rdta);
                 if (rdta == true) {
                     Swal.fire({
-                        title: '¡Tarifa Liga Ingresado!',
+                        title: '¡Producto Ingresado!',
                         text: "Quieres mantenerte en la página o ir al home",
                         icon: 'success',
                         showCancelButton: true,
@@ -145,17 +163,18 @@ document.querySelector('body').onload = (e) => {
                     }else{
                         Swal.fire({
                             icon: 'error',
-                            title: 'No se agregó el Tarifa Liga',
+                            title: 'No se agregó el producto',
                             showConfirmButton: false,
                             timer: 1500
                         }).then((result) => {
                             location.href = './index';
                         })
                     }
-                }
-            }else{
+                }*/
+            } else {
                 this.disabled = false;
             }
         })
+
     })();
 }

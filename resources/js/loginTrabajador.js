@@ -9,7 +9,8 @@ document.querySelector('body').onload = (e) => {
             recapchav2.validarRV2S(async (valid) => {
                 if (valid) {
                     let valid = validar.validarCampos()
-                    if(valid && !valid.validationMessage){
+                    //console.log(valid);
+                    if(valid == true && !valid.validationMessage){
 
                         let edta = validar.crearObjetoJson();
                         let csrf_token = document.getElementById('csrf_token').value;

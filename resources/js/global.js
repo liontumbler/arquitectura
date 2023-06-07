@@ -395,8 +395,13 @@ class Validardor {
             }else if(inputMask.type == 'file' && inputMask.files.length > 0){
                 data['files'] = input.files;
             }else if(inputMask.type == 'number'){
-                const numerovalue = input.value.indexOf(',') >= 0 ? parseInt(input.value) : parseFloat(input.value);
-                data[campo] = numerovalue;
+                if (input.value) {
+                    const numerovalue = ((input.value.indexOf(',') >= 0) ? parseFloat(input.value) : parseInt(input.value));
+                    console.log('value--', '--'+input.value+'++', numerovalue, (input.value.indexOf(',') >= 0));
+                    data[campo] = numerovalue;
+                }else{
+                    data[campo] = null;
+                }
             }else{
                 data[campo] = input.value;
             }
@@ -483,10 +488,11 @@ class Validardor {
             }
 
             if(inputMask.type == 'number'){
-                const numeroMax = inputMask.max.indexOf(',') >= 0 ? parseInt(inputMask.max) : parseFloat(inputMask.max);
-                const numeroMin = inputMask.max.indexOf(',') >= 0 ? parseInt(inputMask.max) : parseFloat(inputMask.max);
-                const numerovalue = inputMask.value.indexOf(',') >= 0 ? parseInt(inputMask.value) : parseFloat(inputMask.value);
+                const numeroMax = inputMask.max.indexOf(',') >= 0 ? parseFloat(inputMask.max) : parseInt(inputMask.max);
+                const numeroMin = inputMask.min.indexOf(',') >= 0 ? parseFloat(inputMask.min) : parseInt(inputMask.min);
+                const numerovalue = inputMask.value.indexOf(',') >= 0 ? parseFloat(inputMask.value) : parseInt(inputMask.value);
                 //console.log(inputMask.max, inputMask.min, inputMask.value);
+                //console.log(numeroMax, numeroMin, numerovalue);
                 if(inputMask.max && numerovalue > numeroMax){
                     input.setCustomValidity(inputMask.validationMessage);
                     input.focus();
@@ -507,14 +513,29 @@ class Validardor {
             if(inputMask.type == 'text' || inputMask.type == 'number' || inputMask.type == 'password'){
                 //console.log(inputMask.getAttribute('maxlength'), inputMask.getAttribute('minlength'), inputMask.maxlength);
                 if(inputMask.value && inputMask.getAttribute('maxlength') && parseInt(inputMask.value.length) > parseInt(inputMask.getAttribute('maxlength'))){
-                    input.setCustomValidity(inputMask.validationMessage);
+                    input.setCustomValidity((inputMask.validationMessage ? inputMask.validationMessage : 'Error en maximo de caracteres'));
                     input.focus();
                     if (input.select) 
                         input.select();
 
                     return input;
                 } else if(inputMask.value && inputMask.getAttribute('minlength') && parseInt(inputMask.value.length) < parseInt(inputMask.getAttribute('minlength'))){
-                    input.setCustomValidity(inputMask.validationMessage);
+                    input.setCustomValidity((inputMask.validationMessage ? inputMask.validationMessage : 'Error en minimo de caracteres'));
+                    input.focus();
+                    if (input.select) 
+                        input.select();
+
+                    return input;
+                }
+            }
+
+            if (inputMask.type == 'email' && inputMask.value) {
+                let validacion1 = '([a-zA-Z0-9]{1,50}[\\_\\-\\.]?[a-zA-Z0-9]{1,50}){1,100}';
+                let validacion2 = '[a-zA-Z]{2,5}$';
+                let cadena = '^'+ validacion1 +'@'+ validacion1 +'\\.'+ validacion2 +'';
+                let expreg = new RegExp(cadena);
+                if(!expreg.test(inputMask.value)){
+                    input.setCustomValidity((inputMask.validationMessage ? inputMask.validationMessage : 'Correo invalido'));
                     input.focus();
                     if (input.select) 
                         input.select();

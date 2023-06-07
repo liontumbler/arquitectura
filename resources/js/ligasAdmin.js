@@ -372,7 +372,7 @@ document.querySelector('body').onload = (e) => {
         document.getElementById('buscar').addEventListener('click', async function(e) {
             this.disabled = true;
             let valid = validarForm.validarCampos();
-            if(valid && !valid.validationMessage){
+            if(valid == true && !valid.validationMessage){
                 let edta = validarForm.crearObjetoJson()
 
                 if (edta.desde) 

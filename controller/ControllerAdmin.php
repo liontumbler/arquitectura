@@ -65,6 +65,11 @@ class ControllerAdmin extends Controller
         return $this->model('ModelGimnasio')->cargarConfiguracion();
     }
 
+    public function postAgregarTrabajador($dta)
+    {
+        return $this->model('ModelTrabajador')->agregarTrabajador($dta);
+    }
+
     
 
     

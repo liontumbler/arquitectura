@@ -7,7 +7,7 @@ document.querySelector('body').onload = (e) => {
             let valid = validarForm.validarCampos();
             console.log(valid);
             
-            if(valid && !valid.validationMessage){
+            if(valid == true && !valid.validationMessage){
                 msgClave(async function () {
                     this.disabled = true;
 
