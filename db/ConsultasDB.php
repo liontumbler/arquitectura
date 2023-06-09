@@ -238,8 +238,8 @@ class ConsultasDB extends Database
             'plan',
             ['id' => $plan],
             '`id`=:id',
-            'descuento'
-        )[0]['descuento'];
+            'descuentos'
+        )[0]['descuentos'];
 
         if ($countDescuento <= $countPlanDescuento) {
             return true;
@@ -696,18 +696,25 @@ class ConsultasDB extends Database
         );
     }
 
-    public function obtenerTrabajadorNombrePorId(string $id = null)
+    public function obtenerTrabajadorNombrePorId(string $gimnasio, string $id = null)
     {
-        $array = empty($id) ? [] : ['id' => $id];
-        $consulta = empty($id) ? '' : $this->ID;
+        $array = empty($id) ? ['idGimnasio' => $gimnasio] : ['id' => $id, 'idGimnasio' => $gimnasio];
+        $consulta = empty($id) ? '`idGimnasio`=:idGimnasio' : '`idGimnasio`=:idGimnasio '.$this->ID;
         return $this->read('trabajador', $array, $consulta, 'id, nombresYapellidos');
     }
 
-    public function obtenerAdminNickname(string $gimnasio)
+    public function obtenerTrabajadorPorId(string $gimnasio, string $id = null)
+    {
+        $array = empty($id) ? ['idGimnasio' => $gimnasio] : ['id' => $id, 'idGimnasio' => $gimnasio];
+        $consulta = empty($id) ? '`idGimnasio`=:idGimnasio' : '`idGimnasio`=:idGimnasio '.$this->ID;
+        return $this->read('trabajador', $array, $consulta, 'id, nombresYapellidos, nickname, correo, telefono, documento, claveCaja');
+    }
+
+    public function obtenerAdminNickname(string $nickname)
     {
         return $this->read(
             'gimnasio',
-            ['nickname' => $gimnasio],
+            ['nickname' => $nickname],
             'nickname=:nickname',
             'clave, id, nombre, nickname, correo, telefono, habilitado, idPlan'
         );

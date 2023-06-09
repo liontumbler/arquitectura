@@ -3,7 +3,7 @@ document.querySelector('body').onload = (e) => {
         let validarForm;
         let $table2;
         let resCli = cargarClientes();
-        let resTra = cargarTrabajadores();
+        let resTra = cargarTrabajadoresOP();
         let resPro = cargarProductos();
         
         resCli.then(function () {

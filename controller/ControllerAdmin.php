@@ -45,9 +45,9 @@ class ControllerAdmin extends Controller
         return $this->model('ModelAdmin')->buscarTiendas($dta);
     }
 
-    public function postCargarTrabajadores()
+    public function postCargarTrabajadoresOP()
     {
-        return $this->model('ModelAdmin')->cargarTrabajadores();
+        return $this->model('ModelTrabajador')->cargarTrabajadoresOP();
     }
 
     public function postCargarNombreCliente($dta)
@@ -70,6 +70,10 @@ class ControllerAdmin extends Controller
         return $this->model('ModelTrabajador')->agregarTrabajador($dta);
     }
 
+    public function postCargarTrabajadores()
+    {
+        return $this->model('ModelTrabajador')->cargarTrabajadores();
+    }
     
 
     

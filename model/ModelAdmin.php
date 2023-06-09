@@ -93,11 +93,6 @@ class ModelAdmin extends Model
         return $this->obtenerTiendas($dto);
     }
 
-    public function cargarTrabajadores()
-    {
-        return $this->obtenerTrabajadorNombrePorId();
-    }
-
     
 
     

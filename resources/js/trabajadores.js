@@ -3,13 +3,13 @@ document.querySelector('body').onload = (e) => {
         let validarForm = new Validardor(['nombresYapellidos', 'nickname', 'correo', 'telefono', 'documento', 'claveCaja']);
         let $table2 = $('#trabajadoresTable');
 
-        /*let rdta = await fetch('controller/ControllerAdmin.php', {
+        let rdta = await fetch('controller/ControllerAdmin.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                accion: 'CargarProdutos',
+                accion: 'CargarTrabajadores',
                 csrf_token: document.getElementById('csrf_token').value
             })
         }).then((res) => {
@@ -61,28 +61,39 @@ document.querySelector('body').onload = (e) => {
                 align: 'center',
                 searchable: 'false'
             }, {
-                field: 'nombre',
-                title: 'Nombre',
+                field: 'nombresYapellidos',
+                title: 'Nombres y Apellidos',
                 halign: 'center',
                 align: 'center',
             }, {
-                field: 'precio',
-                title: 'Precio',
+                field: 'documento',
+                title: 'Documento',
                 halign: 'center',
                 align: 'center',
-            },{
-                field: 'descripcion',
-                title: 'Descripción',
-                width: '250',
-                formatter: function(value, row, index) {
-                    return '<div class="textoLargoTabla">' +
-                        row.descripcion +
-                    '</div>';
-                },
+            }, {
+                field: 'correo',
+                title: 'Correo',
+                halign: 'center',
+                align: 'center',
+            }, {
+                field: 'claveCaja',
+                title: 'Clave de la Caja',
+                halign: 'center',
+                align: 'center',
+            }, {
+                field: 'nickname',
+                title: 'Apodo (Alias)',
+                halign: 'center',
+                align: 'center',
+            }, {
+                field: 'telefono',
+                title: 'Teléfono',
+                halign: 'center',
+                align: 'center',
             }],
 
             data: rdta
-        })*/
+        })
 
         document.getElementById('clave').textContent = generarAlfanumerico();
 

@@ -66,14 +66,14 @@ function salir(e) {
     })
 }
 
-async function cargarTrabajadores() {
+async function cargarTrabajadoresOP() {
     let trabajadores = await fetch('controller/ControllerAdmin.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            accion: 'CargarTrabajadores',
+            accion: 'CargarTrabajadoresOP',
             csrf_token: document.getElementById('csrf_token').value
         })
     }).then((res) => {

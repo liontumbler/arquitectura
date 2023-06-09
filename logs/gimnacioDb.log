@@ -1,0 +1,2 @@
+[2023-06-08 08:41:08] Error: Failed to read record from descuento with 1: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '00:00:00 AND `fecha` <= 2023-06-30 23:59:59' at line 1
+[2023-06-08 08:41:08] Error: Failed to read record from plan with 1: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'descuento' in 'field list'

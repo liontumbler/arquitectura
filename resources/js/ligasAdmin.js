@@ -4,7 +4,7 @@ document.querySelector('body').onload = (e) => {
 
         let $table2;
         let resCli = cargarClientes();
-        let resTra = cargarTrabajadores();
+        let resTra = cargarTrabajadoresOP();
         resCli.then(function () {
             resTra.then(function () {
                 validarForm = new Validardor(['cliente', 'trabajador', 'tipoPago', 'desde', 'hasta']);
