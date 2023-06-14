@@ -14,7 +14,7 @@ class ModelHoraLiga extends Model
 
     public function cargarHoraLigas()
     {
-        return $this->obtenerHorasLigasPorGimnasio($_SESSION['SesionAdmin']['gimnasioId']);
+        return $this->obtenerHoraligaPorId($_SESSION['SesionAdmin']['gimnasioId']);
     }
 
 }

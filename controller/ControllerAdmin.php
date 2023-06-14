@@ -74,6 +74,11 @@ class ControllerAdmin extends Controller
     {
         return $this->model('ModelTrabajador')->cargarTrabajadores();
     }
+
+    public function postCargarEquipos()
+    {
+        return $this->model('ModelEquipo')->cargarEquipos();
+    }
     
 
     

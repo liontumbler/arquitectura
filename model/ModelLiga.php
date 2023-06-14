@@ -54,7 +54,7 @@ class ModelLiga extends Model
 
     public function horas()
     {
-        return $this->obtenerHoraligaNombrePorId();
+        return $this->obtenerHoraligaNombrePorId($_SESSION['SesionTrabajador']['gimnasioId']);
     }
 
     public function minDemas()

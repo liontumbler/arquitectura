@@ -3,7 +3,7 @@ class ModelProducto extends Model
 {
     public function productos()
     {
-        return $this->obtenerProductoNombrePorId();
+        return $this->obtenerProductoNombrePorId($_SESSION['SesionTrabajador']['gimnasioId']);
     }
 
     public function cargarNombreProductoPorId($id)
@@ -13,7 +13,7 @@ class ModelProducto extends Model
 
     public function cargarProdutos()
     {
-        return $this->obtenerProductoPorId();
+        return $this->obtenerProductoPorId($_SESSION['SesionAdmin']['gimnasioId']);
     }
 
     public function agregarProducto($dta)

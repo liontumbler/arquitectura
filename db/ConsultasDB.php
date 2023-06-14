@@ -20,11 +20,6 @@ class ConsultasDB extends Database
         }
     }
 
-    public function obtenerHorasLigasPorGimnasio(string $idGimnasio)
-    {
-        return $this->read('horaliga', ['idGimnasio' => $idGimnasio], 'idGimnasio=:idGimnasio', 'id, nombre, precio, horas, fecha');
-    }
-
     public function obtenerProductoPrecio(string $producto)
     {
         $producto = $this->read('producto', ['id' => $producto], $this->ID, 'precio');
@@ -45,46 +40,37 @@ class ConsultasDB extends Database
         }
     }
 
-    public function obtenerHoraligaPorId(string $id = null)
+    public function obtenerHoraligaPorId(string $gimnasio, string $id = null)
     {
-        $array = empty($id) ? [] : ['id' => $id];
-        $consulta = empty($id) ? '' : $this->ID;
+        $array = empty($id) ? ['idGimnasio' => $gimnasio] : ['id' => $id, 'idGimnasio' => $gimnasio];
+        $consulta = empty($id) ? 'idGimnasio=:idGimnasio' : 'idGimnasio=:idGimnasio '.$this->ID;
         return $this->read('horaliga', $array, $consulta, 'id, nombre, horas, precio, fecha');
     }
 
-    public function obtenerHoraligaNombrePorId(string $id = null)
+    public function obtenerHoraligaNombrePorId(string $gimnasio, string $id = null)
     {
-        $array = empty($id) ? [] : ['id' => $id];
-        $consulta = empty($id) ? '' : $this->ID;
+        $array = empty($id) ? ['idGimnasio' => $gimnasio] : ['id' => $id, 'idGimnasio' => $gimnasio];
+        $consulta = empty($id) ? 'idGimnasio=:idGimnasio' : 'idGimnasio=:idGimnasio '.$this->ID;
         return $this->read('horaliga', $array, $consulta, 'id, nombre, precio');
     }
 
-    public function obtenerProductoPorId(string $id = null)
+    public function obtenerProductoPorId(string $gimnasio, string $id = null)
     {
-        $array = empty($id) ? [] : ['id' => $id];
-        $consulta = empty($id) ? '' : $this->ID;
+        $array = empty($id) ? ['idGimnasio' => $gimnasio] : ['id' => $id, 'idGimnasio' => $gimnasio];
+        $consulta = empty($id) ? 'idGimnasio=:idGimnasio' : 'idGimnasio=:idGimnasio '.$this->ID;
         return $this->read('producto', $array, $consulta, 'id, nombre, precio, fecha, descripcion');
     }
 
-    public function obtenerProductoNombrePorId(string $id = null)
+    public function obtenerProductoNombrePorId(string $gimnasio, string $id = null)
     {
-        $array = empty($id) ? [] : ['id' => $id];
-        $consulta = empty($id) ? '' : $this->ID;
+        $array = empty($id) ? ['idGimnasio' => $gimnasio] : ['id' => $id, 'idGimnasio' => $gimnasio];
+        $consulta = empty($id) ? 'idGimnasio=:idGimnasio' : 'idGimnasio=:idGimnasio '.$this->ID;
         return $this->read('producto', $array, $consulta, 'id, nombre, precio');
     }
 
-    public function obtenerClaveCajaPorId(string $id = null)
+    public function obtenerClaveCajaPorId(string $id)
     {
-        $array = empty($id) ? [] : ['id' => $id];
-        $consulta = empty($id) ? '' : $this->ID;
-        return $this->read('trabajador', $array, $consulta, 'claveCaja');
-    }
-
-    public function obtenerPlanPorId(string $id = null)
-    {
-        $array = empty($id) ? [] : ['id' => $id];
-        $consulta = empty($id) ? '' : $this->ID;
-        return $this->read('plan', $array, $consulta);
+        return $this->read('trabajador', ['id' => $id], $this->ID, 'claveCaja');
     }
 
     public function planTrabajadores(string $plan, string $gimnasio)
@@ -248,11 +234,9 @@ class ConsultasDB extends Database
         }
     }
     
-    public function obtenerGimnasioPorIdBasic(string $id = null)
+    public function obtenerGimnasioPorIdBasic(string $id)
     {
-        $array = empty($id) ? [] : ['id' => $id];
-        $consulta = empty($id) ? '' : $this->ID;
-        return $this->read('gimnasio', $array, $consulta, 'habilitado, nombre, id, idPlan');
+        return $this->read('gimnasio', ['id' => $id], $this->ID, 'habilitado, nombre, id, idPlan');
     }
 
     public function obtenerGimnasioPorId(string $id)
@@ -260,24 +244,24 @@ class ConsultasDB extends Database
         return $this->read('gimnasio', ['id' => $id], '`id`=:id', 'id, correo, nickname, nombre, color, background, direccion, telefono, descripcion, habilitado, minDeMasLiga, idPlan');
     }
 
-    public function obtenerTrabajadoPorId(string $id = null)
+    /*public function obtenerTrabajadoPorId(stringg $id = null)
     {
         $array = empty($id) ? [] : ['id' => $id];
         $consulta = empty($id) ? '' : $this->ID;
         return $this->read('trabajado', $array, $consulta);
     }
 
-    public function obtenerClientePorId(string $id = null)
+    public function obtenerClientePorId(stringg $id = null)
     {
         $array = empty($id) ? [] : ['id' => $id];
         $consulta = empty($id) ? '' : $this->ID;
         return $this->read('cliente', $array, $consulta, 'id, nombresYapellidos, documento');
-    }
+    }*/
 
-    public function obtenerClienteNombrePorId(string $id = null)
+    public function obtenerClienteNombrePorId(string $gimnasio, string $id = null)
     {
-        $array = empty($id) ? [] : ['id' => $id];
-        $consulta = empty($id) ? '' : $this->ID;
+        $array = empty($id) ? ['idGimnasio' => $gimnasio] : ['id' => $id, 'idGimnasio' => $gimnasio];
+        $consulta = empty($id) ? '`idGimnasio`=:idGimnasio' : '`idGimnasio`=:idGimnasio '.$this->ID;
         return $this->read('cliente', $array, $consulta, 'id, nombresYapellidos');
     }
 
@@ -296,17 +280,17 @@ class ConsultasDB extends Database
         return $this->read('trabajador', ['id' => $id], $this->ID, 'nombresYapellidos')[0]['nombresYapellidos'];
     }
 
-    public function obtenerEquiposPorId(string $id = null)
+    public function obtenerEquiposPorId(string $gimnasio, string $id = null)
     {
-        $array = empty($id) ? [] : ['id' => $id];
-        $consulta = empty($id) ? '' : $this->ID;
-        return $this->read('equipo', $array, $consulta);
+        $array = empty($id) ? ['idGimnasio' => $gimnasio] : ['id' => $id, 'idGimnasio' => $gimnasio];
+        $consulta = empty($id) ? '`idGimnasio`=:idGimnasio' : '`idGimnasio`=:idGimnasio '.$this->ID;
+        return $this->read('equipo', $array, $consulta, 'id, nombre, fecha');
     }
 
-    public function obtenerEquiposNombrePorId(string $id = null)
+    public function obtenerEquiposNombrePorId(string $gimnasio, string $id = null)
     {
-        $array = empty($id) ? [] : ['id' => $id];
-        $consulta = empty($id) ? '' : $this->ID;
+        $array = empty($id) ? ['idGimnasio' => $gimnasio] : ['id' => $id, 'idGimnasio' => $gimnasio];
+        $consulta = empty($id) ? '`idGimnasio`=:idGimnasio' : '`idGimnasio`=:idGimnasio '.$this->ID;
         return $this->read('equipo', $array, $consulta, 'id, nombre');
     }
 

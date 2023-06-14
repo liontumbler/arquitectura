@@ -3,7 +3,7 @@ class ModelCliente extends Model
 {
     public function clientes()
     {
-        return $this->obtenerClienteNombrePorId();
+        return $this->obtenerClienteNombrePorId($_SESSION['SesionTrabajador']['gimnasioId']);
     }
 
     public function cargarNombreClientePorId($id)
