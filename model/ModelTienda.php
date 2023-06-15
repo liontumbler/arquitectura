@@ -8,7 +8,7 @@ class ModelTienda extends Model
             //return 'sesion terminada';
             @\session_start();
             unset($_SESSION['SesionTrabajador']);
-            return 'T';
+            return 602;
         } else {//sesion ya iniciada
             $producto = $this->obtenerProductoPrecio($data->producto);
             $total = $data->cantidad * $producto;
@@ -22,7 +22,12 @@ class ModelTienda extends Model
             //return $resCliente;
 
             if ($idCliente > 0) {
-                return $this->crearTienda($data, $idCliente, $total, $_SESSION['SesionTrabajador']['gimnasioId'], $_SESSION['SesionTrabajador']['trabajadoId'], $_SESSION['SesionTrabajador']['trabajadorId']);
+                $vencimiento = $this->planTienda($_SESSION['SesionTrabajador']['plan'], $_SESSION['SesionTrabajador']['gimnasioId']);
+                if ($vencimiento) {
+                    return $this->crearTienda($data, $idCliente, $total, $_SESSION['SesionTrabajador']['gimnasioId'], $_SESSION['SesionTrabajador']['trabajadoId'], $_SESSION['SesionTrabajador']['trabajadorId']);
+                } else {
+                    return 601;
+                }
             }
 
             return false;

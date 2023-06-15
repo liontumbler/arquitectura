@@ -260,7 +260,7 @@ document.querySelector('body').onload = (e) => {
                                 clienteYaExiste(function (res) {
                                     validarForm1.limpiar();
                                 })
-                            } else if(rdta == 'T'){
+                            } else if(rdta == 602){
                                 Swal.fire({
                                     icon: 'error',
                                     title: 'Ya cerro caja de esta sesión',

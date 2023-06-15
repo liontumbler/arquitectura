@@ -34,7 +34,7 @@ class PaginaOnce extends Web implements PaginaX
                             <?= input_csrf_token(); ?>
                             <div class="col-lg-12 mb-1">
                                 <label for="nombre" class="form-label">Nombre *</label>
-                                <input type="text" class="form-control" id="nombre" placeholder="Nombre del equipo" title="Nombre del equipo" required minlength="1" maxlength="100">
+                                <input type="text" class="form-control" id="nombre" placeholder="Nombre del equipo" title="Nombre del equipo" required minlength="1" maxlength="50">
                             </div>
                             <div class="col-lg-12 mb-3">
                                 <div class="d-grid gap-2">

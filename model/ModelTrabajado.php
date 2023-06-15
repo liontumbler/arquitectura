@@ -8,7 +8,7 @@ class ModelTrabajado extends Model
             //return 'sesion terminada';
             @\session_start();
             unset($_SESSION['SesionTrabajador']);
-            return 'T';
+            return 602;
         } else { //sesion ya iniciada
             if ($this->actualizarFinCaja($finCaja, $_SESSION['SesionTrabajador']['trabajadoId'])) {
                 @\session_start();

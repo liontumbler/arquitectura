@@ -70,6 +70,11 @@ class ControllerAdmin extends Controller
         return $this->model('ModelTrabajador')->agregarTrabajador($dta);
     }
 
+    public function postAgregarEquipo($dta)
+    {
+        return $this->model('ModelEquipo')->agregarEquipo($dta);
+    }
+
     public function postCargarTrabajadores()
     {
         return $this->model('ModelTrabajador')->cargarTrabajadores();

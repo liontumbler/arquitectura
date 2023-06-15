@@ -46,59 +46,65 @@ class ModelQuienDebe extends Model
             //return 'sesion terminada';
             @\session_start();
             unset($_SESSION['SesionTrabajador']);
-            return 'T';
+            return 602;
         } else {//sesion ya iniciada
-            $listapagos = [];
 
-            $pagos = [];
-            $pagos['total'] = 0;
-            $pagos['descripcion'] = '';
-            foreach ($dta as $value) {
-                //echo $value->tipoPago;
-                if (!empty($value->tipoPago)) {
-                    //print_r($value);
-                    $pagos['total'] += $value->total;
-                    $pagos['descripcion'] .= $value->descripcion. "\n";
+            $vencimiento = $this->planPagos($_SESSION['SesionAdmin']['plan'], $_SESSION['SesionAdmin']['gimnasioId']);
+            if ($vencimiento) {
+                $listapagos = [];
 
-                    array_push($listapagos, array(
-                        'pago' => $value->tipoDeuda,
-                        'id' => $value->id,
-                        'idPagos' => '',
-                    ));
-                }elseif (!empty($value->pago)) {
-                    $pagos['tipoPago'] = $value->pago;
-                    $pagos['idCliente'] = $value->idCliente;
-                }
-            }
-            //return $pagos;
+                $pagos = [];
+                $pagos['total'] = 0;
+                $pagos['descripcion'] = '';
+                foreach ($dta as $value) {
+                    //echo $value->tipoPago;
+                    if (!empty($value->tipoPago)) {
+                        //print_r($value);
+                        $pagos['total'] += $value->total;
+                        $pagos['descripcion'] .= $value->descripcion. "\n";
 
-            $resTienda = $this->crearPagos($pagos, $_SESSION['SesionTrabajador']['gimnasioId'], $_SESSION['SesionTrabajador']['trabajadoId'], $_SESSION['SesionTrabajador']['trabajadorId']);
-
-            if ($resTienda > 0) {
-                $conteoList = 0;
-                //return $listapagos;
-                foreach ($listapagos as $value) {
-                    $value['idPagos'] = $resTienda;
-                    $resListapagos = $this->crearListapagos($value);
-                    //return $resListapagos;
-                    if ($resListapagos == 0) {
-                        $actualizo = 0;
-                        if ($value['pago'] == 'Tienda') {
-                            $actualizo = $this->update('tienda', ['tipoPago' => 'pazYsalvo'.ucfirst($pagos['tipoPago'])], $value['id']);
-                        } elseif ($value['pago'] == 'Liga') {
-                            $actualizo = $this->update('ligas', ['tipoPago' => 'pazYsalvo'.ucfirst($pagos['tipoPago'])], $value['id']);
-                        }
-
-                        if ($actualizo > 0) {
-                            $conteoList++;
-                        }
+                        array_push($listapagos, array(
+                            'pago' => $value->tipoDeuda,
+                            'id' => $value->id,
+                            'idPagos' => '',
+                        ));
+                    }elseif (!empty($value->pago)) {
+                        $pagos['tipoPago'] = $value->pago;
+                        $pagos['idCliente'] = $value->idCliente;
                     }
                 }
+                //return $pagos;
 
-                //return $conteoList;
-                return ($conteoList >= count($listapagos)) ? true : false;
+                $resTienda = $this->crearPagos($pagos, $_SESSION['SesionTrabajador']['gimnasioId'], $_SESSION['SesionTrabajador']['trabajadoId'], $_SESSION['SesionTrabajador']['trabajadorId']);
+
+                if ($resTienda > 0) {
+                    $conteoList = 0;
+                    //return $listapagos;
+                    foreach ($listapagos as $value) {
+                        $value['idPagos'] = $resTienda;
+                        $resListapagos = $this->crearListapagos($value);
+                        //return $resListapagos;
+                        if ($resListapagos == 0) {
+                            $actualizo = 0;
+                            if ($value['pago'] == 'Tienda') {
+                                $actualizo = $this->update('tienda', ['tipoPago' => 'pazYsalvo'.ucfirst($pagos['tipoPago'])], $value['id']);
+                            } elseif ($value['pago'] == 'Liga') {
+                                $actualizo = $this->update('ligas', ['tipoPago' => 'pazYsalvo'.ucfirst($pagos['tipoPago'])], $value['id']);
+                            }
+
+                            if ($actualizo > 0) {
+                                $conteoList++;
+                            }
+                        }
+                    }
+
+                    //return $conteoList;
+                    return ($conteoList >= count($listapagos)) ? true : false;
+                } else {
+                    return false;
+                }
             } else {
-                return false;
+                return 601;
             }
         }
     }

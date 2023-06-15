@@ -9,7 +9,7 @@ class ModelDescontar extends Model
                 //return 'sesion terminada';
                 @\session_start();
                 unset($_SESSION['SesionTrabajador']);
-                return 'T';
+                return 602;
             } else {//sesion ya iniciada
                 $vencimiento = $this->planDescuento($_SESSION['SesionTrabajador']['plan'], $_SESSION['SesionTrabajador']['gimnasioId']);
                 if ($vencimiento) {

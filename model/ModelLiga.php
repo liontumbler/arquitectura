@@ -8,7 +8,7 @@ class ModelLiga extends Model
             //return 'sesion terminada';
             @\session_start();
             unset($_SESSION['SesionTrabajador']);
-            return 'T';
+            return 602;
         } else {//sesion ya iniciada
             $vencimiento = $this->planLiga($_SESSION['SesionAdmin']['plan'], $_SESSION['SesionAdmin']['gimnasioId']);
             if ($vencimiento) {

@@ -54,7 +54,7 @@ document.querySelector('body').onload = (e) => {
                                 location.href = 'trabajando';
                             }
                         })
-                    } else if (rdta == 'T') {
+                    } else if (rdta == 602) {
                         Swal.fire({
                             icon: 'error',
                             title: 'Ya cerro caja de esta sesión',

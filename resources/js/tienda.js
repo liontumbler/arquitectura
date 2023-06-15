@@ -131,7 +131,7 @@ document.querySelector('body').onload = (e) => {
                                 validarForm3.limpiar();
                                 validarForm4.limpiar();
                             })
-                        } else if(rdta == 'T'){
+                        } else if(rdta == 602){
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Ya cerro caja de esta sesión',

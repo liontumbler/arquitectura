@@ -141,12 +141,12 @@ document.querySelector('body').onload = (e) => {
                     return res;
                 })
                 this.disabled = false;
-                /*
+
                 console.log(rdta);
                 //console.log(rdta);
                 if (rdta == true) {
                     Swal.fire({
-                        title: '¡Producto Ingresado!',
+                        title: '¡Trabajador Ingresado!',
                         text: "Quieres mantenerte en la página o ir al home",
                         icon: 'success',
                         showCancelButton: true,
@@ -181,7 +181,7 @@ document.querySelector('body').onload = (e) => {
                             location.href = './index';
                         })
                     }
-                }*/
+                }
             } else {
                 this.disabled = false;
             }

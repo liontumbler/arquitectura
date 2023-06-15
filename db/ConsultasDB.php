@@ -96,6 +96,29 @@ class ConsultasDB extends Database
         }
     }
 
+    public function planEquipos(string $plan, string $gimnasio)
+    {
+        $countEquipos = $this->read(
+            'trabajador',
+            ['idGimnasio' => $gimnasio],
+            '`idGimnasio`=:idGimnasio',
+            'COUNT(idGimnasio) AS Total'
+        )[0]['Total'];
+
+        $countPlanEquipos = $this->read(
+            'plan',
+            ['id' => $plan],
+            '`id`=:id',
+            'equipos'
+        )[0]['equipos'];
+
+        if ($countEquipos <= $countPlanEquipos) {
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     public function planHoraLiga(string $plan, string $gimnasio)
     {
         $countHoraliga = $this->read(
