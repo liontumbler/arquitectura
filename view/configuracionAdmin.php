@@ -31,12 +31,14 @@ class PaginaOnce extends Web implements PaginaX
                     <div class="container">
                         <div class="row">
                             <?= input_csrf_token(); ?>
-                            <div class="col-lg-12">
+                            <div class="col-lg-12 text-center">
                                 nombre del plan idPlan
                             </div>
                             <div class="col-sm-12 col-lg-6 mb-1">
-                                clave
-                                boton de cambiar clave
+                                <span id="clave"></span>
+                                <div class="d-grid gap-2">
+                                    <button type="button" id="btnClave" class="btn btn-info">Cambio de clave</button>
+                                </div>
                             </div>
                             <div class="col-sm-12 col-lg-6 mb-1">
                                 <input class="form-check-input" type="checkbox" value="" id="habilitado" disabled>
@@ -54,11 +56,11 @@ class PaginaOnce extends Web implements PaginaX
                             </div>
                             <div class="col-sm-12 col-lg-6 mb-1">
                                 <label for="color" class="form-label">Color letra*</label>
-                                <input type="color" class="form-control form-control-color" id="color" title="Color de letra" required minlength="1" maxlength="100">
+                                <input type="color" class="form-control form-control-color" id="color" title="Color de letra" required>
                             </div>
                             <div class="col-sm-12 col-lg-6 mb-1">
                                 <label for="background" class="form-label">Color barras *</label>
-                                <input type="color" class="form-control form-control-color" id="background" title="Color de barras" required minlength="1" maxlength="100">
+                                <input type="color" class="form-control form-control-color" id="background" title="Color de barras" required>
                             </div>
                             <div class="col-sm-12 col-lg-6 mb-1">
                                 <label for="nombre" class="form-label">Nombre *</label>
@@ -88,9 +90,7 @@ class PaginaOnce extends Web implements PaginaX
                                 </div>
                             </div>
                         </div>
-
                     </div>
-                    <table id="horaLigaTable"></table>
                 </div>
             </div>
         </div>
@@ -105,7 +105,7 @@ class PaginaOnce extends Web implements PaginaX
     }
 
     public function footer()
-    {
+    {/*<?= $this->color; ?>*/
         ?>
         <style>
             .navbar {
@@ -115,6 +115,9 @@ class PaginaOnce extends Web implements PaginaX
             #sideBarrar {
                 color: <?= $this->color; ?> !important;
                 background: <?= $this->background; ?> !important;
+            }
+            #sideBar a {
+                color: <?= $this->color; ?> !important;
             }
         </style>
         <?php

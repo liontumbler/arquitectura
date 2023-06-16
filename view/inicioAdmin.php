@@ -55,21 +55,28 @@ class PaginaOnce extends Web implements PaginaX
                             </div>
                             <div class="col-lg-12 mb-1">
                                 <div class="d-grid gap-2">
-                                    <button id="descuentoAdmin" class="btn btn-light" type="button" disabled>
+                                    <button id="descuentoAdmin" class="btn btn-light" type="button">
                                         <i class="bi bi-dash"></i>&nbsp;Descuento
                                     </button>
                                 </div>
                             </div>
                             <div class="col-lg-12 mb-1">
                                 <div class="d-grid gap-2">
-                                    <button id="pagosAdmin" class="btn btn-light" type="button" disabled>
+                                    <button id="pagosAdmin" class="btn btn-light" type="button">
                                         <i class="bi bi-currency-dollar"></i>&nbsp;Pagos
                                     </button>
                                 </div>
                             </div>
                             <div class="col-lg-12 mb-1">
                                 <div class="d-grid gap-2">
-                                    <button id="equiposAdmin" class="btn btn-light" type="button" disabled>
+                                    <button id="cajaAdmin" class="btn btn-light" type="button" disabled>
+                                        <i class="bi bi-currency-dollar"></i>&nbsp;Caja
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 mb-1">
+                                <div class="d-grid gap-2">
+                                    <button id="equiposAdmin" class="btn btn-light" type="button">
                                         <i class="bi bi-people"></i>&nbsp;Equipos
                                     </button>
                                 </div>
@@ -90,14 +97,14 @@ class PaginaOnce extends Web implements PaginaX
                             </div>
                             <div class="col-lg-12 mb-1">
                                 <div class="d-grid gap-2">
-                                    <button id="tarifasAdmin" class="btn btn-light" type="button" disabled>
+                                    <button id="trabajadorAdmin" class="btn btn-light" type="button">
                                         <i class="bi bi-file-earmark-person"></i>&nbsp;Trabajador
                                     </button>
                                 </div>
                             </div>
                             <div class="col-lg-12 mb-1">
                                 <div class="d-grid gap-2">
-                                    <button id="configuracionAdmin" class="btn btn-light" type="button" disabled>
+                                    <button id="configuracionAdmin" class="btn btn-light" type="button">
                                         <i class="bi bi-gear"></i>&nbsp;Configuración
                                     </button>
                                 </div>
@@ -136,6 +143,9 @@ class PaginaOnce extends Web implements PaginaX
                 color: <?= $this->color; ?> !important;
                 background: <?= $this->background; ?> !important;
             }
+            #sideBar a {
+                color: <?= $this->color; ?> !important;
+            }
         </style>
         <?php
     }
@@ -157,6 +167,22 @@ class PaginaOnce extends Web implements PaginaX
             document.getElementById('tarifasAdmin').addEventListener('click', function (e) {
                 location.href = 'horaLigaAdmin';
             })
+            document.getElementById('equiposAdmin').addEventListener('click', function (e) {
+                location.href = 'equiposAdmin';
+            })
+            document.getElementById('trabajadorAdmin').addEventListener('click', function (e) {
+                location.href = 'trabajadoresAdmin';
+            })
+            document.getElementById('configuracionAdmin').addEventListener('click', function (e) {
+                location.href = 'configuracionAdmin';
+            })
+            document.getElementById('pagosAdmin').addEventListener('click', function (e) {
+                location.href = 'pagosAdmin';
+            })
+            document.getElementById('descuentoAdmin').addEventListener('click', function (e) {
+                location.href = 'descuentosAdmin';
+            })
+
             document.getElementById('salirAdmin').addEventListener('click', salir)
         </script>
         <?php

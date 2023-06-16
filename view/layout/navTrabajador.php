@@ -4,6 +4,6 @@
             <img src="resources/img/adminLig.svg" class="imgIco" alt="Nocarga">
         </a>
 
-        <div class="text-white" id="hora">00:00:00 A.M</div>
+        <div id="hora">00:00:00 A.M</div>
     </div>
 </nav>

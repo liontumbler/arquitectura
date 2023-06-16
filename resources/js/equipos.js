@@ -137,7 +137,7 @@ document.querySelector('body').onload = (e) => {
                             showConfirmButton: false,
                             timer: 1500
                         }).then((result) => {
-                            location.href = './index';
+                            //location.href = './index';
                         })
                     }
                 }

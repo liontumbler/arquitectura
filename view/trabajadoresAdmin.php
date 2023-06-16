@@ -98,6 +98,9 @@ class PaginaOnce extends Web implements PaginaX
                 color: <?= $this->color; ?> !important;
                 background: <?= $this->background; ?> !important;
             }
+            #sideBar a {
+                color: <?= $this->color; ?> !important;
+            }
         </style>
         <?php
     }

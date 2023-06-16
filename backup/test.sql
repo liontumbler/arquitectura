@@ -7,7 +7,7 @@ VALUES
 (NULL, 'Master', 'Master', '40', '40', '570', '570', '570', '400', '570', '45');
 
 INSERT INTO `gimnasio` (`id`, `correo`, `nickname`, `nombre`, `clave`, `color`, `background`, `direccion`, `telefono`, `descripcion`, `habilitado`, `minDeMasLiga`, `idPlan`)
-VALUES (NULL, 'lion_3214@hotmail.com', 'admin@admin', 'Liga Gim', '$2y$11$mjwkbMoRVY/tlZ9ttblRzOomcrFL2JhbGJRz1bpEPcrr9Pn/NtYHy', '#fff', '#000', NULL, '3102742576', NULL, '1', '5', '1');
+VALUES (NULL, 'lion_3214@hotmail.com', 'admin@admin', 'Liga Gim', '$2y$11$mjwkbMoRVY/tlZ9ttblRzOomcrFL2JhbGJRz1bpEPcrr9Pn/NtYHy', '#ffffff', '#000000', NULL, '3102742576', NULL, '1', '5', '1');
 
 INSERT INTO `trabajador` (`id`, `nombresYapellidos`, `nickname`, `correo`, `documento`, `clave`, `claveCaja`, `idGimnasio`) 
 VALUES (NULL, 'test', 'test@test', 'lion_3214@hotmail.com', '1033741932', '$2y$11$mjwkbMoRVY/tlZ9ttblRzOomcrFL2JhbGJRz1bpEPcrr9Pn/NtYHy', NULL, '1');
