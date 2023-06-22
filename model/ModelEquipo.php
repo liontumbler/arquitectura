@@ -20,5 +20,10 @@ class ModelEquipo extends Model
             return 601;
         }
     }
+
+    public function actualizarEquipo($dta)
+    {
+        return $this->updateEquipo($dta->id, $dta->nombreEdit);
+    }
 }
 ?>

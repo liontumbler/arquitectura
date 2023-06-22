@@ -45,12 +45,6 @@ class PaginaOnce extends Web implements PaginaX
                         <div class="tab-pane fade show active" id="descuentos" role="tabpanel" aria-labelledby="descuentos-tab">
                             <div class="row g-3 mt-3">
                                 <div class="col-lg-2 col-sm-4">
-                                    <label for="cliente">Clientes</label>
-                                    <select id="cliente" class="form-select">
-                                        <option selected value="">Seleccione una opción</option>
-                                    </select>
-                                </div>
-                                <div class="col-lg-2 col-sm-4">
                                     <label for="trabajador">Trabajador</label>
                                     <select id="trabajador" class="form-select">
                                         <option selected value="">Seleccione una opción</option>

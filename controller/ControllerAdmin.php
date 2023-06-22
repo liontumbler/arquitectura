@@ -75,14 +75,54 @@ class ControllerAdmin extends Controller
         return $this->model('ModelEquipo')->agregarEquipo($dta);
     }
 
+    public function postActualizarEquipo($dta)
+    {
+        return $this->model('ModelEquipo')->actualizarEquipo($dta);
+    }
+
     public function postCargarTrabajadores()
     {
         return $this->model('ModelTrabajador')->cargarTrabajadores();
     }
 
+    public function postActualizarTrabajador($dta)
+    {
+        return $this->model('ModelTrabajador')->actualizarTrabajador($dta);
+    }
+
     public function postCargarEquipos()
     {
         return $this->model('ModelEquipo')->cargarEquipos();
+    }
+
+    public function postActualizarProducto($dta)
+    {
+        return $this->model('ModelProducto')->actualizarProducto($dta);
+    }
+
+    public function postCargarProdutos()
+    {
+        return $this->model('ModelProducto')->cargarProdutos();
+    }
+
+    public function postAgregarProducto($dta)
+    {
+        return $this->model('ModelProducto')->agregarProducto($dta);
+    }
+
+    public function postCargarHoraLigas()
+    {
+        return $this->model('ModelHoraLiga')->cargarHoraLigas();
+    }
+
+    public function postAgregarHoraLiga($dta)
+    {
+        return $this->model('ModelHoraLiga')->agregarHoraLiga($dta);
+    }
+
+    public function postActualizarHoraLiga($dta)
+    {
+        return $this->model('ModelHoraLiga')->actualizarHoraLiga($dta);
     }
     
 

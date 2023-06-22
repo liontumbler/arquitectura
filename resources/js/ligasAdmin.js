@@ -370,7 +370,6 @@ document.querySelector('body').onload = (e) => {
         }
 
         document.getElementById('buscar').addEventListener('click', async function(e) {
-            this.disabled = true;
             let valid = validarForm.validarCampos();
             if(valid == true && !valid.validationMessage){
                 let edta = validarForm.crearObjetoJson()
@@ -381,6 +380,7 @@ document.querySelector('body').onload = (e) => {
                 if (edta.hasta) 
                     edta.hasta = validarForm.obtenerFechaHoraServer(edta.hasta)
 
+                this.disabled = true;
                 let rdta = await fetch('controller/ControllerAdmin.php', {
                     method: 'POST',
                     headers: {
@@ -399,17 +399,18 @@ document.querySelector('body').onload = (e) => {
                     console.error(res.statusText);
                     return res;
                 })
+                this.disabled = false;
 
                 console.log(rdta, 'ligas');
 
-                if (!rdta){
+                if (!rdta || rdta.length == 0){
                     Swal.fire({
                         icon: 'error',
                         title: 'En la consulta',
                         showConfirmButton: false,
                         timer: 1500
                     }).then((result) => {
-                        this.disabled = false;
+                        console.log(result);
                     })
                     return;
                 }
@@ -521,7 +522,6 @@ document.querySelector('body').onload = (e) => {
                     }
 
                     if (limite == i) {
-                        this.disabled = false;
                         $table2.bootstrapTable('destroy')
                         $table2.bootstrapTable({
                             cache: false,
@@ -613,7 +613,7 @@ document.querySelector('body').onload = (e) => {
                     i++;
                 }
             }else{
-                this.disabled = false;
+                Swal.fire('error en los datos');
             }
         });
     })();

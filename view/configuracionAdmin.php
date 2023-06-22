@@ -32,7 +32,7 @@ class PaginaOnce extends Web implements PaginaX
                         <div class="row">
                             <?= input_csrf_token(); ?>
                             <div class="col-lg-12 text-center">
-                                nombre del plan idPlan
+                                Nombre del plan idPlan
                             </div>
                             <div class="col-sm-12 col-lg-6 mb-1">
                                 <span id="clave"></span>
@@ -68,7 +68,7 @@ class PaginaOnce extends Web implements PaginaX
                             </div>
                             <div class="col-sm-12 col-lg-6 mb-1">
                                 <label for="direccion" class="form-label">Dirección *</label>
-                                <input type="text" class="form-control" id="direccion" placeholder="Dirección del gimnasio" title="Dirección del gimnasio" required minlength="1" maxlength="100">
+                                <input type="text" class="form-control" id="direccion" placeholder="Dirección del gimnasio" title="Dirección del gimnasio" minlength="1" maxlength="100">
                             </div>
                             <div class="col-sm-12 col-lg-6 mb-1">
                                 <label for="telefono" class="form-label">teléfono *</label>

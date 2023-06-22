@@ -5,6 +5,10 @@
     display: none;
 }
 
+.editar {
+    cursor: pointer;
+}
+
 #sideBarrar {
     width: 280px;
     height: 89%;

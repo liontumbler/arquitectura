@@ -26,5 +26,10 @@ class ModelProducto extends Model
         }
     }
 
+    public function actualizarProducto($dta)
+    {
+        return $this->updateProducto($dta);
+    }
+
 }
 ?>

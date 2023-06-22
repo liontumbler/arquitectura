@@ -8,16 +8,6 @@ class ControllerProductos extends Controller
         parent::__construct($token);
     }
 
-    public function postCargarProdutos()
-    {
-        return $this->model('ModelProducto')->cargarProdutos();
-    }
-
-    public function postAgregarProducto($dta)
-    {
-        return $this->model('ModelProducto')->agregarProducto($dta);
-    }
-
 
     
 

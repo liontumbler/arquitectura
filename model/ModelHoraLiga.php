@@ -17,5 +17,10 @@ class ModelHoraLiga extends Model
         return $this->obtenerHoraligaPorId($_SESSION['SesionAdmin']['gimnasioId']);
     }
 
+    public function actualizarHoraLiga($dta)
+    {
+        return $this->updateHoraLiga($dta);
+    }
+
 }
 ?>

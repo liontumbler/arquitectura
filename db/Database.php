@@ -93,8 +93,14 @@ class Database {
             
             return $statement->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            $this->logger->log('Error: '."Failed to read record from $table with ".implode(',', $data).": " . $e->getMessage());
-            ServerResponse::getResponse(500);
+            if (strpos($e->getMessage(), '1062') !== false) {//datos duplicados
+                return -1;
+            } else if (strpos($e->getMessage(), '1451') !== false) {//se esta usando en otra tabla
+                return -2;
+            } else {
+                $this->logger->log('Error: '."Failed to read record from $table with ".implode(',', $data).": " . $e->getMessage());
+                ServerResponse::getResponse(500);
+            }
         }
     }
 

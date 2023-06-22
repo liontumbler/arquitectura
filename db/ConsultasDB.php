@@ -937,6 +937,63 @@ class ConsultasDB extends Database
         return $respuesta;
     }
 
+    
+    public function updateHoraLiga($data)
+    {
+        $horaLiga = [];
+        $horaLiga['nombre'] = $data->nombreEdit;
+        $horaLiga['fecha'] = date('Y-m-d H:i:s');
+        $horaLiga['horas'] = $data->horasEdit;
+        $horaLiga['precio'] = $data->precioEdit;
+        $prod = $this->update('horaliga', $horaLiga, $data->id);
+        return ($prod > 0); 
+    }
+
+    public function updateProducto($data)
+    {
+        $producto = [];
+        $producto['nombre'] = $data->nombreEdit;
+        $producto['fecha'] = date('Y-m-d H:i:s');
+        $producto['descripcion'] = $data->descripcionEdit;
+        $producto['precio'] = $data->precioEdit;
+        $prod = $this->update('producto', $producto, $data->id);
+        return ($prod > 0); 
+    }
+
+    public function updateEquipo(string $id, string $nombre)
+    {
+        $equipo = [];
+        $equipo['nombre'] = $nombre;
+        $equipo['fecha'] = date('Y-m-d H:i:s');
+        $equi = $this->update('equipo', $equipo, $id);
+        return ($equi > 0); 
+    }
+
+    public function updateTrabajador($data)
+    {
+        $trabajador = [];
+        $trabajador['nombresYapellidos'] = $data->nombresYapellidosEdit;
+        $trabajador['correo'] = $data->correoEdit;
+        $trabajador['documento'] = $data->documentoEdit;
+
+        if (empty($data->telefonoEdit)) {
+            $data->telefonoEdit = null;
+        }
+        $trabajador['telefono'] = $data->telefonoEdit;
+
+        if (empty($data->claveCajaEdit)) {
+            $data->claveCajaEdit = null;
+        }
+        $trabajador['claveCaja'] = $data->claveCajaEdit;
+
+        if (!empty($data->clave)) {
+            $trabajador['clave'] = $data->clave;
+        }
+
+        $traba = $this->update('trabajador', $trabajador, $data->id);
+        return ($traba > 0); 
+    }
+
     public function actualizarCaja(string $trabajador, string $medio)
     {
         $claveCajaNueva = rand(1000, 9999);

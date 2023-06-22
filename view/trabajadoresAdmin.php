@@ -45,7 +45,7 @@ class PaginaOnce extends Web implements PaginaX
                                 <input type="email" class="form-control" id="correo" placeholder="correo del trabajador" title="correo del trabajador" required minlength="1" maxlength="100">
                             </div>
                             <div class="col-lg-12 mb-1">
-                                <label for="telefono" class="form-label">Telefono *</label>
+                                <label for="telefono" class="form-label">Telefono</label>
                                 <input type="number" class="form-control" id="telefono" placeholder="Teléfono del trabajador" title="Teléfono del trabajador" required minlength="1" maxlength="13">
                             </div>
                             <div class="col-lg-12 mb-1">
