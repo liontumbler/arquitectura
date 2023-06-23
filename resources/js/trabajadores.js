@@ -139,9 +139,6 @@ document.querySelector('body').onload = (e) => {
                             showCancelButton: true,
                             allowOutsideClick: false,
                             confirmButtonText: 'Actualizar',
-                            inputValidator: (value) => {
-                                console.log(value, 'value');
-                            },
                             preConfirm: () => {
                                 if (document.getElementById('nombresYapellidosEdit').value &&
                                     document.getElementById('correoEdit').value &&

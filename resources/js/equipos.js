@@ -87,17 +87,14 @@ document.querySelector('body').onload = (e) => {
                             html:
                                 '<div class="container row mx-auto">' +
                                 '<div class="form-group col-sm-12 mb-2">' +
-                                '<label for="nombreEdit">nombre Equipo</label>' +
-                                '<input id="nombreEdit" class="swal2-input" value="'+row.nombre+'" maxlength="50" required>' +
+                                '<label for="nombre" class="form-label">Nombre *</label>' +
+                                '<input type="text" class="form-control" id="nombre" value="'+row.nombre+'" placeholder="Nombre del equipo" title="Nombre del equipo" required minlength="1" maxlength="50"></input>' +
                                 '</div>' +
                                 '</div>',
                             focusConfirm: false,
                             showCancelButton: true,
                             allowOutsideClick: false,
                             confirmButtonText: 'Actualizar',
-                            inputValidator: (value) => {
-                                console.log(value, 'value');
-                            },
                             preConfirm: () => {
                                 if (document.getElementById('nombreEdit').value) {
                                     return [

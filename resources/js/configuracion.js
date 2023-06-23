@@ -46,6 +46,83 @@ document.querySelector('body').onload = (e) => {
             
         });
 
+        document.getElementById('btnClave').addEventListener('click', function (e) {
+            //clave  clave
+            Swal.fire({
+                title: 'cambiar clave',
+                html:
+                    '<div class="container row mx-auto">' +
+                    
+                    '<div class="form-group col-sm-12 mb-2">' +
+                    '<label for="password1" class="form-label">Clave *</label>' +
+                    '<input type="password" class="form-control" id="password1" placeholder="Clave Nueva" title="Clave Nueva" required minlength="8" maxlength="8"></input>' +
+                    '</div>' +
+                    '<div class="form-group col-sm-12 mb-2">' +
+                    '<label for="password2" class="form-label">Confirmacion *</label>' +
+                    '<input type="password" class="form-control" id="password2" placeholder="Confirmar Clave Nueva" title="Clave Nueva" required minlength="8" maxlength="8"></input>' +
+                    '</div>' +
+                    '<div class="form-group col-sm-12 mb-2">' +
+                    '<div class="progress">' +
+                    '<div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>' +
+                    '</div>' +
+                    '</div>' +
+                    
+                    '</div>',
+                focusConfirm: false,
+                showCancelButton: true,
+                allowOutsideClick: false,
+                confirmButtonText: 'Cambiar',
+                inputValidator: (value) => {
+                    console.log(value, 'value');
+                },
+                preConfirm: () => {
+                    if (document.getElementById('nombreEdit').value) {
+                        return [
+                            document.getElementById('nombreEdit').value,
+                        ]
+                    }else{
+                        return [];
+                    }
+                }
+            }).then(async valid => {
+                
+                console.log(valid, valido);
+                
+            })
+
+            /*document.getElementById('password1').addEventListener('change', function (e) {
+                console.log(this.value);
+            })*/
+
+            document.getElementById('password1').addEventListener('keyup', function (e) {
+                console.log(this.value);
+                let conparar = document.getElementById('password2').value
+
+                var regex = /^(.*[A-Z].*[A-Z])(.*[a-z].*[a-z])(.*\d.*\d)(.*[!@#$%^&*].*[!@#$%^&*])/;
+
+                if (regex.test(this.value)){
+                    console.log('cumple condicion');
+                }else {
+                    console.log('no cumple');
+                }
+
+                if (this.value && conparar == this.value) {
+                    console.log('son iguales');
+                }
+            })
+
+            document.getElementById('password2').addEventListener('keyup', function (e) {
+                console.log(this.value);
+                let conparar = document.getElementById('password1').value
+                if (this.value && conparar == this.value) {
+                    console.log('son iguales');
+                }
+            })
+
+            
+
+        })
+
         
         let background = '';
         let color = '';

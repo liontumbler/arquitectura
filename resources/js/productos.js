@@ -114,9 +114,6 @@ document.querySelector('body').onload = (e) => {
                             showCancelButton: true,
                             allowOutsideClick: false,
                             confirmButtonText: 'Actualizar',
-                            inputValidator: (value) => {
-                                console.log(value, 'value');
-                            },
                             preConfirm: () => {
                                 if (document.getElementById('nombreEdit').value &&
                                     document.getElementById('precioEdit').value
