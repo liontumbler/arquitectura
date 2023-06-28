@@ -67,7 +67,7 @@ class PaginaOnce extends Web implements PaginaX
                                 <input type="text" class="form-control" id="nombre" placeholder="Nombre del gimnasio" title="Nombre del gimnasio" required minlength="1" maxlength="100">
                             </div>
                             <div class="col-sm-12 col-lg-6 mb-1">
-                                <label for="direccion" class="form-label">Dirección *</label>
+                                <label for="direccion" class="form-label">Dirección</label>
                                 <input type="text" class="form-control" id="direccion" placeholder="Dirección del gimnasio" title="Dirección del gimnasio" minlength="1" maxlength="100">
                             </div>
                             <div class="col-sm-12 col-lg-6 mb-1">
@@ -75,7 +75,7 @@ class PaginaOnce extends Web implements PaginaX
                                 <input type="text" class="form-control" id="telefono" placeholder="Telefono del gimnasio" title="Telefono del gimnasio" required minlength="1" maxlength="100">
                             </div>
                             <div class="col-sm-12 col-lg-6 mb-1">
-                                <label for="minDeMasLiga" class="form-label">Minutos de mas de liga *</label>
+                                <label for="minDeMasLiga" class="form-label">Minutos de más de liga *</label>
                                 <input type="number" class="form-control" id="minDeMasLiga" placeholder="minutos de mas para la liga" title="minutos de mas para la liga" required minlength="1" maxlength="60">
                             </div>
                             <div class="col-sm-12 mb-1">

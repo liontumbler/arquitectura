@@ -949,6 +949,25 @@ class ConsultasDB extends Database
         return ($prod > 0); 
     }
 
+    public function updateConfiguracion(string $id, $data)
+    {
+        $gimnasio = [];
+        $gimnasio['correo'] = $data->correo;
+        $gimnasio['nombre'] = $data->nombre;
+        $gimnasio['color'] = $data->color;
+        $gimnasio['background'] = $data->background;
+        $gimnasio['direccion'] = $data->direccion;
+        $gimnasio['telefono'] = $data->telefono;
+        $gimnasio['minDeMasLiga'] = $data->minDeMasLiga;
+        $gimnasio['descripcion'] = $data->descripcion;
+        if (!empty($data->clave)) {
+            $gimnasio['clave'] = $data->clave;
+        }
+
+        $prod = $this->update('gimnasio', $gimnasio, $id);
+        return ($prod > 0); 
+    }
+
     public function updateProducto($data)
     {
         $producto = [];

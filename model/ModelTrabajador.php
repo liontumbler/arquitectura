@@ -6,9 +6,11 @@ class ModelTrabajador extends Model
     {
         $vencimiento = $this->planTrabajadores($_SESSION['SesionAdmin']['plan'], $_SESSION['SesionAdmin']['gimnasioId']);
         if ($vencimiento) {
-            $data->clave = password_hash(sha1($data->clave), PASSWORD_BCRYPT, [
-                'cost' => 11,
-            ]);
+            if (!empty($data->clave)) {
+                $data->clave = password_hash(sha1($data->clave), PASSWORD_BCRYPT, [
+                    'cost' => 11,
+                ]);
+            }
     
             return $this->crearTrabajador($data, $_SESSION['SesionAdmin']['gimnasioId']);
         } else {
@@ -29,9 +31,12 @@ class ModelTrabajador extends Model
 
     public function actualizarTrabajador($dta)
     {
-        $dta->clave = password_hash(sha1($dta->clave), PASSWORD_BCRYPT, [
-            'cost' => 11,
-        ]);
+        if (!empty($dta->clave)) {
+            $dta->clave = password_hash(sha1($dta->clave), PASSWORD_BCRYPT, [
+                'cost' => 11,
+            ]);
+        }
+        
         return $this->updateTrabajador($dta);
     }
 

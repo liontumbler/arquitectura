@@ -124,6 +124,11 @@ class ControllerAdmin extends Controller
     {
         return $this->model('ModelHoraLiga')->actualizarHoraLiga($dta);
     }
+
+    public function postActualizarConfiguracion($dta)
+    {
+        return $this->model('ModelConfiguracion')->actualizarConfiguracion($dta);
+    }
     
 
     
