@@ -19,18 +19,18 @@
                 </a>
             </li>
             <li>
-                <a href="descuentosAdmin" class="nav-link ">
+                <a href="descuentosAdmin" class="nav-link d-none" disabled>
                     <i class="bi bi-dash"></i>&nbsp;
                     Descuento
                 </a>
             </li>
             <li>
-                <a href="pagosAdmin" class="nav-link ">
+                <a href="pagosAdmin" class="nav-link d-none" disabled>
                     <i class="bi bi-currency-dollar"></i>&nbsp;Pagos
                 </a>
             </li>
             <li>
-                <a href="caja" class="nav-link ">
+                <a href="caja" class="nav-link d-none" disabled>
                     <i class="bi bi-currency-dollar"></i>&nbsp;caja
                 </a>
             </li>

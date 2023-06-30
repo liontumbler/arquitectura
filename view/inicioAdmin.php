@@ -54,21 +54,21 @@ class PaginaOnce extends Web implements PaginaX
                                 </div>
                             </div>
                             <div class="col-lg-12 mb-1">
-                                <div class="d-grid gap-2">
-                                    <button id="descuentoAdmin" class="btn btn-light" type="button">
+                                <div class="d-grid gap-2 d-none">
+                                    <button id="descuentoAdmin" class="btn btn-light" type="button" disabled>
                                         <i class="bi bi-dash"></i>&nbsp;Descuento
                                     </button>
                                 </div>
                             </div>
                             <div class="col-lg-12 mb-1">
-                                <div class="d-grid gap-2">
-                                    <button id="pagosAdmin" class="btn btn-light" type="button">
+                                <div class="d-grid gap-2 d-none">
+                                    <button id="pagosAdmin" class="btn btn-light" type="button" disabled>
                                         <i class="bi bi-currency-dollar"></i>&nbsp;Pagos
                                     </button>
                                 </div>
                             </div>
                             <div class="col-lg-12 mb-1">
-                                <div class="d-grid gap-2">
+                                <div class="d-grid gap-2 d-none">
                                     <button id="cajaAdmin" class="btn btn-light" type="button" disabled>
                                         <i class="bi bi-currency-dollar"></i>&nbsp;Caja
                                     </button>
