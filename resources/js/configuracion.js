@@ -132,7 +132,7 @@ document.querySelector('body').onload = (e) => {
                 const lowercaseCount = (pass1.match(/[a-z]/g) || []).length;
                 const uppercaseCount = (pass1.match(/[A-Z]/g) || []).length;
                 const numberCount = (pass1.match(/[0-9]/g) || []).length;
-                const specialCharCount = (pass1.match(/[^a-zA-Z0-9]/g) || []).length;
+                const specialCharCount = (pass1.match(/[^a-zA-Z0-9 ]/g) || []).length;
 
                 if (
                     lowercaseCount < 2 ||
